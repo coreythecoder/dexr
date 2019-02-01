@@ -1,0 +1,11 @@
+User-agent: Googlebot
+Allow: /
+User-agent: Slurp
+Allow: /
+User-Agent: msnbot
+Allow: /
+User-agent: *
+Disallow: /cgi-bin/
+Disallow: /*?
+Disallow: /results
+Disallow: /results/*
