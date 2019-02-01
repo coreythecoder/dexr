@@ -2,12 +2,95 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$curr = $_SERVER['HTTP_HOST'];
-$curr = explode('.', $curr);
-if ($curr[0] == 'app') {
+$states = array(
+    'AL' => 'Alabama',
+    'AK' => 'Alaska',
+    'AZ' => 'Arizona',
+    'AR' => 'Arkansas',
+    'CA' => 'California',
+    'CO' => 'Colorado',
+    'CT' => 'Connecticut',
+    'DE' => 'Delaware',
+    'DC' => 'District of Columbia',
+    'FL' => 'Florida',
+    'GA' => 'Georgia',
+    'HI' => 'Hawaii',
+    'ID' => 'Idaho',
+    'IL' => 'Illinois',
+    'IN' => 'Indiana',
+    'IA' => 'Iowa',
+    'KS' => 'Kansas',
+    'KY' => 'Kentucky',
+    'LA' => 'Louisiana',
+    'ME' => 'Maine',
+    'MD' => 'Maryland',
+    'MA' => 'Massachusetts',
+    'MI' => 'Michigan',
+    'MN' => 'Minnesota',
+    'MS' => 'Mississippi',
+    'MO' => 'Missouri',
+    'MT' => 'Montana',
+    'NE' => 'Nebraska',
+    'NV' => 'Nevada',
+    'NH' => 'New Hampshire',
+    'NJ' => 'New Jersey',
+    'NM' => 'New Mexico',
+    'NY' => 'New York',
+    'NC' => 'North Carolina',
+    'ND' => 'North Dakota',
+    'OH' => 'Ohio',
+    'OK' => 'Oklahoma',
+    'OR' => 'Oregon',
+    'PA' => 'Pennsylvania',
+    'RI' => 'Rhode Island',
+    'SC' => 'South Carolina',
+    'SD' => 'South Dakota',
+    'TN' => 'Tennessee',
+    'TX' => 'Texas',
+    'UT' => 'Utah',
+    'VT' => 'Vermont',
+    'VA' => 'Virginia',
+    'WA' => 'Washington',
+    'WV' => 'West Virginia',
+    'WI' => 'Wisconsin',
+    'WY' => 'Wyoming');
+
+$states = array_flip($states);
+
+$currHost = $_SERVER['HTTP_HOST'];
+$currHost = explode('.', $currHost);
+
+$currPath = explode('/', $_SERVER['REQUEST_URI']);
+
+if ($currHost[0] == 'app') {
+    //BACKEND
     $route['default_controller'] = "home/index";
 } else {
-   // $route['default_controller'] = "live/index";
+    // FRONTEND
+    //state/{/page-number} 
+    //(lists cities)
+
+    if (isset($currPath[1]) && !isset($currPath[2]) && in_array(strtoupper($currPath[1]), $states)) {
+        echo 'state';
+        exit();
+        $route['(:any)'] = "frontend/state/$1";
+    } elseif (isset($currPath[2]) && !isset($currPath[3])) {
+        echo 'city';
+        exit();
+        //state/city/initial 
+        //(first page is A with alpha at top)
+        $route['(:any)/(:any)'] = "frontend/city/$1/$2";
+    } elseif (isset($currPath[3]) && preg_match("/^[a-z]$/", $currPath[3])) {
+        echo 'initial';
+        exit();
+        //state/city/name
+        //(lists domains/whois info)
+        $route['(:any)/(:any)/(:any)'] = "frontend/city/$1/$2/$3";
+    } else {
+        echo 'name-city';
+        exit();
+        $route['(:any)/(:any)/(:any)'] = "frontend/name/$1/$2/$3";
+    }
 }
 
 // Custom Routes
@@ -50,18 +133,7 @@ $route['zap/(:any)/(:any)/(:any)/(:any)'] = "home/zap/$1/$2/$3/$4";
 $route['imap'] = "Imap_controller/index";
 
 $route['create'] = "create/index";
-$route['create/(:any)'] = "create/index/$1";
+$route['translate_uri_dashes'] = FALSE;
 
 $route['404_override'] = 'Error_404';
 $route['translate_uri_dashes'] = FALSE;
-
-/*
-/state/{/page-number} 
-(lists cities)
-
-/state/city/initial {/page-number}
-(first page is A with alpha at top)
-
-/state/city/name {/page-number, noindex}
-(lists domains/whois info)
-*/
