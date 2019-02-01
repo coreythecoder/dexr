@@ -10,9 +10,9 @@ class Frontend_model extends CI_Model {
         $db = $this->load->database('default', TRUE);
     }
     
-    function getByNameCitySlug($slug){
+    function getAllByNameCitySlug($slug){
         
-        $sql = "";
+        $sql = "SELECT ";
         $re = $db->query($sql);
 
         if ($re->num_rows() > 0) {

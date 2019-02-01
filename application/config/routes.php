@@ -54,3 +54,14 @@ $route['create/(:any)'] = "create/index/$1";
 
 $route['404_override'] = 'Error_404';
 $route['translate_uri_dashes'] = FALSE;
+
+/*
+/state/{/page-number} 
+(lists cities)
+
+/state/city/initial {/page-number}
+(first page is A with alpha at top)
+
+/state/city/name {/page-number, noindex}
+(lists domains/whois info)
+*/
