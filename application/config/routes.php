@@ -69,27 +69,53 @@ if ($currHost[0] == 'app') {
     // FRONTEND
     //state/{/page-number} 
     //(lists cities)
-
-    if (isset($currPath[1]) && !isset($currPath[2]) && in_array(strtoupper($currPath[1]), $states)) {
+    // DETECT STATE PAGES THAT LIST CITIES, CHECK FOR PAGINATION
+    if (isset($currPath[1]) && (!isset($currPath[2]) || empty($currPath[2])) && in_array(strtoupper($currPath[1]), $states)) {
         echo 'state';
         exit();
         $route['(:any)'] = "frontend/state/$1";
-    } elseif (isset($currPath[2]) && !isset($currPath[3])) {
+    } elseif (isset($currPath[2]) && is_numeric($currPath[2]) && in_array(strtoupper($currPath[1]), $states)) {
+        echo 'state/2';
+        exit();
+        $route['(:any)/(:any)'] = "frontend/state/$1/$2";
+    }
+    // END STATE DETECTION
+    // DETECT CITY PAGES THAT LIST ABBREVIATED NAMES, CHECK FOR PAGINATION
+    elseif (isset($currPath[2]) && (!isset($currPath[3]) || empty($currPath[3])) && in_array(strtoupper($currPath[1]), $states)) {
         echo 'city';
         exit();
         //state/city/initial 
         //(first page is A with alpha at top)
         $route['(:any)/(:any)'] = "frontend/city/$1/$2";
-    } elseif (isset($currPath[3]) && preg_match("/^[a-z]$/", $currPath[3])) {
+    } elseif (isset($currPath[3]) && is_numeric($currPath[3]) && in_array(strtoupper($currPath[1]), $states)) {
+        echo 'city/2';
+        exit();
+        $route['(:any)/(:any)/(:any)'] = "frontend/city/$1/$2/$3";
+    }
+    // END CITY DETECTION
+    // DETECT INITIAL PAGES THAT LIST NAMES BY INITIAL, CHECK FOR PAGINATION
+    elseif (isset($currPath[3]) && preg_match("/^[a-z]$/", $currPath[3]) && (!isset($currPath[4]) || empty($currPath[4])) && in_array(strtoupper($currPath[1]), $states)) {
         echo 'initial';
         exit();
         //state/city/name
         //(lists domains/whois info)
         $route['(:any)/(:any)/(:any)'] = "frontend/city/$1/$2/$3";
-    } else {
+    } elseif (isset($currPath[3]) && preg_match("/^[a-z]$/", $currPath[3]) && isset($currPath[4]) && is_numeric($currPath[4]) && in_array(strtoupper($currPath[1]), $states)) {
+        echo 'initial/2';
+        exit();
+    }
+    // END INITIAL DETECTION
+    // DETECT NAME THAT LISTS DOMAINS, CHECK FOR PAGINATION
+    elseif (isset($currPath[3]) && !preg_match("/^[a-z]$/", $currPath[3]) && (!isset($currPath[4]) || empty($currPath[4])) && in_array(strtoupper($currPath[1]), $states)) {
         echo 'name-city';
         exit();
         $route['(:any)/(:any)/(:any)'] = "frontend/name/$1/$2/$3";
+    } elseif (isset($currPath[3]) && !preg_match("/^[a-z]$/", $currPath[3]) && isset($currPath[4]) && is_numeric($currPath[4]) && in_array(strtoupper($currPath[1]), $states)) {
+        echo 'name-city/2';
+        exit();
+    } else {
+        echo 'home';
+        exit();
     }
 }
 
