@@ -113,7 +113,10 @@ class Frontend extends CI_Controller {
 
         $statesArray = statesArray();
         $data['state'] = $statesArray[strtoupper($state)];
-        $data['city'] = ucwords($city);
+        $data['state_abr'] = $state;
+        $data['city'] = ucwords(str_replace('-', ' ', $city));
+        $data['city_slug'] = $city;
+        $data['name_slug'] = $name;
         $data['domains'] = "";
 
         $domains = $this->frontend_model->getDomainsByCityStateName($city, $state, $name);
