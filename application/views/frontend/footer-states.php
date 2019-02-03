@@ -32,19 +32,17 @@
                     </div>
 
 
-                    
+
 
                     <div class="col-md-8">
                         <div class="footer-content">
                             <h2 class="title">Browse Our Directory</h2>
                             <div class="separator-2"></div>
                             <?php
-                            
                             $states = statesArray();
-                            foreach ($states as $s) {
-                                echo "<div class='col-md-3'>".$s."</div>";
+                            foreach ($states as $k => $v) {
+                                echo "<div class='col-md-3'><a href='/" . strtolower($k) . "'>" . $v . "</a></div>";
                             }
-                            
                             ?>
                         </div>
                     </div>

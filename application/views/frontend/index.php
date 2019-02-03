@@ -148,7 +148,7 @@
                         </div>
                         <div class="col-sm-4">
                             <br>
-                            <p><a href="https://app.dexr.io" class="btn btn-lg btn-gray-transparent btn-animated">Create a Free Account<i class="fa fa-arrow-right pl-20"></i></a></p>
+                            <p><a href="https://app.dexr.io/register" class="btn btn-lg btn-gray-transparent btn-animated">Create a Free Account<i class="fa fa-arrow-right pl-20"></i></a></p>
                         </div>
                     </div>
                 </div>
