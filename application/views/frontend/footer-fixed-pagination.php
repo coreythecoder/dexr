@@ -12,21 +12,13 @@
                         <div class="text-center" style="position:absolute; left:20px; bottom:-20px;">
                             <?php if (isset($count) && $count > $maxPerPage) { ?>
                                 <?php
-                                $url = explode("/", $_SERVER['REQUEST_URI']);
-                                if (!isset($url[2])) {
-                                    $url[2] = 1;
-                                    $thisPage = 1;
-                                }
-                                $next = $url[2] + 1;
-                                $previous = $url[2] - 1;
-
-
-                                if ($thisPage != '1') {
+                               
+                                if ($thisPage != 1) {
                                     ?>
-                                    <a rel="prev" href="<?php echo "/" . $url[1] . "/" . $previous; ?>" class="btn btn-default btn-xs"><i class="fa fa-caret-left"></i></a> 
-                                <?php } ?> &nbsp; Page <?php echo $url[2]; ?> of <?php echo ceil($lastPage); ?> &nbsp; 
+                                    <a rel="prev" href="<?php echo $prev; ?>" class="btn btn-default btn-xs"><i class="fa fa-caret-left"></i></a> 
+                                <?php } ?> &nbsp; Page <?php echo $thisPage; ?> of <?php echo ceil($lastPage); ?> &nbsp; 
                                 <?php if ($thisPage != ceil($lastPage)) { ?>
-                                    <a rel="next" href="<?php echo "/" . $url[1] . "/" . $next; ?>" class="btn btn-default btn-xs"><i class="fa fa-caret-right"></i></a> 
+                                    <a rel="next" href="<?php echo $next; ?>" class="btn btn-default btn-xs"><i class="fa fa-caret-right"></i></a> 
                                 <?php } ?>
                             <?php } ?>
                         </div>

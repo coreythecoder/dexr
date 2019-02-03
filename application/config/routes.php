@@ -91,8 +91,7 @@ if ($currHost[0] == 'app') {
         //(lists domains/whois info)
         $route['(:any)/(:any)/(:any)'] = "frontend/city_letter/$1/$2/$3";
     } elseif (isset($currPath[3]) && preg_match("/^[a-z]$/", $currPath[3]) && isset($currPath[4]) && is_numeric($currPath[4]) && in_array(strtoupper($currPath[1]), $states)) {
-        echo 'initial/2';
-        exit();
+        $route['(:any)/(:any)/(:any)/(:any)'] = "frontend/city_letter/$1/$2/$3/$4";
     }
     // END INITIAL DETECTION
     // DETECT NAME THAT LISTS DOMAINS, CHECK FOR PAGINATION

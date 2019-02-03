@@ -74,7 +74,7 @@ class Frontend_model extends CI_Model {
         }
 
         $ncs = $name . "-" . $city . "-" . $state;
-        $sqlOne = "SELECT domain_name, registrant_name FROM production_2 WHERE name_city_slug = '" . $ncs . "' ORDER BY created_date_normalized ASC LIMIT " . $start . ", " . $perPage;
+        $sqlOne = "SELECT * FROM production_2 WHERE name_city_slug = '" . $ncs . "' ORDER BY created_date_normalized ASC LIMIT " . $start . ", " . $perPage;
         $reOne = $db->query($sqlOne); 
         
 
