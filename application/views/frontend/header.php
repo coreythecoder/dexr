@@ -9,6 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <head>
         <meta charset="utf-8">
+        <meta name="theme-color" content="#09afdf" />
         <title><?php echo $metaTitle; ?></title>
         <meta name="description" content="<?php echo $metaDescription; ?>">
         <meta name="author" content="htmlcoder.me">
@@ -170,10 +171,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                                                         <!-- mega-menu start -->
                                                         <li class=" mega-menu">
-                                                            <a href="/"><i class="fa fa-search"></i> Pricing</a>														
+                                                            <a href="/pricing"><i class="fa fa-search"></i> Pricing</a>														
                                                         </li>
                                                         <li class=" mega-menu">
-                                                            <a href="/register"><i class="fa fa-user"></i> Create a Free Account</a>														
+                                                            <a href="https://app.dexr.io/register"><i class="fa fa-user"></i> Create a Free Account</a>														
                                                         </li>
                                                         <!-- mega-menu end -->
 

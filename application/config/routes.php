@@ -71,17 +71,14 @@ if ($currHost[0] == 'app') {
     //(lists cities)
     // DETECT STATE PAGES THAT LIST CITIES, CHECK FOR PAGINATION
     if (isset($currPath[1]) && (!isset($currPath[2]) || empty($currPath[2])) && in_array(strtoupper($currPath[1]), $states)) {
-        echo 'state';
-        exit();
         $route['(:any)'] = "frontend/state/$1";
     } elseif (isset($currPath[2]) && is_numeric($currPath[2]) && in_array(strtoupper($currPath[1]), $states)) {
-        echo 'state/2';
-        exit();
         $route['(:any)/(:any)'] = "frontend/state/$1/$2";
     }
     // END STATE DETECTION
     // DETECT CITY PAGES THAT LIST ABBREVIATED NAMES, CHECK FOR PAGINATION
     elseif (isset($currPath[2]) && (!isset($currPath[3]) || empty($currPath[3])) && in_array(strtoupper($currPath[1]), $states)) {
+        header("Location: https://dexr.io" . str_replace("//", "/", $_SERVER['REQUEST_URI'] . "/a"));
         echo 'city';
         exit();
         //state/city/initial 
@@ -95,8 +92,6 @@ if ($currHost[0] == 'app') {
     // END CITY DETECTION
     // DETECT INITIAL PAGES THAT LIST NAMES BY INITIAL, CHECK FOR PAGINATION
     elseif (isset($currPath[3]) && preg_match("/^[a-z]$/", $currPath[3]) && (!isset($currPath[4]) || empty($currPath[4])) && in_array(strtoupper($currPath[1]), $states)) {
-        echo 'initial';
-        exit();
         //state/city/name
         //(lists domains/whois info)
         $route['(:any)/(:any)/(:any)'] = "frontend/city/$1/$2/$3";
@@ -114,8 +109,7 @@ if ($currHost[0] == 'app') {
         echo 'name-city/2';
         exit();
     } else {
-        echo 'home';
-        exit();
+        $route['default_controller'] = "frontend/index";
     }
 }
 
@@ -147,7 +141,7 @@ $route['email/templates'] = "welcome/email_templates";
 $route['email/inboxes'] = "welcome/email_inboxes";
 $route['email/campaigns'] = "welcome/email_campaigns";
 $route['user_settings'] = "User_settings";
-$route['pricing'] = "home/pricing";
+$route['pricing'] = "frontend/pricing";
 
 $route['datasets'] = "home/datasets";
 $route['dataset/(:any)/(:any)/(:any)'] = "home/dataset/$1/$2/$3";
