@@ -78,15 +78,10 @@ if ($currHost[0] == 'app') {
     // END STATE DETECTION
     // DETECT CITY PAGES THAT LIST ABBREVIATED NAMES, CHECK FOR PAGINATION
     elseif (isset($currPath[2]) && (!isset($currPath[3]) || empty($currPath[3])) && in_array(strtoupper($currPath[1]), $states)) {
-        header("Location: https://dexr.io" . str_replace("//", "/", $_SERVER['REQUEST_URI'] . "/a"));
-        echo 'city';
-        exit();
         //state/city/initial 
         //(first page is A with alpha at top)
         $route['(:any)/(:any)'] = "frontend/city/$1/$2";
     } elseif (isset($currPath[3]) && is_numeric($currPath[3]) && in_array(strtoupper($currPath[1]), $states)) {
-        echo 'city/2';
-        exit();
         $route['(:any)/(:any)/(:any)'] = "frontend/city/$1/$2/$3";
     }
     // END CITY DETECTION
@@ -94,7 +89,7 @@ if ($currHost[0] == 'app') {
     elseif (isset($currPath[3]) && preg_match("/^[a-z]$/", $currPath[3]) && (!isset($currPath[4]) || empty($currPath[4])) && in_array(strtoupper($currPath[1]), $states)) {
         //state/city/name
         //(lists domains/whois info)
-        $route['(:any)/(:any)/(:any)'] = "frontend/city/$1/$2/$3";
+        $route['(:any)/(:any)/(:any)'] = "frontend/city_letter/$1/$2/$3";
     } elseif (isset($currPath[3]) && preg_match("/^[a-z]$/", $currPath[3]) && isset($currPath[4]) && is_numeric($currPath[4]) && in_array(strtoupper($currPath[1]), $states)) {
         echo 'initial/2';
         exit();
@@ -102,12 +97,9 @@ if ($currHost[0] == 'app') {
     // END INITIAL DETECTION
     // DETECT NAME THAT LISTS DOMAINS, CHECK FOR PAGINATION
     elseif (isset($currPath[3]) && !preg_match("/^[a-z]$/", $currPath[3]) && (!isset($currPath[4]) || empty($currPath[4])) && in_array(strtoupper($currPath[1]), $states)) {
-        echo 'name-city';
-        exit();
         $route['(:any)/(:any)/(:any)'] = "frontend/name/$1/$2/$3";
     } elseif (isset($currPath[3]) && !preg_match("/^[a-z]$/", $currPath[3]) && isset($currPath[4]) && is_numeric($currPath[4]) && in_array(strtoupper($currPath[1]), $states)) {
-        echo 'name-city/2';
-        exit();
+        $route['(:any)/(:any)/(:any)/(:any)'] = "frontend/name/$1/$2/$3/$4";
     } else {
         $route['default_controller'] = "frontend/index";
     }
