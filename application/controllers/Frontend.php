@@ -52,17 +52,6 @@ class Frontend extends CI_Controller {
             foreach ($cities['results'] as $c) {
                 $data['cities'] .= "<div class='col-md-4'><a href='/" . $state . "/" . $c->slug . "'>" . ucwords(strtolower($c->city)) . "</a></div>";
             }
-
-            $data['url'] = $url = explode("/", $_SERVER['REQUEST_URI']);
-            if (!isset($url[2]) || empty($url[2])) {
-                $data['url'][2] = $url[2] = 1;
-                $thisPage = 1;
-            }
-            $next = $url[2] + 1;
-            $previous = $url[2] - 1;
-
-            $data['prev'] = "/" . $url[1] . "/" . $previous;
-            $data['next'] = "/" . $url[1] . "/" . $next;
         } else {
             show_404();
         }
@@ -71,6 +60,17 @@ class Frontend extends CI_Controller {
         $data['maxPerPage'] = 200;
         $data['lastPage'] = ($data['count'] / $data['maxPerPage']);
         $data['thisPage'] = $page;
+
+        $data['url'] = $url = explode("/", $_SERVER['REQUEST_URI']);
+        if (!isset($url[2]) || empty($url[2])) {
+            $data['url'][2] = $url[2] = 1;
+            $data['thisPage'] = $thisPage = 1;
+        }
+        $next = $url[2] + 1;
+        $previous = $url[2] - 1;
+
+        $data['prev'] = "/" . $url[1] . "/" . $previous;
+        $data['next'] = "/" . $url[1] . "/" . $next;
 
         $metaPage = "";
         if ($page > 1) {
@@ -140,9 +140,32 @@ class Frontend extends CI_Controller {
         $domains = $this->frontend_model->getDomainsByCityStateName($city, $state, $name);
         if ($domains['results']) {
             foreach ($domains['results'] as $d) {
-                $data['domains'] .= "<div class='col-md-4'><a href='/" . $state . "/" . $city . "/" . $d->domain_name . "'>" . ucwords(strtolower($d->domain_name)) . "</a></div>";
+                $data['domains'] .= "<div class='col-md-12 domain'><h2>" . $d->domain_name . "</h2><div class='separator'></div>";
+                $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Keyword Split</div><div class='col-info'>" . $d->num . "</div></div>";
+                if (!empty($d->created_date_normalized)) {
+                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Created</div><div class='col-info'>" . date('M d, Y', strtotime($d->created_date_normalized)) . "</div></div>";
+                } else {
+                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Created</div><div class='col-info'>-</div></div>";
+                }
+                
+                if (!empty($d->update_date)) {
+                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Updated</div><div class='col-info'>" . date('M d, Y', strtotime($d->update_date)) . "</div></div>";
+                } else {
+                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Updated</div><div class='col-info'>-</div></div>";
+                }
+                
+                if (!empty($d->registrant_name)) {
+                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Registrant Name</div><div class='col-info'>" . $d->registrant_name . "</div></div>";
+                } else {
+                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Updated</div><div class='col-info'>-</div></div>";
+                }
+                
+                $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Registrar</div><div class='col-info'>" . str_replace('Llc', 'LLC', ucwords(strtolower($d->domain_registrar_name))) . "</div></div>";
+
+
+                $data['domains'] .= "</div>";
             }
-            $data['domains'] .= "</div>";
+            //$data['domains'] .= "</div>";
         }
 
         $data['name'] = ucwords($domains['results'][0]->registrant_name);

@@ -60,3 +60,17 @@ form {
 .orange {
     color:orange;
 }
+
+.col-info {
+    font-size:1.2em;
+    margin-bottom:20px;
+}
+
+.col-title {
+    font-weight:bold;
+    color:#b8b8b8;
+}
+
+.domain {
+    margin-bottom:50px;
+}
