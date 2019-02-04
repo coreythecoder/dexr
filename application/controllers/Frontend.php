@@ -138,87 +138,106 @@ class Frontend extends CI_Controller {
         $data['domains'] = "";
 
         $domains = $this->frontend_model->getDomainsByCityStateName($city, $state, $name);
+        $nId = $this->frontend_model->getNameIdFromNameSlugCityState($city, $state, $name);
+        $data['total'] = $domains['total'];
         if ($domains['results']) {
             foreach ($domains['results'] as $d) {
-                $data['domains'] .= "<div class='col-md-12 domain'><h2>" . $d->domain_name . "</h2><div class='separator'></div>";
+                $data['domains'] .= "<class='row domain'>";
+                $data['domains'] .= "<div class='col-md-12'><h2>" . $d->domain_name . "</h2><div class='separator'></div>";
                 $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Keyword Split</div><div class='col-info'>" . $d->num . "</div></div>";
                 if (!empty($d->created_date_normalized)) {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Created</div><div class='col-info'>" . date('M d, Y', strtotime($d->created_date_normalized)) . "</div></div>";
                 } else {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Created</div><div class='col-info'>-</div></div>";
                 }
-                
+
                 if (!empty($d->update_date)) {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Updated</div><div class='col-info'>" . date('M d, Y', strtotime($d->update_date)) . "</div></div>";
                 } else {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Updated</div><div class='col-info'>-</div></div>";
                 }
-                
+
                 if (!empty($d->expiry_date)) {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Expiration</div><div class='col-info'>" . date('M d, Y', strtotime($d->expiry_date)) . "</div></div>";
                 } else {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Expiration</div><div class='col-info'>-</div></div>";
                 }
-                
+
                 if (!empty($d->registrant_name)) {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Registrant Name</div><div class='col-info'>" . $d->registrant_name . "</div></div>";
                 } else {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Registrant Name</div><div class='col-info'>-</div></div>";
                 }
-                
+
                 if (!empty($d->registrant_company)) {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Company</div><div class='col-info'>" . ucwords(strtolower($d->registrant_company)) . "</div></div>";
                 } else {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Company</div><div class='col-info'>-</div></div>";
                 }
-                
+
                 if (!empty($d->registrant_address)) {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Address</div><div class='col-info'>" . $d->registrant_address . "</div></div>";
                 } else {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Address</div><div class='col-info'>-</div></div>";
                 }
-                
+
                 if (!empty($d->registrant_city)) {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>City</div><div class='col-info'>" . ucwords(strtolower($d->registrant_city)) . ", ".$d->registrant_state."</div></div>";
+                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>City</div><div class='col-info'>" . ucwords(strtolower($d->registrant_city)) . ", " . $d->registrant_state . "</div></div>";
                 } else {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>City</div><div class='col-info'>-</div></div>";
                 }
-                
+
                 if (!empty($d->registrant_state)) {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>State</div><div class='col-info'>" . $d->registrant_state . "</div></div>";
                 } else {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>State</div><div class='col-info'>-</div></div>";
                 }
-                
+
                 if (!empty($d->registrant_zip)) {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Zip</div><div class='col-info'>" . $d->registrant_zip . "</div></div>";
                 } else {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Zip</div><div class='col-info'>-</div></div>";
                 }
-                
+
                 if (!empty($d->registrant_email)) {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Email</div><div class='col-info'>" . $d->registrant_email . "</div></div>";
+                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Email</div><div class='col-info'>" . obfuscate_email($d->registrant_email) . "</div></div>";
                 } else {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Email</div><div class='col-info'>-</div></div>";
                 }
-                
+
                 if (!empty($d->registrant_phone)) {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Phone</div><div class='col-info'>" . formatPhoneNumber($d->registrant_phone) . "</div></div>";
                 } else {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Phone</div><div class='col-info'>-</div></div>";
                 }
-                
+
                 if (!empty($d->registrant_fax)) {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Fax</div><div class='col-info'>" . $d->registrant_fax . "</div></div>";
                 } else {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Fax</div><div class='col-info'>-</div></div>";
                 }
-                
-                $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Registrar</div><div class='col-info'>" . str_replace('Llc', 'LLC', ucwords(strtolower($d->domain_registrar_name))) . "</div></div>";
 
+                $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Registrar</div><div class='col-info'>" . str_replace('Llc', 'LLC', ucwords(strtolower($d->domain_registrar_name))) . "</div></div>";
 
                 $data['domains'] .= "</div>";
             }
+
+            $idRollList = "";
+            $data['names'] = "";
+            $idRoll = $this->frontend_model->getSomeNamesByID($nId[0]->ID);
+            if ($idRoll) {
+                foreach ($idRoll as $ir) {
+                    $idRollList .= "<div class='col-md-3'><a href='/" . $ir->state . "/" . $ir->city_slug . "/" . $ir->name_slug . "'>" . ucwords(strtolower($ir->name)) . "</a></div>";
+                }
+                $data['names'] .= '
+                                            <div class="col-md-12">
+                                                <h4>Other Popular People & Businesses</h4>
+                                                    <div class="separator"></div>
+                                                ' . $idRollList . '
+                                            </div>
+                                        ';
+            }
+
             //$data['domains'] .= "</div>";
         }
 
@@ -235,6 +254,68 @@ class Frontend extends CI_Controller {
         $this->load->view('frontend/header', $data);
         $this->load->view('frontend/name');
         $this->load->view('frontend/footer-fixed-pagination');
+    }
+
+    public function sitemapIndex() {
+        exit();
+        $this->load->helper('url');
+        $this->load->helper('general');
+        $this->load->model('Database_model');
+
+        $countSitemapPagesTx = ceil(208849 / 25000);
+        $countSitemapPagesFl = ceil(269805 / 25000);
+
+        $urlset = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" /><!--?xml version="1.0" encoding="UTF-8"?-->');
+
+        $i = 1;
+        while ($i <= $countSitemapPagesTx) {
+            $url = $urlset->addChild('sitemap');
+            $url->addChild('loc', 'https://www.3topagents.com/sitemaps/tx/' . $i);
+            //$url->addChild('lastmod', $item->LASTMOD );
+            $url->addChild('changefreq', 'monthly');
+            $url->addChild('priority', '1.0');
+            $i++;
+        }
+
+        $dom = new DomDocument();
+        $dom->loadXML($urlset->asXML());
+
+        $dom->formatOutput = true;
+        $data['map'] = $dom->saveXML();
+
+        $this->load->view('sitemapxml', $data);
+    }
+
+    public function sitemap() {
+        exit();
+        $this->load->helper('url');
+        $this->load->helper('general');
+        $this->load->model('Database_model');
+
+        $url = explode('/', uri_string());
+        $state = $url[1];
+        $page = $url[2];
+
+        $urlBatch = $this->Database_model->getSitemapBatch($state, $page);
+
+        $urlset = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" /><!--?xml version="1.0" encoding="UTF-8"?-->');
+
+        foreach ($urlBatch as $uri) {
+            $city = slugify($uri->listings_city);
+            $url = $urlset->addChild('url');
+            $url->addChild('loc', 'https://www.3topagents.com/' . $state . '/' . $city . '/' . $uri->listings_slug);
+            //$url->addChild('lastmod', $item->LASTMOD );
+            $url->addChild('changefreq', 'monthly');
+            $url->addChild('priority', '1.0');
+        }
+
+        $dom = new DomDocument();
+        $dom->loadXML($urlset->asXML());
+
+        $dom->formatOutput = true;
+        $data['map'] = $dom->saveXML();
+
+        $this->load->view('sitemapxml', $data);
     }
 
     public function city_letter($state, $city, $letter, $page = false) {
