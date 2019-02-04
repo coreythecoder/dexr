@@ -12,10 +12,23 @@
     <div class="row">
         <div class="col-md-12" style="margin-top:25px; margin-bottom:80px;">
             <h1>
-                <?php echo ucwords(strtolower($name)); ?>
+                <?php echo ucwords(strtolower($name)); ?> in <?php echo $city; ?>, <?php echo $state_abr; ?>
             </h1>
+            <?php if ($total >= 10) { ?>
+                <h4>Showing 10 of <?php echo $total; ?> Registration(s)</h4>
+            <?php } else { ?>
+                <h4>Showing <?php echo $total; ?> of <?php echo $total; ?> Registration(s)</h4>
+            <?php } ?>
+
+
             <div class="separator"></div>
             <?php echo $domains; ?>
+        </div>        
+    </div>
+    <div class="row">
+        <div class="col-md-12" style="margin-top:25px; margin-bottom:80px;">
+            <?php echo $names; ?>  
         </div>
     </div>
+
 </div>
