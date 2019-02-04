@@ -9,18 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <meta name="description" content="<?php echo $metaDescription; ?>">        
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic|Raleway:700,400,300|Pacifico|PT+Serif' rel='stylesheet' type='text/css'>
-        <link href="/assets/themes/v4/bootstrap/css/bootstrap.css" rel="stylesheet">
-        <link href="/assets/themes/v4/fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
-        <link href="/assets/themes/v4/fonts/fontello/css/fontello.css" rel="stylesheet">
-        <link href="/assets/themes/v4/plugins/magnific-popup/magnific-popup.css" rel="stylesheet">
-        <link href="/assets/themes/v4/css/animations.css" rel="stylesheet">
-        <link href="/assets/themes/v4/plugins/owl-carousel/owl.carousel.css" rel="stylesheet">
-        <link href="/assets/themes/v4/plugins/owl-carousel/owl.transitions.css" rel="stylesheet">
-        <link href="/assets/themes/v4/plugins/hover/hover-min.css" rel="stylesheet">		
-        <link href="/assets/themes/v4/css/style.css" rel="stylesheet" >
-        <link href="/assets/themes/v4/css/skins/light_blue.css" rel="stylesheet">
-        <link href="/assets/themes/v4/css/custom.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+        <link href="https://static.dexr.io/css/combined-minified.css" rel="stylesheet">
     </head>
     <body class="no-trans    ">
         <div class="scrollToTop circle"><i class="icon-up-open-big"></i></div>
