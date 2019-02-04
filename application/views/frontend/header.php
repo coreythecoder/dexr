@@ -9,23 +9,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <meta name="description" content="<?php echo $metaDescription; ?>">        
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic|Raleway:700,400,300|Pacifico|PT+Serif' rel='stylesheet' type='text/css'>
-        <link href="https://static.dexr.io/css/combined-minified.css" rel="stylesheet">
+
+        <!-- Web Fonts -->
+        <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic|Raleway:700,400,300|Pacifico|PT+Serif' rel='stylesheet' type='text/css'>
+
+
+        <!-- Bootstrap core CSS -->
+        <link href="https://static.dexr.io/assets/themes/v4/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+        <!-- Font Awesome CSS -->
+        <link href="https://static.dexr.io/assets/themes/v4/fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+        <!-- Fontello CSS -->
+        <link href="https://static.dexr.io/assets/themes/v4/fonts/fontello/css/fontello.css" rel="stylesheet">
+
+        <!-- Plugins -->
+        <link href="https://static.dexr.io/assets/themes/v4/plugins/magnific-popup/magnific-popup.css" rel="stylesheet">
+        <link href="https://static.dexr.io/assets/themes/v4/css/animations.css" rel="stylesheet">
+        <link href="https://static.dexr.io/assets/themes/v4/plugins/owl-carousel/owl.carousel.css" rel="stylesheet">
+        <link href="https://static.dexr.io/assets/themes/v4/plugins/owl-carousel/owl.transitions.css" rel="stylesheet">
+        <link href="https://static.dexr.io/assets/themes/v4/plugins/hover/hover-min.css" rel="stylesheet">		
+
+        <!-- The Project core CSS file -->
+        <link href="https://static.dexr.io/assets/themes/v4/css/style.css" rel="stylesheet" >
+        <!-- Color Scheme (In order to change the color scheme, replace the blue.css with the color scheme that you prefer)-->
+        <link href="https://static.dexr.io/assets/themes/v4/css/skins/light_blue.css" rel="stylesheet">
+
+        <!-- Custom css --> 
+        <link href="https://static.dexr.io/assets/themes/v4/css/custom.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
         <link rel="apple-touch-icon" sizes="180x180" href="https://static.dexr.io/pwa/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="https://static.dexr.io/pwa/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="https://static.dexr.io/pwa/favicon-16x16.png">
         <link rel="manifest" href="https://static.dexr.io/pwa/site.webmanifest">
         <meta name="msapplication-TileColor" content="#2d89ef">
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133857018-1"></script>
         <script>
-            if (navigator.serviceWorker.controller) {
-                console.log('[PWA Builder] active service worker found, no need to register')
-            } else {
-                //Register the ServiceWorker
-                navigator.serviceWorker.register('https://static.dexr.io/serviceworker/pwabuilder-sw.js', {
-                    scope: './'
-                }).then(function (reg) {
-                    console.log('Service worker has been registered for scope:' + reg.scope);
-                });
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
             }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-133857018-1');
         </script>
     </head>
     <body class="no-trans    ">
