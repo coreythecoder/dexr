@@ -102,8 +102,8 @@ class Frontend_model extends CI_Model {
         $db = $this->load->database('default', TRUE);
 
         $x = explode(" ", $keywords);
-        $keywords = implode(" +", $x);
-        $sql = "SELECT domain_name FROM production_2 WHERE MATCH(num) AGAINST('" . $keywords . "' IN BOOLEAN MODE) LIMIT 5";
+        //$keywords = implode(" +", $x);
+        $sql = "SELECT domain_name, registrant_name, name_slug, city_slug, registrant_state FROM production_2 WHERE MATCH(num) AGAINST('+" . $x[0] . "' IN BOOLEAN MODE) LIMIT 5";
         $re = $db->query($sql);
 
         if ($re->num_rows() > 0) {

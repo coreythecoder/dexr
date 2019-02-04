@@ -143,7 +143,7 @@ class Frontend extends CI_Controller {
         if ($domains['results']) {
             foreach ($domains['results'] as $d) {
                 $data['domains'] .= "<class='row domain'>";
-                $data['domains'] .= "<div class='col-md-12'><h2>" . $d->domain_name . "</h2><div class='separator'></div>";
+                $data['domains'] .= "<div class='col-md-9'><h2>" . $d->domain_name . "</h2><div class='separator'></div>";
                 $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Keyword Split</div><div class='col-info'>" . $d->num . "</div></div>";
                 if (!empty($d->created_date_normalized)) {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Created</div><div class='col-info'>" . date('M d, Y', strtotime($d->created_date_normalized)) . "</div></div>";
@@ -212,14 +212,26 @@ class Frontend extends CI_Controller {
                 }
 
                 if (!empty($d->registrant_fax)) {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Fax</div><div class='col-info'>" . $d->registrant_fax . "</div></div>";
+                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Fax</div><div class='col-info'>" . formatPhoneNumber($d->registrant_fax) . "</div></div>";
                 } else {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Fax</div><div class='col-info'>-</div></div>";
                 }
 
                 $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Registrar</div><div class='col-info'>" . str_replace('Llc', 'LLC', ucwords(strtolower($d->domain_registrar_name))) . "</div></div>";
 
+
+
                 $data['domains'] .= "</div>";
+
+                $sim = $this->frontend_model->getSimilarDomains($d->num);
+                if ($sim) {
+                    $data['domains'] .= "<div class='row' style='margin-top:40px; margin-bottom:40px;'><div class='col-md-9'><h5>Similar Web Sites</h5></div><div class='col-md-9'>";
+                    foreach ($sim as $s) {
+                        if ($s->domain_name !== $d->domain_name)
+                            $data['domains'] .= "<div class='col-md-4' style='margin-bottom:10px;'><a href='/" . strtolower($s->registrant_state) . "/" . $s->city_slug . "/" . $s->name_slug . "'>" . ucwords(strtolower($s->registrant_name)) . "</a><br><small>" . $s->domain_name . "</small></div>";
+                    }
+                    $data['domains'] .= "</div></div>";
+                }
             }
 
             $idRollList = "";
