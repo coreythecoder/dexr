@@ -19,8 +19,8 @@ class Frontend extends CI_Controller {
             return;
         }
 
-        $data['metaTitle'] = "dexr";
-        $data['metaDescription'] = "";
+        $data['metaTitle'] = "B2B Marketing Tools, Link Building Outreach & Domain Research";
+        $data['metaDescription'] = "Dexr provides business to business marketing tools, link building outreach and research tools to help you discover & connect with web site owners & local small businesses.";
 
         $this->load->view('frontend/header', $data);
         $this->load->view('frontend/index');
@@ -29,8 +29,8 @@ class Frontend extends CI_Controller {
 
     public function pricing() {
 
-        $data['metaTitle'] = "dexr";
-        $data['metaDescription'] = "";
+        $data['metaTitle'] = "Pricing";
+        $data['metaDescription'] = "Dexr free account & pricing information.";
 
         $this->load->view('frontend/header', $data);
         $this->load->view('frontend/pricing');
@@ -115,8 +115,8 @@ class Frontend extends CI_Controller {
         }
 
 
-        $data['metaTitle'] = "List of " . $statesArray[strtoupper($state)] . " Business Owners & Web Site Owners";
-        $data['metaDescription'] = "Dexr is the leading provider for " . $statesArray[strtoupper($state)] . " Business Owner & Web Site Owner lists available for download. Our database contains full contact info such as owner name, email, phone and address.";
+        $data['metaTitle'] = "List of " . $data['city'] . ", " . strtoupper($data['state_abr']) . " Business Owners & Web Site Owners";
+        $data['metaDescription'] = "Dexr is the leading provider for " . $data['city'] . ", " . strtoupper($data['state_abr']) . " Business Owner & Web Site Owner lists available for download. Our database contains full contact info such as owner name, email, phone and address.";
 
         $this->load->view('frontend/header', $data);
         $this->load->view('frontend/city');
@@ -136,6 +136,8 @@ class Frontend extends CI_Controller {
         $data['city_slug'] = $city;
         $data['name_slug'] = $name;
         $data['domains'] = "";
+        $siteList = array();
+        $i = 0;
 
         $domains = $this->frontend_model->getDomainsByCityStateName($city, $state, $name);
         $nId = $this->frontend_model->getNameIdFromNameSlugCityState($city, $state, $name);
@@ -232,6 +234,11 @@ class Frontend extends CI_Controller {
                     }
                     $data['domains'] .= "</div></div>";
                 }
+
+                if ($i < 3) {
+                    $siteList[] = $d->domain_name;
+                    $i++;
+                }
             }
 
             $idRollList = "";
@@ -253,6 +260,12 @@ class Frontend extends CI_Controller {
             //$data['domains'] .= "</div>";
         }
 
+        if (count($siteList) > 0) {
+            $siteList = implode(', ', $siteList);
+        } else {
+            $siteList = $siteList[0];
+        }
+
         $data['name'] = ucwords($domains['results'][0]->registrant_name);
 
         if (empty($data['names'])) {
@@ -260,8 +273,8 @@ class Frontend extends CI_Controller {
         }
 
 
-        $data['metaTitle'] = "Contact: ".ucwords(str_replace('-', ' ', strtolower($name)))." in ".$data['city']." ".$statesArray[strtoupper($state)] . " ";
-        $data['metaDescription'] = "Dexr is the leading provider for " . $statesArray[strtoupper($state)] . " Business Owner & Web Site Owner lists available for download. Our database contains full contact info such as owner name, email, phone and address.";
+        $data['metaTitle'] = "Webmaster: " . ucwords(str_replace('-', ' ', strtolower($name))) . " in " . $data['city'] . ", " . strtoupper($state);
+        $data['metaDescription'] = "Contact webmaster " . ucwords(str_replace('-', ' ', strtolower($name))) . " in " . $data['city'] . ", " . strtoupper($state) . " by owner name, email, phone or address. They've registered " . $siteList . ".";
 
         $this->load->view('frontend/header', $data);
         $this->load->view('frontend/name');
@@ -375,8 +388,8 @@ class Frontend extends CI_Controller {
             $metaPage = " - Page " . $page;
         }
 
-        $data['metaTitle'] = "List of " . $statesArray[strtoupper($state)] . " Business Owners & Web Site Owners" . $metaPage;
-        $data['metaDescription'] = "Dexr is the leading provider for " . $statesArray[strtoupper($state)] . " Business Owner & Web Site Owner lists available for download. Our database contains full contact info such as owner name, email, phone and address." . $metaPage;
+        $data['metaTitle'] = "List of " . $data['city'] . ", " . strtoupper($state) . " Business Owners & Web Site Owners - Letter " . strtoupper($letter) . $metaPage;
+        $data['metaDescription'] = "Dexr is the leading provider for " . $data['city'] . ", " . $statesArray[strtoupper($state)] . " business owner & web site owner lists. Our database contains full contact info such as owner name, email, phone and address - Letter " . strtoupper($letter) . $metaPage.".";
 
         $this->load->view('frontend/header', $data);
         $this->load->view('frontend/letter');
