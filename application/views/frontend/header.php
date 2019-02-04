@@ -64,7 +64,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="col-md-2">
                                 <div class="header-left clearfix">
                                     <div id="logo" class="logo">
-                                        <a href="/"><img id="logo_img" src="/assets/images/blue-logo-45.png" alt="The Project"></a>
+                                        <a href="/"><img id="logo_img" src="https://static.dexr.io/images/blue-logo-45.png" alt="The Project"></a>
                                     </div>
                                 </div>
                             </div>
