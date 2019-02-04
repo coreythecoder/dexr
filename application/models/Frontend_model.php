@@ -17,7 +17,7 @@ class Frontend_model extends CI_Model {
         $sqlOne = "SELECT city, slug FROM city_index WHERE state = '" . $state . "' ORDER BY city ASC LIMIT " . $start . ", " . $perPage;
         $reOne = $db->query($sqlOne);
 
-        $sqlTwo = "SELECT count(ID) as count FROM city_index WHERE state = '" . $state . "' ORDER BY city ASC LIMIT 10000";
+        $sqlTwo = "SELECT count(ID) as count FROM city_index WHERE state = '" . $state . "' LIMIT 10000";
         $reTwo = $db->query($sqlTwo);
 
         if ($reOne->num_rows() > 0) {
@@ -47,7 +47,7 @@ class Frontend_model extends CI_Model {
         $sqlOne = "SELECT name, name_slug FROM name_index WHERE initial_city_state_slug = '" . $icss . "' ORDER BY name ASC LIMIT " . $start . ", " . $perPage;
         $reOne = $db->query($sqlOne);
 
-        $sqlTwo = "SELECT count(ID) as count FROM name_index WHERE initial_city_state_slug = '" . $icss . "' ORDER BY name ASC LIMIT 10000";
+        $sqlTwo = "SELECT count(ID) as count FROM name_index WHERE initial_city_state_slug = '" . $icss . "' LIMIT 100";
         $reTwo = $db->query($sqlTwo);
 
         if ($reOne->num_rows() > 0) {
@@ -70,13 +70,13 @@ class Frontend_model extends CI_Model {
         $reOne = $db->query($sqlOne);
 
 
-        $sqlTwo = "SELECT count(ID) as count FROM production_2 WHERE name_city_slug = '" . $ncs . "' ORDER BY created_date_normalized ASC LIMIT 10000";
+        $sqlTwo = "SELECT ID FROM production_2 WHERE name_city_slug = '" . $ncs . "' LIMIT 100";
         $reTwo = $db->query($sqlTwo);
 
         if ($reOne->num_rows() > 0) {
             $res['results'] = $reOne->result();
-            $total = $reTwo->result();
-            $res['total'] = $total[0]->count;
+            $res['total'] = $reTwo->num_rows();
+            //$res['total'] = $total[0]->count;
 
             return $res;
         } else {
