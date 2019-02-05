@@ -14,8 +14,8 @@
             <h1>
                 <?php echo ucwords(strtolower($name)); ?> in <?php echo $city; ?>, <?php echo $state_abr; ?>
             </h1>
-            <?php if ($total >= 10) { ?>
-                <h4>Showing 10 of <?php if ($total >= 100) {
+            <?php if ($total >= 5) { ?>
+                <h4>Showing 5 of <?php if ($total >= 50) {
                 echo ">";
             } ?><?php echo $total; ?> Registration(s)</h4>
             <?php } else { ?>
