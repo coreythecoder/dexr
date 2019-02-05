@@ -61,7 +61,7 @@ class Frontend_model extends CI_Model {
         }
     }
 
-    function getDomainsByCityStateName($city, $state, $name, $limit = 10) {
+    function getDomainsByCityStateName($city, $state, $name, $limit = 5) {
         $db = $this->load->database('default', TRUE);
         $res = array();
 
@@ -70,7 +70,7 @@ class Frontend_model extends CI_Model {
         $reOne = $db->query($sqlOne);
 
 
-        $sqlTwo = "SELECT ID FROM production_2 WHERE name_city_slug = '" . $ncs . "' LIMIT 100";
+        $sqlTwo = "SELECT ID FROM production_2 WHERE name_city_slug = '" . $ncs . "' LIMIT 50";
         $reTwo = $db->query($sqlTwo);
 
         if ($reOne->num_rows() > 0) {
@@ -103,7 +103,7 @@ class Frontend_model extends CI_Model {
 
         $x = explode(" ", $keywords);
         //$keywords = implode(" +", $x);
-        $sql = "SELECT domain_name, registrant_name, name_slug, city_slug, registrant_state FROM production_2 WHERE MATCH(num) AGAINST('+" . $x[0] . "' IN BOOLEAN MODE) LIMIT 5";
+        $sql = "SELECT domain_name, registrant_name, name_slug, city_slug, registrant_state FROM production_2 WHERE MATCH(num) AGAINST('+" . $x[0] . "' IN BOOLEAN MODE) AND name_city_slug IN (SELECT name_city_slug FROM name_index) LIMIT 5";
         $re = $db->query($sql);
 
         if ($re->num_rows() > 0) {
@@ -136,6 +136,25 @@ class Frontend_model extends CI_Model {
         $re = $db->query($sql);
 
         if ($re->num_rows() > 0) {
+            return $re->result();
+        } else {
+            return false;
+        }
+    }
+
+    function getNearbyCities($city, $state) {
+        $this->load->database();
+        $sql = "SELECT lat, lng FROM wp_locations WHERE city = " . $this->db->escape($city) . " AND state_id = '" . $state . "'";
+        $re = $this->db->query($sql);
+        $r = $re->result();
+
+        if (isset($r[0]->lat)) {
+            $sql = "SELECT city, state_id, city_slug, SQRT(
+                    POW(69.1 * (lat - " . $r[0]->lat . "), 2) +
+                    POW(69.1 * (" . $r[0]->lng . " - lng) * COS(lat / 57.3), 2)) AS distance
+                    FROM wp_locations WHERE has_listings = 1 ORDER BY distance ASC LIMIT 22";
+            $re = $this->db->query($sql);
+
             return $re->result();
         } else {
             return false;
