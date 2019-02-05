@@ -114,6 +114,15 @@ class Frontend extends CI_Controller {
             header('Location: /' . $state);
         }
 
+        $nearby = $this->frontend_model->getNearbyCities($data['city'], $state);
+        $data['nearby'] = "";
+        if ($nearby) {
+            foreach ($nearby as $n) {
+                if($n->city_slug !== $city)
+                $data['nearby'] .= "<div class='col-md-4'><a href='/" . strtolower($n->state_id) . "/" . $n->city_slug . "'>" . $n->city . ", " . $n->state_id . "</a> (".number_format($n->distance, 2, '.', '')." m)</div>";
+            }
+        }
+
 
         $data['metaTitle'] = "List of " . $data['city'] . ", " . strtoupper($data['state_abr']) . " Business Owners & Web Site Owners";
         $data['metaDescription'] = "Dexr is the leading provider for " . $data['city'] . ", " . strtoupper($data['state_abr']) . " Business Owner & Web Site Owner lists available for download. Our database contains full contact info such as owner name, email, phone and address.";
@@ -389,7 +398,7 @@ class Frontend extends CI_Controller {
         }
 
         $data['metaTitle'] = "List of " . $data['city'] . ", " . strtoupper($state) . " Business Owners & Web Site Owners - Letter " . strtoupper($letter) . $metaPage;
-        $data['metaDescription'] = "Dexr is the leading provider for " . $data['city'] . ", " . $statesArray[strtoupper($state)] . " business owner & web site owner lists. Our database contains full contact info such as owner name, email, phone and address - Letter " . strtoupper($letter) . $metaPage.".";
+        $data['metaDescription'] = "Dexr is the leading provider for " . $data['city'] . ", " . $statesArray[strtoupper($state)] . " business owner & web site owner lists. Our database contains full contact info such as owner name, email, phone and address - Letter " . strtoupper($letter) . $metaPage . ".";
 
         $this->load->view('frontend/header', $data);
         $this->load->view('frontend/letter');

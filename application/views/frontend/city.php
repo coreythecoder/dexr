@@ -17,4 +17,14 @@
             <?php echo $names; ?>
         </div>
     </div>
+    
+    <div class="row">
+        <div class="col-md-12" style="margin-top:25px; margin-bottom:80px;">
+            <h1>
+                Cities Near <?php echo $city; ?>, <?php echo $state_abr; ?>
+            </h1>
+            <div class="separator"></div>
+            <?php echo $nearby; ?>
+        </div>
+    </div>
 </div>
