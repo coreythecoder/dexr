@@ -118,8 +118,8 @@ class Frontend extends CI_Controller {
         $data['nearby'] = "";
         if ($nearby) {
             foreach ($nearby as $n) {
-                if($n->city_slug !== $city)
-                $data['nearby'] .= "<div class='col-md-4'><a href='/" . strtolower($n->state_id) . "/" . $n->city_slug . "'>" . $n->city . ", " . $n->state_id . "</a> (".number_format($n->distance, 2, '.', '')." m)</div>";
+                if ($n->city_slug !== $city)
+                    $data['nearby'] .= "<div class='col-md-4'><a href='/" . strtolower($n->state_id) . "/" . $n->city_slug . "'>" . $n->city . ", " . $n->state_id . "</a> (" . number_format($n->distance, 2, '.', '') . " m)</div>";
             }
         }
 
@@ -290,21 +290,19 @@ class Frontend extends CI_Controller {
         $this->load->view('frontend/footer-fixed-pagination');
     }
 
-    public function sitemapIndex() {
-        exit();
+    public function sitemap_index() {
+
         $this->load->helper('url');
         $this->load->helper('general');
-        $this->load->model('Database_model');
 
-        $countSitemapPagesTx = ceil(208849 / 25000);
-        $countSitemapPagesFl = ceil(269805 / 25000);
+        $countSitemapPages = ceil(11083211 / 25000);
 
         $urlset = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" /><!--?xml version="1.0" encoding="UTF-8"?-->');
 
         $i = 1;
-        while ($i <= $countSitemapPagesTx) {
+        while ($i <= $countSitemapPages) {
             $url = $urlset->addChild('sitemap');
-            $url->addChild('loc', 'https://www.3topagents.com/sitemaps/tx/' . $i);
+            $url->addChild('loc', 'https://dexr.io/sitemap/' . $i);
             //$url->addChild('lastmod', $item->LASTMOD );
             $url->addChild('changefreq', 'monthly');
             $url->addChild('priority', '1.0');
@@ -320,24 +318,20 @@ class Frontend extends CI_Controller {
         $this->load->view('sitemapxml', $data);
     }
 
-    public function sitemap() {
-        exit();
+    public function sitemap($page) {
+
         $this->load->helper('url');
         $this->load->helper('general');
-        $this->load->model('Database_model');
 
-        $url = explode('/', uri_string());
-        $state = $url[1];
-        $page = $url[2];
-
-        $urlBatch = $this->Database_model->getSitemapBatch($state, $page);
+        $urlBatch = $this->frontend_model->getSitemapBatch($page);
 
         $urlset = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" /><!--?xml version="1.0" encoding="UTF-8"?-->');
 
         foreach ($urlBatch as $uri) {
-            $city = slugify($uri->listings_city);
+            $city = $uri->city_slug;
+            $state = $uri->state;
             $url = $urlset->addChild('url');
-            $url->addChild('loc', 'https://www.3topagents.com/' . $state . '/' . $city . '/' . $uri->listings_slug);
+            $url->addChild('loc', 'https://dexr.io/' . $state . '/' . $city . '/' . $uri->name_slug);
             //$url->addChild('lastmod', $item->LASTMOD );
             $url->addChild('changefreq', 'monthly');
             $url->addChild('priority', '1.0');

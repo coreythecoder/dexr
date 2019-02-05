@@ -161,4 +161,21 @@ class Frontend_model extends CI_Model {
         }
     }
 
+    function getSitemapBatch($page) {
+        $db = $this->load->database('default', TRUE);
+
+        $perPage = 25000;
+        $startID = 1;
+        $endID = 25000;
+
+        $sql = "SELECT state, city_slug, name_slug FROM name_index WHERE ID >= '" . $startID . "' AND ID <= '" . $endID . "'";
+        $re = $db->query($sql);
+
+        if ($re->num_rows() > 0) {
+            return $re->result();
+        } else {
+            return false;
+        }
+    }
+
 }
