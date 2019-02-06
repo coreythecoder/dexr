@@ -311,8 +311,8 @@ class Frontend extends CI_Controller {
             $url = $urlset->addChild('sitemap');
             $url->addChild('loc', 'https://dexr.io/sitemap/' . $i);
             //$url->addChild('lastmod', $item->LASTMOD );
-            $url->addChild('changefreq', 'monthly');
-            $url->addChild('priority', '1.0');
+            //$url->addChild('changefreq', 'monthly');
+            //$url->addChild('priority', '1.0');
             $i++;
         }
 
@@ -331,18 +331,25 @@ class Frontend extends CI_Controller {
         $this->load->helper('general');
 
         $urlBatch = $this->frontend_model->getSitemapBatch($page);
+        
+        function utf8_for_xml($string)
+{
+    return preg_replace ('/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u', ' ', $string);
+}
 
         if ($urlBatch) {
             $urlset = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" /><!--?xml version="1.0" encoding="UTF-8"?-->');
 
-            foreach ($urlBatch as $uri) {
+            foreach ($urlBatch as $uri) { 
+                            
                 $city = $uri->city_slug;
                 $state = $uri->state;
                 $url = $urlset->addChild('url');
-                $url->addChild('loc', 'https://dexr.io/' . $state . '/' . $city . '/' . $uri->name_slug);
+                $url->addChild('loc', 'https://dexr.io/' . $state . '/' . $city . '/' . utf8_for_xml($uri->name_slug));
+                
                 //$url->addChild('lastmod', $item->LASTMOD );
-                $url->addChild('changefreq', 'monthly');
-                $url->addChild('priority', '1.0');
+                //$url->addChild('changefreq', 'monthly');
+                //$url->addChild('priority', '1.0');
             }
 
 
