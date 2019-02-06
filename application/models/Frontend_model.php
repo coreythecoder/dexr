@@ -116,10 +116,10 @@ class Frontend_model extends CI_Model {
     function getSomeNamesByID($id) {
         $db = $this->load->database('default', TRUE);
 
-        $start = $id - 5;
-        $end = $id + 5;
+        $start = $id - 6;
+        $end = $id + 6;
 
-        $sql = "SELECT * FROM name_index WHERE ID >= '" . $start . "' AND ID <= '" . $end . "' LIMIT 11";
+        $sql = "SELECT * FROM name_index WHERE ID >= '" . $start . "' AND ID <= '" . $end . "' LIMIT 13";
         $re = $db->query($sql);
 
         if ($re->num_rows() > 0) {

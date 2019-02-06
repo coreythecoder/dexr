@@ -9,3 +9,6 @@ Disallow: /cgi-bin/
 Disallow: /*?
 Disallow: /results
 Disallow: /results/*
+
+Sitemap: https://dexr.io/sitemap
+

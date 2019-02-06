@@ -132,7 +132,7 @@ class Frontend extends CI_Controller {
         $this->load->view('frontend/footer-fixed-pagination');
     }
 
-    public function name($state, $city, $name, $page = false) {
+    public function name($state, $city, $name, $page = false) { 
 
         if ($page == '1') {
             //header('Location: /' . $state . "/" . $city . "/" . $name);
@@ -287,7 +287,7 @@ class Frontend extends CI_Controller {
 
         $this->load->view('frontend/header', $data);
         $this->load->view('frontend/name');
-        $this->load->view('frontend/footer-fixed-pagination');
+        $this->load->view('frontend/footer-fixed-pagination'); 
     }
 
     public function sitemap_index() {
@@ -295,7 +295,7 @@ class Frontend extends CI_Controller {
         $this->load->helper('url');
         $this->load->helper('general');
 
-        $countSitemapPages = ceil(11083211 / 25000);
+        $countSitemapPages = ceil(12170098 / 25000);
 
         $urlset = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" /><!--?xml version="1.0" encoding="UTF-8"?-->');
 
