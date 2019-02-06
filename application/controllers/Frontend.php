@@ -132,7 +132,7 @@ class Frontend extends CI_Controller {
         $this->load->view('frontend/footer-fixed-pagination');
     }
 
-    public function name($state, $city, $name, $page = false) { 
+    public function name($state, $city, $name, $page = false) {
 
         if ($page == '1') {
             //header('Location: /' . $state . "/" . $city . "/" . $name);
@@ -234,14 +234,16 @@ class Frontend extends CI_Controller {
 
                 $data['domains'] .= "</div>";
 
-                $sim = $this->frontend_model->getSimilarDomains($d->num);
-                if ($sim) {
-                    $data['domains'] .= "<div class='row' style='margin-top:40px; margin-bottom:40px;'><div class='col-md-9'><h5>Similar Web Sites</h5></div><div class='col-md-12'>";
-                    foreach ($sim as $s) {
-                        if ($s->domain_name !== $d->domain_name)
-                            $data['domains'] .= "<div class='col-md-4' style='margin-bottom:10px;'><a href='/" . strtolower($s->registrant_state) . "/" . $s->city_slug . "/" . $s->name_slug . "'>" . ucwords(strtolower($s->registrant_name)) . "</a><br><small>" . $s->domain_name . "</small></div>";
+                if (!empty($d->num)) {
+                    $sim = $this->frontend_model->getSimilarDomains($d->num);
+                    if ($sim) {
+                        $data['domains'] .= "<div class='row' style='margin-top:40px; margin-bottom:40px;'><div class='col-md-9'><h5>Similar Web Sites</h5></div><div class='col-md-12'>";
+                        foreach ($sim as $s) {
+                            if ($s->domain_name !== $d->domain_name)
+                                $data['domains'] .= "<div class='col-md-4' style='margin-bottom:10px;'><a href='/" . strtolower($s->registrant_state) . "/" . $s->city_slug . "/" . $s->name_slug . "'>" . ucwords(strtolower($s->registrant_name)) . "</a><br><small>" . $s->domain_name . "</small></div>";
+                        }
+                        $data['domains'] .= "</div></div>";
                     }
-                    $data['domains'] .= "</div></div>";
                 }
 
                 if ($i < 3) {
@@ -252,21 +254,26 @@ class Frontend extends CI_Controller {
 
             $idRollList = "";
             $data['names'] = "";
-            $idRoll = $this->frontend_model->getSomeNamesByID($nId[0]->ID);
-            if ($idRoll) {
-                foreach ($idRoll as $ir) {
-                    $idRollList .= "<div class='col-md-3'><a href='/" . $ir->state . "/" . $ir->city_slug . "/" . $ir->name_slug . "'>" . ucwords(strtolower($ir->name)) . "</a></div>";
-                }
-                $data['names'] .= '
+
+            if ($nId[0]->ID && !empty($nId[0]->ID)) {
+                $idRoll = $this->frontend_model->getSomeNamesByID($nId[0]->ID);
+                if ($idRoll) {
+                    foreach ($idRoll as $ir) {
+                        $idRollList .= "<div class='col-md-3'><a href='/" . $ir->state . "/" . $ir->city_slug . "/" . $ir->name_slug . "'>" . ucwords(strtolower($ir->name)) . "</a></div>";
+                    }
+                    $data['names'] .= '
                                             <div class="col-md-12">
                                                 <h4>Other Popular People & Businesses</h4>
                                                     <div class="separator"></div>
                                                 ' . $idRollList . '
                                             </div>
                                         ';
+                }
             }
 
             //$data['domains'] .= "</div>";
+        } else {
+            show_404();
         }
 
         if (count($siteList) > 0) {
@@ -287,7 +294,7 @@ class Frontend extends CI_Controller {
 
         $this->load->view('frontend/header', $data);
         $this->load->view('frontend/name');
-        $this->load->view('frontend/footer-fixed-pagination'); 
+        $this->load->view('frontend/footer-fixed-pagination');
     }
 
     public function sitemap_index() {

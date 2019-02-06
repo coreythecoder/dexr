@@ -9,13 +9,12 @@
  * 
  */
 
-function obfuscate_email($email)
-{
-    $em   = explode("@",$email);
-    $name = implode(array_slice($em, 0, count($em)-1), '@');
-    $len  = floor(strlen($name)/2);
+function obfuscate_email($email) {
+    $em = explode("@", $email);
+    $name = implode(array_slice($em, 0, count($em) - 1), '@');
+    $len = floor(strlen($name) / 2);
 
-    return substr($name,0, $len) . str_repeat('*', $len) . "@" . end($em);   
+    return substr($name, 0, $len) . str_repeat('*', $len) . "@" . end($em);
 }
 
 function slugify($text) {
@@ -453,4 +452,13 @@ function deleteDir($dirPath) {
         }
     }
     rmdir($dirPath);
+}
+
+function find_longer_value($first, $second) {
+    return strlen($first) > strlen($second);
+}
+
+function longest_value($array) {
+    usort($array, 'find_longer_value');
+    return $array[count($array) - 1];
 }

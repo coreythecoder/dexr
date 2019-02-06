@@ -66,7 +66,7 @@ class Frontend_model extends CI_Model {
         $res = array();
 
         $ncs = $name . "-" . $city . "-" . $state;
-        $sqlOne = "SELECT * FROM production_2 WHERE name_city_slug = '" . $ncs . "' ORDER BY created_date_normalized ASC LIMIT " . $limit;
+        $sqlOne = "SELECT domain_name, num, registrant_name, domain_registrar_name, create_date, update_date, expiry_date, registrant_address, registrant_city, registrant_state, registrant_zip, registrant_email, registrant_phone, registrant_fax, domain_registrar_name FROM production_2 WHERE name_city_slug = '" . $ncs . "' LIMIT " . $limit;
         $reOne = $db->query($sqlOne);
 
 
@@ -102,12 +102,21 @@ class Frontend_model extends CI_Model {
         $db = $this->load->database('default', TRUE);
 
         $x = explode(" ", $keywords);
-        //$keywords = implode(" +", $x);
-        $sql = "SELECT domain_name, registrant_name, name_slug, city_slug, registrant_state FROM production_2 WHERE MATCH(num) AGAINST('+" . $x[0] . "' IN BOOLEAN MODE) AND name_city_slug IN (SELECT name_city_slug FROM name_index) LIMIT 5";
-        $re = $db->query($sql);
+        array_pop($x);
+        
+        $longest = longest_value($x);
 
-        if ($re->num_rows() > 0) {
-            return $re->result();
+        //$keywords = implode(" +", $x);
+        if (!is_numeric($longest)) {
+            $sql = "SELECT domain_name, registrant_name, name_slug, city_slug, registrant_state FROM production_2 WHERE MATCH(num) AGAINST('+" . $longest . "' IN BOOLEAN MODE) AND name_city_slug IN (SELECT name_city_slug FROM name_index) LIMIT 5";
+            //exit();
+            $re = $db->query($sql);
+
+            if ($re->num_rows() > 0) {
+                return $re->result();
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
