@@ -169,6 +169,11 @@ class Frontend_model extends CI_Model {
         $startID = 1;
         $endID = 25000;
 
+        for ($i = 1; $i < $page; $i++) {
+            $startID = $startID + 25000;
+            $endID = $endID + 25000;
+        }
+
         $sql = "SELECT state, city_slug, name_slug FROM name_index WHERE ID >= '" . $startID . "' AND ID <= '" . $endID . "'";
         $re = $db->query($sql);
 
