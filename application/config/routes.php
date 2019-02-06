@@ -144,6 +144,10 @@ $route['zap/(:any)/(:any)/(:any)/(:any)'] = "home/zap/$1/$2/$3/$4";
 $route['imap'] = "Imap_controller/index";
 
 $route['create'] = "create/index";
+
+$route['sitemap'] = "frontend/sitemap_index";
+$route['sitemap/(:any)'] = "frontend/sitemap/$1";
+
 $route['translate_uri_dashes'] = FALSE;
 
 $route['404_override'] = 'Error_404';

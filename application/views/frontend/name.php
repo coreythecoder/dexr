@@ -19,7 +19,7 @@
                 echo ">";
             } ?><?php echo $total; ?> Registration(s)</h4>
             <?php } else { ?>
-                <h4>Showing <?php echo $total; ?> of <?php if ($total >= 100) {
+                <h4>Showing <?php echo $total; ?> of <?php if ($total >= 50) {
                 echo ">";
             } ?><?php echo $total; ?> Registration(s)</h4>
 <?php } ?>

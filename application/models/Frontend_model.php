@@ -149,12 +149,30 @@ class Frontend_model extends CI_Model {
         $r = $re->result();
 
         if (isset($r[0]->lat)) {
-            $sql = "SELECT city, state_id, SQRT(
+
+            $sql = "SELECT city, state_id, city_slug, SQRT(
                     POW(69.1 * (lat - " . $r[0]->lat . "), 2) +
                     POW(69.1 * (" . $r[0]->lng . " - lng) * COS(lat / 57.3), 2)) AS distance
                     FROM wp_locations WHERE has_listings = 1 ORDER BY distance ASC LIMIT 22";
             $re = $this->db->query($sql);
 
+            return $re->result();
+        } else {
+            return false;
+        }
+    }
+
+    function getSitemapBatch($page) {
+        $db = $this->load->database('default', TRUE);
+
+        $perPage = 25000;
+        $startID = 1;
+        $endID = 25000;
+
+        $sql = "SELECT state, city_slug, name_slug FROM name_index WHERE ID >= '" . $startID . "' AND ID <= '" . $endID . "'";
+        $re = $db->query($sql);
+
+        if ($re->num_rows() > 0) {
             return $re->result();
         } else {
             return false;
