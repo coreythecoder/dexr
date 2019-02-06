@@ -325,25 +325,30 @@ class Frontend extends CI_Controller {
 
         $urlBatch = $this->frontend_model->getSitemapBatch($page);
 
-        $urlset = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" /><!--?xml version="1.0" encoding="UTF-8"?-->');
+        if ($urlBatch) {
+            $urlset = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" /><!--?xml version="1.0" encoding="UTF-8"?-->');
 
-        foreach ($urlBatch as $uri) {
-            $city = $uri->city_slug;
-            $state = $uri->state;
-            $url = $urlset->addChild('url');
-            $url->addChild('loc', 'https://dexr.io/' . $state . '/' . $city . '/' . $uri->name_slug);
-            //$url->addChild('lastmod', $item->LASTMOD );
-            $url->addChild('changefreq', 'monthly');
-            $url->addChild('priority', '1.0');
+            foreach ($urlBatch as $uri) {
+                $city = $uri->city_slug;
+                $state = $uri->state;
+                $url = $urlset->addChild('url');
+                $url->addChild('loc', 'https://dexr.io/' . $state . '/' . $city . '/' . $uri->name_slug);
+                //$url->addChild('lastmod', $item->LASTMOD );
+                $url->addChild('changefreq', 'monthly');
+                $url->addChild('priority', '1.0');
+            }
+
+
+            $dom = new DomDocument();
+            $dom->loadXML($urlset->asXML());
+
+            $dom->formatOutput = true;
+            $data['map'] = $dom->saveXML();
+
+            $this->load->view('sitemapxml', $data);
+        } else {
+            show_404();
         }
-
-        $dom = new DomDocument();
-        $dom->loadXML($urlset->asXML());
-
-        $dom->formatOutput = true;
-        $data['map'] = $dom->saveXML();
-
-        $this->load->view('sitemapxml', $data);
     }
 
     public function city_letter($state, $city, $letter, $page = false) {

@@ -149,6 +149,7 @@ class Frontend_model extends CI_Model {
         $r = $re->result();
 
         if (isset($r[0]->lat)) {
+
             $sql = "SELECT city, state_id, city_slug, SQRT(
                     POW(69.1 * (lat - " . $r[0]->lat . "), 2) +
                     POW(69.1 * (" . $r[0]->lng . " - lng) * COS(lat / 57.3), 2)) AS distance
@@ -167,6 +168,11 @@ class Frontend_model extends CI_Model {
         $perPage = 25000;
         $startID = 1;
         $endID = 25000;
+
+        for ($i = 1; $i < $page; $i++) {
+            $startID = $startID + 25000;
+            $endID = $endID + 25000;
+        }
 
         $sql = "SELECT state, city_slug, name_slug FROM name_index WHERE ID >= '" . $startID . "' AND ID <= '" . $endID . "'";
         $re = $db->query($sql);
