@@ -12,22 +12,21 @@
                             <nav>
                                 <ul class="nav nav-pills nav-stacked">
                                     <li><a target="_blank" href="/pricing">Pricing</a></li>
-                                    <li><a href="#">About Our Data</a></li>
                                     <li><a href="#">Opt-Outs & Removals</a></li>
-                                    <li><a href="page-about.html">Create Account</a></li>
-                                    <li><a href="page-about.html">Sign In</a></li>
+                                    <li><a href="https://app.dexr.io/register">Create Account</a></li>
+                                    <li><a href="https://app.dexr.io/login">Sign In</a></li>
                                 </ul>
                             </nav>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <div class="footer-content">
+                        <div class="footer-content state-list">
                             <h2 class="title">Browse Our Directory</h2>
                             <div class="separator-2"></div>
                             <?php
                             $states = statesArray();
                             foreach ($states as $k => $v) {
-                                echo "<div class='col-md-3'><a href='/" . strtolower($k) . "'>" . $v . "</a></div>";
+                                echo "<div class='col-md-3 col-xs-6'><a href='/" . strtolower($k) . "'>" . $v . "</a></div>";
                             }
                             ?>
                         </div>
@@ -62,9 +61,5 @@
 <script type="text/javascript" src="https://static.dexr.io/assets/themes/v4/plugins/jquery.browser.js"></script>
 <script type="text/javascript" src="https://static.dexr.io/assets/themes/v4/plugins/SmoothScroll.js"></script>
 <script type="text/javascript" src="https://static.dexr.io/assets/themes/v4/js/template.js"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-<script type="text/javascript" src="https://static.dexr.io/assets/themes/v4/js/custom.js"></script>
-<script src="https://static.dexr.io/assets/javascripts/custom.js"></script>
 </body>
 </html>

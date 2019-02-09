@@ -40,6 +40,64 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             gtag('config', 'UA-133857018-1');
         </script>
+        <style>
+            .state-list {
+                margin-top:25px; 
+                margin-bottom:80px;
+            }
+            .nearby-cities {
+                margin-top:25px; 
+                margin-bottom:80px;
+            }
+            .city-list {
+                margin-top:25px; 
+                margin-bottom:80px;
+            }
+            .letter-list {
+                margin-top:25px; 
+                margin-bottom:80px;
+            }
+            .word-break {
+                word-break: break-all;
+            }
+            @media (max-width:600px){
+                .other-names .col-md-3 {
+                    margin-bottom:10px;
+                }
+                .state-list .col-md-3 {
+                    margin-bottom:10px;
+                }
+                .main-navigation {
+                    position: absolute;
+                    top: -65px;
+                    right: 0px;
+                    z-index:999;
+                }
+                .state-list .col-md-4 {
+                    margin-bottom: 10px;
+                }
+                .nearby-cities .col-md-4 {
+                    margin-bottom:10px;
+                }
+                .city-list .col-md-4 {
+                    margin-bottom:10px;
+                }
+                .letter-list .col-md-4 {
+                    margin-bottom: 10px;
+                }
+                body > div.page-wrapper > div.breadcrumb-container > div > ol > li > a {
+                    line-height: 2em;
+                }
+                .breadcrumb {
+                    text-align:center;
+                }
+                .copyright {
+                    text-align:right;
+                    margin-right:40px;
+                }
+                
+            }
+        </style>
     </head>
     <body class="no-trans    ">
         <div class="scrollToTop circle"><i class="icon-up-open-big"></i></div>
@@ -96,7 +154,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="col-md-2">
                                 <div class="header-left clearfix">
                                     <div id="logo" class="logo">
-                                        <a href="/"><img id="logo_img" src="https://static.dexr.io/images/blue-logo-45.png" alt="The Project"></a>
+                                        <a href="/"><img id="logo_img" src="https://static.dexr.io/images/blue-logo-45.png" alt="dexr.io"></a>
                                     </div>
                                 </div>
                             </div>

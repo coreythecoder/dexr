@@ -50,7 +50,7 @@ class Frontend extends CI_Controller {
         $cities = $this->frontend_model->getCitiesFromState($state, $page);
         if ($cities['results']) {
             foreach ($cities['results'] as $c) {
-                $data['cities'] .= "<div class='col-md-4'><a href='/" . $state . "/" . $c->slug . "'>" . ucwords(strtolower($c->city)) . "</a></div>";
+                $data['cities'] .= "<div class='col-md-4 col-xs-6'><a href='/" . $state . "/" . $c->slug . "'>" . ucwords(strtolower($c->city)) . "</a></div>";
             }
         } else {
             show_404();
@@ -154,7 +154,7 @@ class Frontend extends CI_Controller {
         if ($domains['results']) {
             foreach ($domains['results'] as $d) {
                 $data['domains'] .= "<class='row domain'>";
-                $data['domains'] .= "<div class='col-md-12'><h2>" . $d->domain_name . "</h2><div class='separator'></div>";
+                $data['domains'] .= "<div class='col-md-12'><h2 class='word-break'>" . $d->domain_name . "</h2><div class='separator'></div>";
                 $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Keyword Split</div><div class='col-info'>" . $d->num . "</div></div>";
                 if (!empty($d->created_date_normalized)) {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Created</div><div class='col-info'>" . date('M d, Y', strtotime($d->created_date_normalized)) . "</div></div>";
@@ -383,7 +383,7 @@ class Frontend extends CI_Controller {
         $names = $this->frontend_model->getNamesFromLetterCityState($city, $state, $letter, $page);
         if ($names['results']) {
             foreach ($names['results'] as $n) {
-                $data['names'] .= "<div class='col-md-4'><a href='/" . $state . "/" . $city . "/" . $n->name_slug . "'>" . ucwords(strtolower($n->name)) . "</a></div>";
+                $data['names'] .= "<div class='col-md-4 col-xs-6'><a href='/" . $state . "/" . $city . "/" . $n->name_slug . "'>" . ucwords(strtolower($n->name)) . "</a></div>";
             }
         } else {
             show_404();

@@ -9,7 +9,7 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-md-12" style="margin-top:25px; margin-bottom:80px;">
+        <div class="col-md-12 city-list">
             <h1>
                 <?php echo $city; ?>, <?php echo $state_abr; ?> Business Owners & Web Site Owners
             </h1>
@@ -19,7 +19,7 @@
     </div>
     
     <div class="row">
-        <div class="col-md-12" style="margin-top:25px; margin-bottom:80px;">
+        <div class="col-md-12 nearby-cities">
             <h1>
                 Cities Near <?php echo $city; ?>, <?php echo $state_abr; ?>
             </h1>

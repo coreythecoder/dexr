@@ -127,8 +127,8 @@
 <section>
     <div class="row">
         <div class="col-md-12 text-center" style='margin-top:80px; margin-bottom:80px;'>
-            <h2>We're Integrated with Zapier!</h2>
-            <p class='text-center large'>Send our data to any of over 1000 other apps connected by Zapier!<br><small>**requires a Zapier account</small></p>
+            <h2 style="padding:15px;">We're Integrated with Zapier!</h2>
+            <p class='text-center large' style="padding:15px;">Send our data to any of over 1000 other apps connected by Zapier!<br><small>**requires a Zapier account</small></p>
             <img src='https://static.dexr.io/images/zapier.png' style='display:inline;'>
         </div>
     </div>

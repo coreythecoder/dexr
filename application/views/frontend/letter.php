@@ -10,7 +10,7 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-md-12" style="margin-top:25px; margin-bottom:80px;">
+        <div class="col-md-12 letter-list">
             <h1>
                 <?php echo ucwords(strtolower($letter)); ?><?php if($thisPage > 1){ echo " - Page ".$thisPage; } ?>
             </h1>

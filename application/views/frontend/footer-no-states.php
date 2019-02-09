@@ -25,9 +25,5 @@
 <script type="text/javascript" src="https://static.dexr.io/assets/themes/v4/plugins/jquery.browser.js"></script>
 <script type="text/javascript" src="https://static.dexr.io/assets/themes/v4/plugins/SmoothScroll.js"></script>
 <script type="text/javascript" src="https://static.dexr.io/assets/themes/v4/js/template.js"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-<script type="text/javascript" src="https://static.dexr.io/assets/themes/v4/js/custom.js"></script>
-<script src="https://static.dexr.io/assets/javascripts/custom.js"></script>
 </body>
 </html>
