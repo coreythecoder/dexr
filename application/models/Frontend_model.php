@@ -107,7 +107,7 @@ class Frontend_model extends CI_Model {
         $longest = longest_value($x);
 
         //$keywords = implode(" +", $x);
-        if (!is_numeric($longest)) {
+        if (isset($longest) && !empty($longest) && !is_numeric($longest) && strlen($longest) > 3) {
             $sql = "SELECT domain_name, registrant_name, name_slug, city_slug, registrant_state FROM production_2 WHERE MATCH(num) AGAINST('+" . $longest . "' IN BOOLEAN MODE) AND name_city_slug IN (SELECT name_city_slug FROM name_index) LIMIT 5";
             //exit();
             $re = $db->query($sql);
