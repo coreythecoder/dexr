@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-12" style="margin-top:25px; margin-bottom:80px;">
+        <div class="col-md-12 state-list">
             <h1>
                 <?php echo $state; ?><?php
                 if ($thisPage > 1) {

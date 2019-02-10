@@ -1,5 +1,5 @@
 
-<div class="container">
+<div class="container" style="padding-left:0px; padding-right:0px;">
     <div class='col-md-12 animated fadeInUp'>
         <a href="/">
             <div class="login-page-heade logo text-center" style="font-size:5em; margin-bottom:40px;">
@@ -12,7 +12,7 @@
                     <div class="login-page">
                         <div class="row">   
 
-                            <div class="col-md-6" style='padding-left:20px;'>
+                            <div class="col-md-6" style='padding-left:0px'>
                                 <div class="page-header" style="margin-top:-10px;"><h3><i class="fa fa-user"></i> Create a Free Account.</h3></div>
                                 <?php if (!empty($fail)) : ?>
                                     <div class="alert alert-danger"><?php echo $fail ?></div>
@@ -48,7 +48,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" style="margin-left:-15px;">
                                 <div class='row'>
                                     <div class='col-md-12'>
                                         <div style="margin-top:-10px;"><h3>America's #1 B2B Search Engine</h3></div>
@@ -65,10 +65,10 @@
 
                         </div>
                         <div class="row">
-                            <div class="col-md-12 center-block-e"><br>
+                            <div class="col-md-12 center-block-e" style="margin-left:-30px;"><br>
                                 <button onClick="ga('send', 'event', {eventCategory: 'buttonClicks', eventAction: 'register', eventLabel: ''});" type="submit" name="s" class="btn btn-success btn-block" />Next <i class="fa fa-caret-right"></i></button>
                                 <?php echo form_close() ?><br>
-                                <p class="decent-margin text-center">Already have an account? <a href="<?php echo site_url("login") ?>" class="" >Sign In</a></p>
+                                <p class="decent-margin text-center">Already have an account?<br><a href="<?php echo site_url("login") ?>" class="" >Sign In</a></p>
                             </div>
                         </div>
                     </div>
