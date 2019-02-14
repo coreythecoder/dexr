@@ -98,17 +98,31 @@ class Frontend_model extends CI_Model {
         }
     }
 
+    function getDomainInfoByID($ID) {
+        $db = $this->load->database('default', TRUE);
+
+        $sql = "SELECT domain_name, registrant_name, name_slug, city_slug, registrant_state FROM production_2 WHERE ID = '" . $ID . "' AND name_city_slug IN (SELECT name_city_slug FROM name_index) LIMIT 1";
+
+        $re = $db->query($sql);
+
+        if ($re->num_rows() > 0) {
+            return $re->result();
+        } else {
+            return false;
+        }
+    }
+
     function getSimilarDomains($keywords) {
         $db = $this->load->database('default', TRUE);
 
         $x = explode(" ", $keywords);
         array_pop($x);
-        
+
         $longest = longest_value($x);
 
         //$keywords = implode(" +", $x);
         if (isset($longest) && !empty($longest) && !is_numeric($longest) && strlen($longest) > 4) {
-            $sql = "SELECT domain_name, registrant_name, name_slug, city_slug, registrant_state FROM production_2 WHERE MATCH(num) AGAINST('+" . $longest . "' IN BOOLEAN MODE) AND name_city_slug IN (SELECT name_city_slug FROM name_index) LIMIT 5";
+            $sql = "SELECT domain_ID FROM similar_domains WHERE keyword = '" . $longest . "' LIMIT 7";
             //exit();
             $re = $db->query($sql);
 

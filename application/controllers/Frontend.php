@@ -239,8 +239,12 @@ class Frontend extends CI_Controller {
                     if ($sim) {
                         $data['domains'] .= "<div class='row' style='margin-top:40px; margin-bottom:40px;'><div class='col-md-9'><h5>Similar Web Sites</h5></div><div class='col-md-12'>";
                         foreach ($sim as $s) {
-                            if ($s->domain_name !== $d->domain_name)
-                                $data['domains'] .= "<div class='col-md-4' style='margin-bottom:10px;'><a href='/" . strtolower($s->registrant_state) . "/" . $s->city_slug . "/" . $s->name_slug . "'>" . ucwords(strtolower($s->registrant_name)) . "</a><br><small>" . $s->domain_name . "</small></div>";
+                            $domainInfo = $this->frontend_model->getDomainInfoByID($s->domain_ID);
+                            if ($domainInfo) {
+                                if ($domainInfo[0]->domain_name !== $d->domain_name) {
+                                    $data['domains'] .= "<div class='col-md-4' style='margin-bottom:10px;'><a href='/" . strtolower($domainInfo[0]->registrant_state) . "/" . $domainInfo[0]->city_slug . "/" . $domainInfo[0]->name_slug . "'>" . ucwords(strtolower($domainInfo[0]->registrant_name)) . "</a><br><small>" . $domainInfo[0]->domain_name . "</small></div>";
+                                }
+                            }
                         }
                         $data['domains'] .= "</div></div>";
                     }
@@ -331,22 +335,21 @@ class Frontend extends CI_Controller {
         $this->load->helper('general');
 
         $urlBatch = $this->frontend_model->getSitemapBatch($page);
-        
-        function utf8_for_xml($string)
-{
-    return preg_replace ('/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u', ' ', $string);
-}
+
+        function utf8_for_xml($string) {
+            return preg_replace('/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u', ' ', $string);
+        }
 
         if ($urlBatch) {
             $urlset = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" /><!--?xml version="1.0" encoding="UTF-8"?-->');
 
-            foreach ($urlBatch as $uri) { 
-                            
+            foreach ($urlBatch as $uri) {
+
                 $city = $uri->city_slug;
                 $state = $uri->state;
                 $url = $urlset->addChild('url');
                 $url->addChild('loc', 'https://dexr.io/' . $state . '/' . $city . '/' . utf8_for_xml($uri->name_slug));
-                
+
                 //$url->addChild('lastmod', $item->LASTMOD );
                 //$url->addChild('changefreq', 'monthly');
                 //$url->addChild('priority', '1.0');

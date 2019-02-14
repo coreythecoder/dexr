@@ -62,7 +62,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
-$db['default']['hostname'] = 'dexr-production.ci0hkmciekd6.us-east-2.rds.amazonaws.com';
+$db['default']['hostname'] = 'dexr-production-2.ci0hkmciekd6.us-east-2.rds.amazonaws.com';
 $db['default']['username'] = 'dexrdb';
 $db['default']['password'] = 'dexrdbpass';
 $db['default']['database'] = 'ebdb';
