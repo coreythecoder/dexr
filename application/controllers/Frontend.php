@@ -154,7 +154,8 @@ class Frontend extends CI_Controller {
         if ($domains['results']) {
             foreach ($domains['results'] as $d) {
                 $data['domains'] .= "<class='row domain'>";
-                $data['domains'] .= "<div class='col-md-12'><h2 class='word-break'>" . $d->domain_name . "</h2><div class='separator'></div>";
+                $data['domains'] .= "<div class='col-md-12'><h2 class='word-break'>" . $d->domain_name . "</h2><div class='separator'></div></div>";
+                $data['domains'] .= "<div class='col-md-9'>";
                 $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Keyword Split</div><div class='col-info'>" . $d->num . "</div></div>";
                 if (!empty($d->created_date_normalized)) {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Created</div><div class='col-info'>" . date('M d, Y', strtotime($d->created_date_normalized)) . "</div></div>";
@@ -211,7 +212,7 @@ class Frontend extends CI_Controller {
                 }
 
                 if (!empty($d->registrant_email)) {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Email</div><div class='col-info'>" . obfuscate_email($d->registrant_email) . "</div></div>";
+                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Email</div><div class='col-info'><small><a class='btn btn-default' href='https://app.dexr.io/register' rel='nofollow'>Uncover Email<br>" . obfuscate_email($d->registrant_email) . "</a></small></div></div>";
                 } else {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Email</div><div class='col-info'>-</div></div>";
                 }
@@ -230,9 +231,8 @@ class Frontend extends CI_Controller {
 
                 $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Registrar</div><div class='col-info'>" . str_replace('Llc', 'LLC', ucwords(strtolower($d->domain_registrar_name))) . "</div></div>";
 
-
-
                 $data['domains'] .= "</div>";
+                $data['domains'] .= "<div class='col-md-3'><button class='btn btn-default btn-block'>Test</button></div>";
 
                 if (!empty($d->num)) {
                     $sim = $this->frontend_model->getSimilarDomains($d->num);
@@ -298,7 +298,7 @@ class Frontend extends CI_Controller {
 
         $this->load->view('frontend/header', $data);
         $this->load->view('frontend/name');
-        $this->load->view('frontend/footer-fixed-pagination');
+        $this->load->view('frontend/footer-states');
     }
 
     public function sitemap_index() {

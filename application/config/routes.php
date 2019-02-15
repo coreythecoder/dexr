@@ -132,7 +132,13 @@ $route['email/templates'] = "welcome/email_templates";
 $route['email/inboxes'] = "welcome/email_inboxes";
 $route['email/campaigns'] = "welcome/email_campaigns";
 $route['user_settings'] = "User_settings";
-$route['pricing'] = "frontend/pricing";
+
+if ($currHost[0] == 'app') {
+    //BACKEND
+    $route['pricing'] = "home/pricing";
+} else {
+    $route['pricing'] = "frontend/pricing";
+}
 
 $route['datasets'] = "home/datasets";
 $route['dataset/(:any)/(:any)/(:any)'] = "home/dataset/$1/$2/$3";
