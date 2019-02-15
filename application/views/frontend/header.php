@@ -127,9 +127,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             </ul>
                                         </div>
                                     </div>
-                                    <ul class="list-inline hidden-sm hidden-xs">
-                                        <li><i class="fa fa-envelope-o pr-5 pl-10"></i> Support@Dexr.io</li>
-                                    </ul>
+                                    
                                 </div>
                             </div>
                             <div class="col-xs-9 col-sm-6 col-md-3">
