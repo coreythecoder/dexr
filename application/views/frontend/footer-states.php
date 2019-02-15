@@ -12,8 +12,7 @@
                             <nav>
                                 <ul class="nav nav-pills nav-stacked">
                                     <li><a target="_blank" href="/pricing">Pricing</a></li>
-                                    <li><a href="#">Opt-Outs & Removals</a></li>
-                                    <li><a href="https://app.dexr.io/register">Create Account</a></li>
+                                    <li><a href="https://app.dexr.io/register">Create a Free Account</a></li>
                                     <li><a href="https://app.dexr.io/login">Sign In</a></li>
                                 </ul>
                             </nav>
