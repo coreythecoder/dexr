@@ -53,7 +53,8 @@ $states = array(
     'WA' => 'Washington',
     'WV' => 'West Virginia',
     'WI' => 'Wisconsin',
-    'WY' => 'Wyoming');
+    'WY' => 'Wyoming',
+    'PR' => 'Puerto Rico');
 
 $states = array_flip($states);
 
