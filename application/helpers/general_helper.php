@@ -172,6 +172,7 @@ function statesArray($flip = '') {
         'WV' => 'West Virginia',
         'WI' => 'Wisconsin',
         'WY' => 'Wyoming',
+        'PR' => 'Puerto Rico'
     );
     if (empty($flip)) {
         return $states;

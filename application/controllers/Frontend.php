@@ -134,6 +134,13 @@ class Frontend extends CI_Controller {
 
     public function name($state, $city, $name, $page = false) {
 
+        $currPath = $_SERVER['REQUEST_URI'];
+
+        if (isset($currPath) && substr($currPath, -1) == '-') {
+            redirect("https://dexr.io" . substr_replace($currPath, "", -1), 'location', 301);
+            exit();
+        }
+
         if ($page == '1') {
             //header('Location: /' . $state . "/" . $city . "/" . $name);
         }
