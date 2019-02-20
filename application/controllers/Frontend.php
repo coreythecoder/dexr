@@ -36,6 +36,16 @@ class Frontend extends CI_Controller {
         $this->load->view('frontend/pricing');
         $this->load->view('frontend/footer-no-states');
     }
+    
+        public function opt_out() {
+
+        $data['metaTitle'] = "Remove Your Information & Opt Out of Dexr.";
+        $data['metaDescription'] = "Remove your information from the dexr public web site.";
+
+        $this->load->view('frontend/header', $data);
+        $this->load->view('frontend/opt-out');
+        $this->load->view('frontend/footer-no-states');
+    }
 
     public function state($state, $page = false) {
 

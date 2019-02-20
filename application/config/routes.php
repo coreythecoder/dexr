@@ -134,6 +134,8 @@ $route['email/inboxes'] = "welcome/email_inboxes";
 $route['email/campaigns'] = "welcome/email_campaigns";
 $route['user_settings'] = "User_settings";
 
+$route['opt-out'] = "frontend/opt_out";
+
 if ($currHost[0] == 'app') {
     //BACKEND
     $route['pricing'] = "home/pricing";
