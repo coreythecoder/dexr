@@ -36,9 +36,33 @@ class Frontend extends CI_Controller {
         $this->load->view('frontend/pricing');
         $this->load->view('frontend/footer-no-states');
     }
-    
-        public function opt_out() {
 
+    public function opt_out() {
+        
+        $data['messages'] = "";
+        $messages = "";
+
+        if (isset($_POST['reg_email']) && isset($_POST['g-recaptcha-response'])) {
+            if (isset($_POST['first']) && empty($_POST['first'])) {
+                $messages .= "<div class='alert alert-danger'>First name required.</div>";
+            }
+            if (isset($_POST['last']) && empty($_POST['last'])) {
+                $messages .= "<div class='alert alert-danger'>Last name required.</div>";
+            }
+            if (isset($_POST['email']) && empty($_POST['email'])) {
+                $messages .= "<div class='alert alert-danger'>Email name required.</div>";
+            }
+            if (isset($_POST['reg_email']) && empty($_POST['reg_email'])) {
+                $messages .= "<div class='alert alert-danger'>Domain registration email required.</div>";
+            }
+            
+            if (!empty($messages)) {
+                $data['messages'] = $messages;
+            } else {
+                $this->frontend_model->insertOptOut($this->input->post());
+            }
+        }
+        
         $data['metaTitle'] = "Remove Your Information & Opt Out of Dexr.";
         $data['metaDescription'] = "Remove your information from the dexr public web site.";
 

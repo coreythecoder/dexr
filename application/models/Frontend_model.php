@@ -2,6 +2,13 @@
 
 class Frontend_model extends CI_Model {
 
+    function insertOptOut($POST) {
+        
+        $db = $this->load->database('default', TRUE);
+        $sql = "INSERT INTO opt_outs SET first = '" . $POST['first'] . "', last = '" . $POST['last'] . "', email = '" . $POST['email'] . "', reg_email = '" . $POST['reg_email'] . "'";
+        $db->query($sql);
+    }
+
     function getCitiesFromState($state, $page = 1) {
         $db = $this->load->database('default', TRUE);
         $res = array();
