@@ -25,5 +25,18 @@
 <script type="text/javascript" src="https://static.dexr.io/assets/themes/v4/plugins/jquery.browser.js"></script>
 <script type="text/javascript" src="https://static.dexr.io/assets/themes/v4/plugins/SmoothScroll.js"></script>
 <script type="text/javascript" src="https://static.dexr.io/assets/themes/v4/js/template.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#submit").click(function () {
+                if (grecaptcha.getResponse() == "") {
+                    alert("reCaptcha Failed! Are you a robot? Please try again...");
+                } else {
+                    $( "#opt-out" ).submit();
+                }
+            });
+    });
+
+</script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
 </html>
