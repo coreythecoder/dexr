@@ -27,9 +27,10 @@
 <script type="text/javascript" src="https://static.dexr.io/assets/themes/v4/js/template.js"></script>
 <script>
     $(document).ready(function () {
-        $("#submit").click(function () {
+        $("#submit_opt").click(function (event) {
                 if (grecaptcha.getResponse() == "") {
                     alert("reCaptcha Failed! Are you a robot? Please try again...");
+                    event.preventDefault();
                 } else {
                     $( "#opt-out" ).submit();
                 }
