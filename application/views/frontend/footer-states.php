@@ -39,7 +39,7 @@
             <div class="subfooter-inner">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="text-center">Copyright © <?php echo date('Y'); ?> <a href="/">dexr.</a> All Rights Reserved</p>                    
+                        <p class="text-center">Copyright © <?php echo date('Y'); ?> <a href="/">dexr.</a> All Rights Reserved | <a href="/opt-out" rel="nofollow">Opt-Out</a></p>                    
                     </div>
                 </div>
             </div>

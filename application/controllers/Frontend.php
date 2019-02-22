@@ -38,7 +38,7 @@ class Frontend extends CI_Controller {
     }
 
     public function opt_out() {
-        
+
         $data['messages'] = "";
         $messages = "";
 
@@ -55,14 +55,15 @@ class Frontend extends CI_Controller {
             if (isset($_POST['reg_email']) && empty($_POST['reg_email'])) {
                 $messages .= "<div class='alert alert-danger'>Domain registration email required.</div>";
             }
-            
+
             if (!empty($messages)) {
                 $data['messages'] = $messages;
             } else {
                 $this->frontend_model->insertOptOut($this->input->post());
+                $data['messages'] = "<div class='alert alert-success'>Removal request received.  Please allow 3-5 business days for processing.</div>";
             }
         }
-        
+
         $data['metaTitle'] = "Remove Your Information & Opt Out of Dexr.";
         $data['metaDescription'] = "Remove your information from the dexr public web site.";
 
@@ -274,6 +275,24 @@ class Frontend extends CI_Controller {
 
                 $data['domains'] .= "</div>";
                 //$data['domains'] .= "<div class='col-md-3'><button class='btn btn-default btn-block'>Test</button></div>";
+
+                if ($i == 0) {
+                    $data['domains'] .= "<div class='row'>";
+                    $data['domains'] .= "<div class='col-md-12'>";
+                    $data['domains'] .= '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                                        <!-- Name Top Main Column -->
+                                        <ins class="adsbygoogle"
+                                             style="display:block"
+                                             data-ad-client="ca-pub-2063867378055756"
+                                             data-ad-slot="5520348789"
+                                             data-ad-format="auto"
+                                             data-full-width-responsive="true"></ins>
+                                        <script>
+                                        (adsbygoogle = window.adsbygoogle || []).push({});
+                                        </script>';
+                    $data['domains'] .= "</div>";
+                    $data['domains'] .= "</div>";
+                }
 
                 if (!empty($d->num)) {
                     $sim = $this->frontend_model->getSimilarDomains($d->num);

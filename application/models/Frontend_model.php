@@ -3,9 +3,43 @@
 class Frontend_model extends CI_Model {
 
     function insertOptOut($POST) {
-        
+
         $db = $this->load->database('default', TRUE);
         $sql = "INSERT INTO opt_outs SET first = '" . $POST['first'] . "', last = '" . $POST['last'] . "', email = '" . $POST['email'] . "', reg_email = '" . $POST['reg_email'] . "'";
+        $db->query($sql);
+/*
+        //UPDATE PRODUCTION OPT OUT
+        $IDs = $this->updateProductionOptOut($email);
+
+        // FROM IDS, CHECK IF DOMAINS EXISTS FOR NAME-CITY-STATE
+        if ($IDs) {
+            foreach ($IDs as $ID)
+            //GET NAME FROM PRODUCTION
+                $nameInfo = $this->getDomainInfoByID($ID);
+
+            //LOOKUP OTHER EMAILS/NAMES FROM PRODUCTION
+            $names = $this->getDomainsByCityStateName($city, $state, $name);
+
+            //IF NONE, UPDATE NAME NAME IN INDEX TO OPT OUT    
+            if (!$names) {
+                $this->updateNameIndexOptOut($cityStateName);
+            }
+        }
+ * 
+ */
+    }
+
+    function updateProductionOptOut($email) {
+
+        $db = $this->load->database('default', TRUE);
+        $sql = " FROM name_index WHERE email = '" . $email . "' LIMIT 1";
+        $db->query($sql);
+    }
+
+    function updateNameIndexOptOut($cityStateName) {
+
+        $db = $this->load->database('default', TRUE);
+        $sql = "UPDATE name_index SET opt_out = 1 WHERE city_state_name = '" . $cityStateName . "' LIMIT 1";
         $db->query($sql);
     }
 
