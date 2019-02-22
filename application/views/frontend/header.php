@@ -95,9 +95,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     text-align:right;
                     margin-right:40px;
                 }
-                
+
             }
         </style>
+        <?php if (isset($showAds)) { ?>
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({
+                    google_ad_client: "ca-pub-2063867378055756",
+                    enable_page_level_ads: true
+                });
+            </script>
+        <?php } ?>
     </head>
     <body class="no-trans    ">
         <div class="scrollToTop circle"><i class="icon-up-open-big"></i></div>
@@ -127,7 +136,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             </ul>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div class="col-xs-9 col-sm-6 col-md-3">
