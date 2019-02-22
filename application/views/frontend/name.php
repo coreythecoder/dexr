@@ -95,7 +95,7 @@
                         </div>
                         <div class="col-sm-4">
                             <br>
-                            <p><a href="/pricing" rel="nofollow" class="btn btn-lg btn-gray-transparent btn-animated">Check Out Our Pricing<i class="fa fa-arrow-right pl-20"></i></a></p>
+                            <p><a href="/pricing?src=name&btn=test_drive" rel="nofollow" class="btn btn-lg btn-gray-transparent btn-animated">Check Out Our Pricing<i class="fa fa-arrow-right pl-20"></i></a></p>
                         </div>
                     </div>
                 </div>
