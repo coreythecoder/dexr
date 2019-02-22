@@ -275,7 +275,7 @@ class Frontend extends CI_Controller {
 
                 $data['domains'] .= "</div>";
                 //$data['domains'] .= "<div class='col-md-3'><button class='btn btn-default btn-block'>Test</button></div>";
-
+/*
                 if ($i == 0) {
                     $data['domains'] .= "<div class='row'>";
                     $data['domains'] .= "<div class='col-md-12'>";
@@ -293,6 +293,8 @@ class Frontend extends CI_Controller {
                     $data['domains'] .= "</div>";
                     $data['domains'] .= "</div>";
                 }
+ * 
+ */
 
                 if (!empty($d->num)) {
                     $sim = $this->frontend_model->getSimilarDomains($d->num);

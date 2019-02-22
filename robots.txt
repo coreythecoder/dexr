@@ -1,5 +1,4 @@
-User-agent: *
-Disallow: /
+
 User-agent: Googlebot
 Allow: /
 User-agent: Mediapartners-Google
@@ -8,11 +7,7 @@ User-agent: Slurp
 Allow: /
 User-Agent: msnbot
 Allow: /
-User-agent: *
-Disallow: /cgi-bin/
-Disallow: /*?
-Disallow: /results
-Disallow: /results/*
+
 
 Sitemap: https://dexr.io/sitemap
 
