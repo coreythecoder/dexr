@@ -317,14 +317,13 @@ class Frontend extends CI_Controller {
                 $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Registrar</div><div class='col-info'>" . str_replace('Llc', 'LLC', ucwords(strtolower($d->domain_registrar_name))) . "</div></div>";
 
                 $data['domains'] .= "</div>";
+
                 $data['domains'] .= "<div class='col-md-3 text-center'>"
                         . "<img style='width:250px; height:250px; border-radius:50%; margin-top:40px; margin-bottom:40px; margin-left:auto; margin-right:auto;' src='https://maps.googleapis.com/maps/api/staticmap?center=" . explode("|", explode("#", ucwords(strtolower($d->registrant_address)))[0])[0] . " " . $data['city'] . ", " . strtoupper($state) . "&zoom=13&size=250x250&maptype=roadmap
                                         &markers=color:blue%7Clabel:%7C" . explode("|", explode("#", ucwords(strtolower($d->registrant_address)))[0])[0] . " " . $data['city'] . ", " . strtoupper($state) . "
                                         &key=AIzaSyBSK9ERERVRBcrcRMVZkwhIt9Hjjb42dMg'></img>"
                         . "</div>";
                 
-
-
                 if ($i == 0) {
                     $data['domains'] .= "<div class='row'>";
                     $data['domains'] .= "<div class='col-md-12'>";
@@ -341,7 +340,10 @@ class Frontend extends CI_Controller {
                                         </script>';
                     $data['domains'] .= "</div>";
                     $data['domains'] .= "</div>";
+
                 }                
+
+                }
 
                 if (!empty($d->num)) {
                     $sim = $this->frontend_model->getSimilarDomains($d->num);
