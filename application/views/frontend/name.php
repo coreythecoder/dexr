@@ -21,7 +21,7 @@
                             if ($total >= 25) {
                                 echo ">";
                             }
-                            ?><?php echo $total; ?> Registration(s) &nbsp; &nbsp; <a href="/pricing" rel="nofollow" class="btn btn-default btn-sm">See Full List</a></h4>
+                            ?><?php echo $total; ?> Registration(s) &nbsp; &nbsp; <a href="/pricing?src=name&btn=show_full_list" rel="nofollow" class="btn btn-default btn-sm">See Full List</a></h4>
                         <?php } else { ?>
                         <h4>Showing <?php echo $total; ?> of <?php
                             if ($total >= 25) {

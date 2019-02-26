@@ -195,8 +195,8 @@ class Frontend extends CI_Controller {
         $data['total'] = $domains['total'];
         if ($domains['results']) {
             foreach ($domains['results'] as $d) {
-                $data['domains'] .= "<class='row domain'>";
-                $data['domains'] .= "<div class='col-md-12'><h2 class='word-break'>" . $d->domain_name . "</h2><div class='separator'></div></div>";
+                $data['domains'] .= "<div class='row domain'>";
+                $data['domains'] .= "<div class='col-md-12'><h2 class='word-break'><i class='fa fa-asterisk' style='color:#09afdf;'></i> " . $d->domain_name . "</h2><div class='separator'></div></div>";
 
                 $created = "";
                 if (!empty($d->created_date_normalized)) {
@@ -325,7 +325,7 @@ class Frontend extends CI_Controller {
                 
 
 
-                if ($i == 0) {
+                if ($i == 0 && 1 == 2) {
                     $data['domains'] .= "<div class='row'>";
                     $data['domains'] .= "<div class='col-md-12'>";
                     $data['domains'] .= '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -346,7 +346,9 @@ class Frontend extends CI_Controller {
                 if (!empty($d->num)) {
                     $sim = $this->frontend_model->getSimilarDomains($d->num);
                     if ($sim) {
-                        $data['domains'] .= "<div class='row' style='margin-top:40px; margin-bottom:40px;'><div class='col-md-9'><h5>Similar Web Sites</h5></div><div class='col-md-12'>";
+                        $data['domains'] .= "</div><div class='row'><div class='col-md-1'></div>";
+                        $data['domains'] .= "<div class='col-md-11'>";
+                        $data['domains'] .= "<div class='row' style='margin-bottom:80px;'><div class='col-md-12'><h5 style='border-bottom:1px solid #ddd; padding-bottom:8px;'>Similar Web Sites</h5></div><div class='col-md-12'>";
                         foreach ($sim as $s) {
                             $domainInfo = $this->frontend_model->getDomainInfoByID($s->domain_ID);
                             if ($domainInfo) {
@@ -355,6 +357,7 @@ class Frontend extends CI_Controller {
                                 }
                             }
                         }
+                        $data['domains'] .= "</div>";
                         $data['domains'] .= "</div></div>";
                     }
                 }
@@ -363,6 +366,7 @@ class Frontend extends CI_Controller {
                     $siteList[] = $d->domain_name;
                     $i++;
                 }
+                $data['domains'] .= "</div>";
             }
 
             $idRollList = "";
