@@ -9,7 +9,7 @@ class Frontend_model extends CI_Model {
         $db->query($sql);
 
         //UPDATE PRODUCTION OPT OUT
-        $IDs = $this->updateProductionOptOut($POST['email']);
+        $IDs = $this->updateProductionOptOut($POST['reg_email']);
 
         // FROM IDS, CHECK IF DOMAINS EXISTS FOR NAME-CITY-STATE
         if ($IDs) {
@@ -37,7 +37,7 @@ class Frontend_model extends CI_Model {
     function updateSimilarOptOut($ID) {
         $db = $this->load->database('default', TRUE);
 
-        $sql = "UPDATE similar_domains SET opt_out = '1' WHERE ID = '" . $ID . "' LIMIT 1";
+        $sql = "UPDATE similar_domains SET opt_out = '1' WHERE domain_ID = '" . $ID . "' LIMIT 1";
         $db->query($sql);
     }
 
