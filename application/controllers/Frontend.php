@@ -60,7 +60,7 @@ class Frontend extends CI_Controller {
                 $data['messages'] = $messages;
             } else {
                 $this->frontend_model->insertOptOut($this->input->post());
-                $data['messages'] = "<div class='alert alert-success'>Removal request received.  Please allow 3-5 business days for processing.</div>";
+                $data['messages'] = "<div class='alert alert-success'>Removal request received.  Please allow 3-5 business days for processing. Also, please note; the maximum number of domains this tool will remove is 20. Please contact support for bulk removals.</div>";
             }
         }
 

@@ -9,33 +9,35 @@ class Frontend_model extends CI_Model {
         $db->query($sql);
 
         //UPDATE PRODUCTION OPT OUT
-        $IDs = $this->updateProductionOptOut($email);
+        $IDs = $this->updateProductionOptOut($POST['email']);
 
         // FROM IDS, CHECK IF DOMAINS EXISTS FOR NAME-CITY-STATE
         if ($IDs) {
             foreach ($IDs as $ID) {
 
                 //GET NAME FROM PRODUCTION
-                $nameInfo = $this->getDomainInfoByID($ID);
+                $nameInfo = $this->getDomainInfoByID($ID->ID)[0];
 
-                //UPDATE SIMILAR DOMAINS OPT OUT
-                $this->updateSimilarOptOut($nameInfo->domain_name);
+                if ($nameInfo) { 
+                    //UPDATE SIMILAR DOMAINS OPT OUT
+                    $this->updateSimilarOptOut($ID->ID);
 
-                //LOOKUP OTHER EMAILS/NAMES FROM PRODUCTION
-                $names = $this->getDomainsByCityStateName($nameInfo->city_slug, $nameInfo->registrant_state, $nameInfo->name_slug, 1);
+                    //LOOKUP OTHER EMAILS/NAMES FROM PRODUCTION
+                    $names = $this->getDomainsByCityStateName($nameInfo->city_slug, $nameInfo->registrant_state, $nameInfo->name_slug, 1);
 
-                //IF NONE, UPDATE NAME NAME IN INDEX TO OPT OUT    
-                if (!$names) {
-                    $this->updateNameIndexOptOut($nameInfo->name_city_slug);
+                    //IF NONE, UPDATE NAME NAME IN INDEX TO OPT OUT    
+                    if (!$names) {
+                        $this->updateNameIndexOptOut($nameInfo->name_city_slug);
+                    }
                 }
             }
         }
     }
 
-    function updateSimilarOptOut($domain) {
+    function updateSimilarOptOut($ID) {
         $db = $this->load->database('default', TRUE);
 
-        $sql = "UPDATE similar_domains SET opt_out = '1' WHERE domain_name = '" . $domain . "' LIMIT 1";
+        $sql = "UPDATE similar_domains SET opt_out = '1' WHERE ID = '" . $ID . "' LIMIT 1";
         $db->query($sql);
     }
 
@@ -43,10 +45,10 @@ class Frontend_model extends CI_Model {
 
         $db = $this->load->database('default', TRUE);
 
-        $sql = "UPDATE production_2 SET opt_out = '1' WHERE email = '" . $email . "' LIMIT 20";
+        $sql = "UPDATE production_2 SET opt_out = '1' WHERE registrant_email = '" . $email . "' LIMIT 20";
         $db->query($sql);
 
-        $sqlTwo = "SELECT ID FROM production_2 WHERE email = '" . $email . "' AND opt_out = '1' LIMIT 20";
+        $sqlTwo = "SELECT ID FROM production_2 WHERE registrant_email = '" . $email . "' AND opt_out = '1' LIMIT 20";
         $r = $db->query($sqlTwo);
 
         return $r->result();
@@ -158,7 +160,7 @@ class Frontend_model extends CI_Model {
     function getDomainInfoByID($ID) {
         $db = $this->load->database('default', TRUE);
 
-        $sql = "SELECT domain_name, registrant_name, name_slug, city_slug, registrant_state FROM production_2 WHERE ID = '" . $ID . "' AND name_city_slug IN (SELECT name_city_slug FROM name_index) LIMIT 1";
+        $sql = "SELECT domain_name, registrant_name, name_slug, city_slug, registrant_state, name_slug, name_city_slug FROM production_2 WHERE ID = '" . $ID . "' AND name_city_slug IN (SELECT name_city_slug FROM name_index) LIMIT 1";
 
         $re = $db->query($sql);
 
