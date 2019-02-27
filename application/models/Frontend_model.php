@@ -7,39 +7,55 @@ class Frontend_model extends CI_Model {
         $db = $this->load->database('default', TRUE);
         $sql = "INSERT INTO opt_outs SET first = '" . $POST['first'] . "', last = '" . $POST['last'] . "', email = '" . $POST['email'] . "', reg_email = '" . $POST['reg_email'] . "'";
         $db->query($sql);
-/*
+
         //UPDATE PRODUCTION OPT OUT
         $IDs = $this->updateProductionOptOut($email);
 
         // FROM IDS, CHECK IF DOMAINS EXISTS FOR NAME-CITY-STATE
         if ($IDs) {
-            foreach ($IDs as $ID)
-            //GET NAME FROM PRODUCTION
+            foreach ($IDs as $ID) {
+
+                //GET NAME FROM PRODUCTION
                 $nameInfo = $this->getDomainInfoByID($ID);
 
-            //LOOKUP OTHER EMAILS/NAMES FROM PRODUCTION
-            $names = $this->getDomainsByCityStateName($city, $state, $name);
+                //UPDATE SIMILAR DOMAINS OPT OUT
+                $this->updateSimilarOptOut($nameInfo->domain_name);
 
-            //IF NONE, UPDATE NAME NAME IN INDEX TO OPT OUT    
-            if (!$names) {
-                $this->updateNameIndexOptOut($cityStateName);
+                //LOOKUP OTHER EMAILS/NAMES FROM PRODUCTION
+                $names = $this->getDomainsByCityStateName($nameInfo->city_slug, $nameInfo->registrant_state, $nameInfo->name_slug, 1);
+
+                //IF NONE, UPDATE NAME NAME IN INDEX TO OPT OUT    
+                if (!$names) {
+                    $this->updateNameIndexOptOut($nameInfo->name_city_slug);
+                }
             }
         }
- * 
- */
+    }
+
+    function updateSimilarOptOut($domain) {
+        $db = $this->load->database('default', TRUE);
+
+        $sql = "UPDATE similar_domains SET opt_out = '1' WHERE domain_name = '" . $domain . "' LIMIT 1";
+        $db->query($sql);
     }
 
     function updateProductionOptOut($email) {
 
         $db = $this->load->database('default', TRUE);
-        $sql = " FROM name_index WHERE email = '" . $email . "' LIMIT 1";
+
+        $sql = "UPDATE production_2 SET opt_out = '1' WHERE email = '" . $email . "' LIMIT 20";
         $db->query($sql);
+
+        $sqlTwo = "SELECT ID FROM production_2 WHERE email = '" . $email . "' AND opt_out = '1' LIMIT 20";
+        $r = $db->query($sqlTwo);
+
+        return $r->result();
     }
 
-    function updateNameIndexOptOut($cityStateName) {
+    function updateNameIndexOptOut($nameCitySlug) {
 
         $db = $this->load->database('default', TRUE);
-        $sql = "UPDATE name_index SET opt_out = 1 WHERE city_state_name = '" . $cityStateName . "' LIMIT 1";
+        $sql = "UPDATE name_index SET opt_out = '1' WHERE name_city_slug = '" . $nameCitySlug . "' LIMIT 1";
         $db->query($sql);
     }
 
@@ -85,10 +101,10 @@ class Frontend_model extends CI_Model {
         }
 
         $icss = $letter . "-" . $city . "-" . $state;
-        $sqlOne = "SELECT name, name_slug FROM name_index WHERE initial_city_state_slug = '" . $icss . "' ORDER BY name ASC LIMIT " . $start . ", " . $perPage;
+        $sqlOne = "SELECT name, name_slug FROM name_index WHERE initial_city_state_slug = '" . $icss . "' AND opt_out = '0' ORDER BY name ASC LIMIT " . $start . ", " . $perPage;
         $reOne = $db->query($sqlOne);
 
-        $sqlTwo = "SELECT count(ID) as count FROM name_index WHERE initial_city_state_slug = '" . $icss . "' LIMIT 100";
+        $sqlTwo = "SELECT count(ID) as count FROM name_index WHERE initial_city_state_slug = '" . $icss . "' AND opt_out = '0' LIMIT 100";
         $reTwo = $db->query($sqlTwo);
 
         if ($reOne->num_rows() > 0) {
@@ -107,11 +123,11 @@ class Frontend_model extends CI_Model {
         $res = array();
 
         $ncs = $name . "-" . $city . "-" . $state;
-        $sqlOne = "SELECT domain_name, num, registrant_name, domain_registrar_name, create_date, update_date, expiry_date, registrant_address, registrant_city, registrant_state, registrant_zip, registrant_email, registrant_phone, registrant_fax, domain_registrar_name FROM production_2 WHERE name_city_slug = '" . $ncs . "' LIMIT " . $limit;
+        $sqlOne = "SELECT domain_name, num, registrant_name, domain_registrar_name, create_date, update_date, expiry_date, registrant_address, registrant_city, registrant_state, registrant_zip, registrant_email, registrant_phone, registrant_fax, domain_registrar_name FROM production_2 WHERE name_city_slug = '" . $ncs . "' AND opt_out = '0' LIMIT " . $limit;
         $reOne = $db->query($sqlOne);
 
 
-        $sqlTwo = "SELECT ID FROM production_2 WHERE name_city_slug = '" . $ncs . "' LIMIT 50";
+        $sqlTwo = "SELECT ID FROM production_2 WHERE name_city_slug = '" . $ncs . "' AND opt_out = '0' LIMIT 25";
         $reTwo = $db->query($sqlTwo);
 
         if ($reOne->num_rows() > 0) {
@@ -129,7 +145,7 @@ class Frontend_model extends CI_Model {
         $db = $this->load->database('default', TRUE);
 
         $icss = $letter . "-" . $city . "-" . $state;
-        $sqlOne = "SELECT name, name_slug FROM name_index WHERE initial_city_state_slug = '" . $icss . "' ORDER BY name ASC LIMIT " . $limit;
+        $sqlOne = "SELECT name, name_slug FROM name_index WHERE initial_city_state_slug = '" . $icss . "' AND opt_out = '0' ORDER BY name ASC LIMIT " . $limit;
         $re = $db->query($sqlOne);
 
         if ($re->num_rows() > 0) {
@@ -163,7 +179,7 @@ class Frontend_model extends CI_Model {
 
         //$keywords = implode(" +", $x);
         if (isset($longest) && !empty($longest) && !is_numeric($longest) && strlen($longest) > 4) {
-            $sql = "SELECT domain_ID FROM similar_domains WHERE keyword = '" . $longest . "' LIMIT 7";
+            $sql = "SELECT domain_ID FROM similar_domains WHERE keyword = '" . $longest . "' AND opt_out = '0' LIMIT 7";
             //exit();
             $re = $db->query($sql);
 
@@ -183,7 +199,7 @@ class Frontend_model extends CI_Model {
         $start = $id - 6;
         $end = $id + 6;
 
-        $sql = "SELECT * FROM name_index WHERE ID >= '" . $start . "' AND ID <= '" . $end . "' LIMIT 13";
+        $sql = "SELECT * FROM name_index WHERE ID >= '" . $start . "' AND ID <= '" . $end . "' AND opt_out = '0' LIMIT 13";
         $re = $db->query($sql);
 
         if ($re->num_rows() > 0) {
@@ -238,7 +254,7 @@ class Frontend_model extends CI_Model {
             $endID = $endID + 25000;
         }
 
-        $sql = "SELECT state, city_slug, name_slug FROM name_index WHERE ID >= '" . $startID . "' AND ID <= '" . $endID . "'";
+        $sql = "SELECT state, city_slug, name_slug FROM name_index WHERE ID >= '" . $startID . "' AND ID <= '" . $endID . "' AND opt_out = '0'";
         $re = $db->query($sql);
 
         if ($re->num_rows() > 0) {
