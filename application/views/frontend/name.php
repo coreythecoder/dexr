@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-md-12" style="margin-top:25px; margin-bottom:80px;">
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <h1>
                         <?php echo ucwords(strtolower($name)); ?> in <?php echo $city; ?>, <?php echo $state_abr; ?>
                     </h1>
@@ -29,9 +29,14 @@
                             }
                             ?><?php echo $total; ?> Registration(s)</h4>
                     <?php } ?>         
-                </div>
-                <div class="col-md-2">
-
+                </div>                
+            </div>
+            <div class="separator"></div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h4>Need Pro Web Design, Development or Marketing?</h4>
+                    <button class="btn btn-default" id="get_bids_btn">Get Multiple Bids from Pros</button>
+                    <div><small>Web designer, developer or marketer?<br><a id="bid_on_proj">Bid on Projects, It's free.</a></small></div>
                 </div>
             </div>
             <div class="separator"></div>
