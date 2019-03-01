@@ -31,7 +31,71 @@
                     <?php } ?>         
                 </div>                
             </div>
+            <style>
+                .others-number {
+                    font-size:2.6em;
+                    font-weight:bold;                    
+                    margin-right:15px;
+                    margin-left:15px;
+                    color: #09afdf;
+                }
+                .others-label {
+                    position:relative;
+                    top:8px;
+                }
+                .others-list {
+                    position:relative;
+                    top:8px;
+                }
+
+            </style>
             <div class="separator"></div>
+
+            <div class="row">
+                <div class="col-md-12 other-text">
+                    <h4>Our Database Contains</h4>
+                    <div class="row">
+                        <div class="col-md-3 other-text">
+                            <div class="col-md-4 text-center">
+                                <div class="others-number">2</div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="others-label small">Emails</div>
+                                <div class="others-list small">CDS****@gmail.com, CDS****@aol.com</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 other-text">
+                            <div class="col-md-4 text-center">
+                                <div class="others-number">4</div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="others-label small">Cities</div>
+                                <div class="others-list small">Dallas, TX, Debary, FL, Deland, FL</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 other-text">
+                            <div class="col-md-4 text-center">
+                                <div class="others-number">3</div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="others-label small">Phone #s</div>
+                                <div class="others-list small">(972) 555-****, (352) 555-****, (972) 555-****</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 other-text">
+                            <div class="col-md-4 text-center">
+                                <div class="others-number">4</div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="others-label small">Addresses</div>
+                                <div class="others-list small">*** Main St, *** Some Ave, *** Random St</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <div class="separator"></div>
+
             <?php echo $domains; ?>
         </div>    
     </div>
@@ -88,7 +152,7 @@
                     <div class="row">
                         <div class="col-sm-8">
                             <h1 class="title">Ready To Take A Test Drive?</h1>
-                            <p>Create a free forever account. No credit card required.<br>We're also offering a 7 day free trial on our Pro membership.</p>
+                            <p>Get started today.</p>
                         </div>
                         <div class="col-sm-4">
                             <br>

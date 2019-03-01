@@ -2,6 +2,43 @@
 
 class Frontend_model extends CI_Model {
 
+    function getAllFromEmail($email, $limit = 10) {
+        $db = $this->load->database('default', TRUE);
+        $sql = "SELECT domain_name, city_slug, registrant_state, registrant_phone, registrant_address FROM production_2 WHERE registrant_email = '" . $email . "' LIMIT " . $limit;
+        $re = $db->query($sql);
+
+        if ($re->num_rows() > 0) {
+            return $re->result();
+        } else {
+            return false;
+        }
+    }
+
+    function getAllFromPhone($phone, $limit = 10) {
+        $db = $this->load->database('default', TRUE);
+        $sql = "SELECT domain_name, city_slug, registrant_state, registrant_phone, registrant_address, registrant_email FROM production_2 WHERE registrant_phone = '" . $phone . "' LIMIT " . $limit;
+        $re = $db->query($sql);
+
+        if ($re->num_rows() > 0) {
+            return $re->result();
+        } else {
+            return false;
+        }
+    }
+
+    function getAllFromAddress($address, $limit = 10) {
+        $db = $this->load->database('default', TRUE);
+        $address = explode("|", $address);
+        $sql = "SELECT domain_name, city_slug, registrant_state, registrant_phone, registrant_address, registrant_email FROM production_2 WHERE registrant_address = '" . $address[0] . "' AND city_slug = '" . $address[1] . "' AND registrant_state = '" . $address[2] . "' LIMIT " . $limit;
+        $re = $db->query($sql);
+
+        if ($re->num_rows() > 0) {
+            return $re->result();
+        } else {
+            return false;
+        }
+    }
+
     function insertOptOut($POST) {
 
         $db = $this->load->database('default', TRUE);
@@ -18,7 +55,7 @@ class Frontend_model extends CI_Model {
                 //GET NAME FROM PRODUCTION
                 $nameInfo = $this->getDomainInfoByID($ID->ID)[0];
 
-                if ($nameInfo) { 
+                if ($nameInfo) {
                     //UPDATE SIMILAR DOMAINS OPT OUT
                     $this->updateSimilarOptOut($ID->ID);
 
@@ -125,7 +162,7 @@ class Frontend_model extends CI_Model {
         $res = array();
 
         $ncs = $name . "-" . $city . "-" . $state;
-        $sqlOne = "SELECT domain_name, num, registrant_name, domain_registrar_name, create_date, update_date, expiry_date, registrant_address, registrant_city, registrant_state, registrant_zip, registrant_email, registrant_phone, registrant_fax, domain_registrar_name FROM production_2 WHERE name_city_slug = '" . $ncs . "' AND opt_out = '0' LIMIT " . $limit;
+        $sqlOne = "SELECT domain_name, num, registrant_name, domain_registrar_name, create_date, update_date, expiry_date, registrant_address, registrant_city, registrant_state, registrant_zip, registrant_email, registrant_phone, registrant_fax, domain_registrar_name, city_slug FROM production_2 WHERE name_city_slug = '" . $ncs . "' AND opt_out = '0' LIMIT " . $limit;
         $reOne = $db->query($sqlOne);
 
 

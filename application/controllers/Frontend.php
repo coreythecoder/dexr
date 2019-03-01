@@ -193,6 +193,9 @@ class Frontend extends CI_Controller {
         $domains = $this->frontend_model->getDomainsByCityStateName($city, $state, $name);
         $nId = $this->frontend_model->getNameIdFromNameSlugCityState($city, $state, $name);
         $data['total'] = $domains['total'];
+
+        $domainBucket = array();
+
         if ($domains['results']) {
             foreach ($domains['results'] as $d) {
                 $data['domains'] .= "<div class='row domain'>";
@@ -372,7 +375,87 @@ class Frontend extends CI_Controller {
                     $i++;
                 }
                 $data['domains'] .= "</div>";
+
+                $domainBucket['theseDomains'][$d->domain_name] = $d->domain_name;
+                $domainBucket['emails'][$d->registrant_email] = trim($d->registrant_email);
+                $domainBucket['cities'][$d->city_slug . ", " . $d->registrant_state] = $d->city_slug . ", " . $d->registrant_state;
+                $domainBucket['phones'][trim($d->registrant_phone)] = trim($d->registrant_phone);
+                $domainBucket['addresses'][slugify($d->registrant_address) . "|" . $d->city_slug . "|" . $d->registrant_state] = slugify($d->registrant_address) . "|" . $d->city_slug . "|" . $d->registrant_state;
             }
+
+            //echo var_dump($domainBucket); // exit();
+
+            $newBucket = array();
+
+            if ($domainBucket['emails']) {
+                foreach ($domainBucket['emails'] as $bucketEmails) {
+                    $bucketFromEmail = $this->frontend_model->getAllFromEmail($bucketEmails, 10);
+                    if ($bucketFromEmail) {
+                        foreach ($bucketFromEmail as $bfe) {
+                            if (!in_array($bfe->domain_name, $domainBucket['theseDomains'])) {
+                                $newBucket['domains'][$bfe->domain_name] = $bfe->domain_name;
+                            }
+                            if (!in_array($bfe->city_slug . ", " . $bfe->registrant_state, $domainBucket['cities'])) {
+                                $newBucket['cities'][$bfe->city_slug . ", " . $bfe->registrant_state] = $bfe->city_slug . ", " . $bfe->registrant_state;
+                            }
+                            if (!in_array($bfe->registrant_phone, $domainBucket['phones'])) {
+                                $newBucket['phones'][$bfe->registrant_phone] = $bfe->registrant_phone;
+                            }
+                            if (!in_array(slugify($bfe->registrant_address) . "|" . $bfe->city_slug . "|" . $bfe->registrant_state, $domainBucket['addresses'])) {
+                                $newBucket['addresses'][slugify($bfe->registrant_address) . "|" . $bfe->city_slug . "|" . $bfe->registrant_state] = slugify($bfe->registrant_address) . "|" . $bfe->city_slug . "|" . $bfe->registrant_state;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if ($domainBucket['phones']) {
+                foreach ($domainBucket['phones'] as $bucketPhones) {
+                    $bucketFromPhone = $this->frontend_model->getAllFromPhone($bucketPhones, 10);
+                    if ($bucketFromPhone) {
+                        foreach ($bucketFromPhone as $bfe) {
+                            if (!in_array($bfe->domain_name, $domainBucket['theseDomains'])) {
+                                $newBucket['domains'][$bfe->domain_name] = $bfe->domain_name;
+                            }
+                            if (!in_array($bfe->registrant_email, $domainBucket['emails'])) {
+                                $newBucket['emails'][$bfe->registrant_email] = $bfe->registrant_email;
+                            }
+                            if (!in_array($bfe->city_slug . ", " . $bfe->registrant_state, $domainBucket['cities'])) {
+                                $newBucket['cities'][$bfe->city_slug . ", " . $bfe->registrant_state] = $bfe->city_slug . ", " . $bfe->registrant_state;
+                            }
+                            if (!in_array(slugify($bfe->registrant_address) . "|" . $bfe->city_slug . "|" . $bfe->registrant_state, $domainBucket['addresses'])) {
+                                $newBucket['addresses'][slugify($bfe->registrant_address) . "|" . $bfe->city_slug . "|" . $bfe->registrant_state] = slugify($bfe->registrant_address) . "|" . $bfe->city_slug . "|" . $bfe->registrant_state;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if ($domainBucket['addresses']) {
+                foreach ($domainBucket['addresses'] as $bucketAddress) {
+                    $bucketFromAddress = $this->frontend_model->getAllFromAddress($bucketAddress, 10);
+                    if ($bucketFromAddress) {
+                        foreach ($bucketFromPhone as $bfe) {
+                            if (!in_array($bfe->domain_name, $domainBucket['theseDomains'])) {
+                                $newBucket['domains'][$bfe->domain_name] = $bfe->domain_name;
+                            }
+                            if (!in_array($bfe->registrant_email, $domainBucket['emails'])) {
+                                $newBucket['emails'][$bfe->registrant_email] = $bfe->registrant_email;
+                            }
+                            if (!in_array($bfe->city_slug . ", " . $bfe->registrant_state, $domainBucket['cities'])) {
+                                $newBucket['cities'][$bfe->city_slug . ", " . $bfe->registrant_state] = $bfe->city_slug . ", " . $bfe->registrant_state;
+                            }
+                            if (!in_array($bfe->registrant_phone, $domainBucket['phones'])) {
+                                $newBucket['phones'][$bfe->registrant_phone] = $bfe->registrant_phone;
+                            }
+                        }
+                    }
+                }
+            }
+
+            echo var_dump($newBucket);
+
+            
 
             $idRollList = "";
             $data['names'] = "";
