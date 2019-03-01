@@ -32,14 +32,6 @@
                 </div>                
             </div>
             <div class="separator"></div>
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <h4>Need Pro Web Design, Development or Marketing?</h4>
-                    <button class="btn btn-default" id="get_bids_btn">Get Multiple Bids from Pros</button>
-                    <div><small>Web designer, developer or marketer?<br><a id="bid_on_proj">Bid on Projects, It's free.</a></small></div>
-                </div>
-            </div>
-            <div class="separator"></div>
             <?php echo $domains; ?>
         </div>    
     </div>
