@@ -60,7 +60,7 @@ class Frontend extends CI_Controller {
                 $data['messages'] = $messages;
             } else {
                 $this->frontend_model->insertOptOut($this->input->post());
-                $data['messages'] = "<div class='alert alert-success'>Removal request received.  Please allow 3-5 business days for processing.</div>";
+                $data['messages'] = "<div class='alert alert-success'>Removal request received.  Please allow 3-5 business days for processing. Also, please note; the maximum number of domains this tool will remove is 20. Please contact support for bulk removals.</div>";
             }
         }
 
@@ -195,9 +195,52 @@ class Frontend extends CI_Controller {
         $data['total'] = $domains['total'];
         if ($domains['results']) {
             foreach ($domains['results'] as $d) {
-                $data['domains'] .= "<class='row domain'>";
-                $data['domains'] .= "<div class='col-md-12'><h2 class='word-break'>" . $d->domain_name . "</h2><div class='separator'></div></div>";
-                $data['domains'] .= "<div class='col-md-12'>";
+                $data['domains'] .= "<div class='row domain'>";
+                $data['domains'] .= "<div class='col-md-12'><h2 class='word-break'><i class='fa fa-asterisk' style='color:#09afdf;'></i> " . $d->domain_name . "</h2><div class='separator'></div></div>";
+
+                $created = "";
+                if (!empty($d->created_date_normalized)) {
+                    $ex = explode(" ", $name);
+                    $created = " " . ucwords(strtolower($ex[0])) . " registered this web site on " . date('M d, Y', strtotime($d->created_date_normalized)) . ". ";
+                }
+                $expires = "";
+                if (!empty($d->expiry_date)) {
+                    $expires = " The expiration for " . ucwords($d->domain_name) . " is listed as " . date('M d, Y', strtotime($d->expiry_date)) . ". ";
+                }
+
+                $updated = "";
+                if (!empty($d->update_date)) {
+                    $updated = " The site's info was last updated on " . date('M d, Y', strtotime($d->update_date));
+                }
+
+                if (!empty($d->registrant_company)) {
+                    $updated .= " by " . ucwords(strtolower($d->registrant_company)) . " who is the registered company for this domain.";
+                } else {
+                    $updated .= ".";
+                }
+
+                $contact = "";
+                if (!empty($d->registrant_phone)) {
+                    $contact = " You may be able to contact them at " . formatPhoneNumber($d->registrant_phone);
+                }
+
+                if (!empty($d->registrant_email)) {
+                    $contact .= " or using their email address at " . obfuscate_email($d->registrant_email) . ".";
+                } else {
+                    $contact .= ".";
+                }
+
+                if ($data['total'] > 5) {
+                    $totalListed = '5';
+                } else {
+                    $totalListed = $data['total'];
+                }
+
+                if ($i == 0) {
+                    $data['domains'] .= "<div class='col-md-12'><p>" . ucwords(str_replace('-', ' ', strtolower($name))) . " was located at " . ucwords(strtolower($d->registrant_address)) . " in " . $data['city'] . ", " . strtoupper($state) . " when they registered " . ucwords($d->domain_name) . " at " . str_replace('Llc', 'LLC', ucwords(strtolower($d->domain_registrar_name))) . "." . $created . $expires . $updated . $contact . " We have " . $data['total'] . " domain registration(s) total in our database, " . $totalListed . " of which are listed below. For the complete list please create an account, <a href='/pricing?src=name&link=description' rel='nofollow'>click here for pricing</a>.</p><div class='separator'></div></div>";
+                }
+
+                $data['domains'] .= "<div class='col-md-9'>";
                 $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Keyword Split</div><div class='col-info'>" . $d->num . "</div></div>";
                 if (!empty($d->created_date_normalized)) {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Created</div><div class='col-info'>" . date('M d, Y', strtotime($d->created_date_normalized)) . "</div></div>";
@@ -254,7 +297,7 @@ class Frontend extends CI_Controller {
                 }
 
                 if (!empty($d->registrant_email)) {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Email</div><div class='col-info'><small><a class='btn btn-default-transparent' href='/pricing' rel='nofollow'>Uncover Email<br>" . obfuscate_email($d->registrant_email) . "</a></small></div></div>";
+                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Email</div><div class='col-info'><small><a class='btn btn-default-transparent' href='/pricing?src=name&btn=uncover_email' rel='nofollow'>Uncover Email<br>" . obfuscate_email($d->registrant_email) . "</a></small></div></div>";
                 } else {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Email</div><div class='col-info'>-</div></div>";
                 }
@@ -274,9 +317,18 @@ class Frontend extends CI_Controller {
                 $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Registrar</div><div class='col-info'>" . str_replace('Llc', 'LLC', ucwords(strtolower($d->domain_registrar_name))) . "</div></div>";
 
                 $data['domains'] .= "</div>";
-                //$data['domains'] .= "<div class='col-md-3'><button class='btn btn-default btn-block'>Test</button></div>";
-/*
-                if ($i == 0) {
+
+                $data['domains'] .= "<div class='col-md-3 text-center'>"
+                        . "<img style='width:250px; height:250px; border-radius:50%; margin-top:40px; margin-bottom:40px; margin-left:auto; margin-right:auto;' src='https://maps.googleapis.com/maps/api/staticmap?center=" . explode("|", explode("#", ucwords(strtolower($d->registrant_address)))[0])[0] . " " . $data['city'] . ", " . strtoupper($state) . "&zoom=13&size=250x250&maptype=roadmap
+                                        &markers=color:blue%7Clabel:%7C" . explode("|", explode("#", ucwords(strtolower($d->registrant_address)))[0])[0] . " " . $data['city'] . ", " . strtoupper($state) . "
+                                        &key=AIzaSyBSK9ERERVRBcrcRMVZkwhIt9Hjjb42dMg'></img>"
+                        . "</div>";
+
+
+
+
+                if ($i == 0 && 1 == 2) {
+
                     $data['domains'] .= "<div class='row'>";
                     $data['domains'] .= "<div class='col-md-12'>";
                     $data['domains'] .= '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -293,13 +345,15 @@ class Frontend extends CI_Controller {
                     $data['domains'] .= "</div>";
                     $data['domains'] .= "</div>";
                 }
- * 
- */
+
+
 
                 if (!empty($d->num)) {
                     $sim = $this->frontend_model->getSimilarDomains($d->num);
                     if ($sim) {
-                        $data['domains'] .= "<div class='row' style='margin-top:40px; margin-bottom:40px;'><div class='col-md-9'><h5>Similar Web Sites</h5></div><div class='col-md-12'>";
+                        $data['domains'] .= "</div><div class='row'><div class='col-md-1'></div>";
+                        $data['domains'] .= "<div class='col-md-11'>";
+                        $data['domains'] .= "<div class='row' style='margin-bottom:80px;'><div class='col-md-12'><h5 style='border-bottom:1px solid #ddd; padding-bottom:8px;'>Similar Web Sites</h5></div><div class='col-md-12'>";
                         foreach ($sim as $s) {
                             $domainInfo = $this->frontend_model->getDomainInfoByID($s->domain_ID);
                             if ($domainInfo) {
@@ -308,6 +362,7 @@ class Frontend extends CI_Controller {
                                 }
                             }
                         }
+                        $data['domains'] .= "</div>";
                         $data['domains'] .= "</div></div>";
                     }
                 }
@@ -316,6 +371,7 @@ class Frontend extends CI_Controller {
                     $siteList[] = $d->domain_name;
                     $i++;
                 }
+                $data['domains'] .= "</div>";
             }
 
             $idRollList = "";
@@ -354,6 +410,7 @@ class Frontend extends CI_Controller {
             //header('Location: /' . $state);
         }
 
+        //$data['showAds'] = true;
 
         $data['metaTitle'] = "Webmaster: " . ucwords(str_replace('-', ' ', strtolower($name))) . " in " . $data['city'] . ", " . strtoupper($state);
         $data['metaDescription'] = "Contact webmaster " . ucwords(str_replace('-', ' ', strtolower($name))) . " in " . $data['city'] . ", " . strtoupper($state) . " by owner name, email, phone or address. They've registered " . $siteList . ".";

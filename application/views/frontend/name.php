@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-md-12" style="margin-top:25px; margin-bottom:80px;">
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <h1>
                         <?php echo ucwords(strtolower($name)); ?> in <?php echo $city; ?>, <?php echo $state_abr; ?>
                     </h1>
@@ -21,7 +21,7 @@
                             if ($total >= 25) {
                                 echo ">";
                             }
-                            ?><?php echo $total; ?> Registration(s) &nbsp; &nbsp; <a href="/pricing" rel="nofollow" class="btn btn-default btn-sm">See Full List</a></h4>
+                            ?><?php echo $total; ?> Registration(s) &nbsp; &nbsp; <a href="/pricing?src=name&btn=show_full_list" rel="nofollow" class="btn btn-default btn-sm">See Full List</a></h4>
                         <?php } else { ?>
                         <h4>Showing <?php echo $total; ?> of <?php
                             if ($total >= 25) {
@@ -29,9 +29,14 @@
                             }
                             ?><?php echo $total; ?> Registration(s)</h4>
                     <?php } ?>         
-                </div>
-                <div class="col-md-2">
-
+                </div>                
+            </div>
+            <div class="separator"></div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h4>Need Pro Web Design, Development or Marketing?</h4>
+                    <button class="btn btn-default" id="get_bids_btn">Get Multiple Bids from Pros</button>
+                    <div><small>Web designer, developer or marketer?<br><a id="bid_on_proj">Bid on Projects, It's free.</a></small></div>
                 </div>
             </div>
             <div class="separator"></div>
@@ -95,7 +100,7 @@
                         </div>
                         <div class="col-sm-4">
                             <br>
-                            <p><a href="/pricing" rel="nofollow" class="btn btn-lg btn-gray-transparent btn-animated">Check Out Our Pricing<i class="fa fa-arrow-right pl-20"></i></a></p>
+                            <p><a href="/pricing?src=name&btn=test_drive" rel="nofollow" class="btn btn-lg btn-gray-transparent btn-animated">Check Out Our Pricing<i class="fa fa-arrow-right pl-20"></i></a></p>
                         </div>
                     </div>
                 </div>
