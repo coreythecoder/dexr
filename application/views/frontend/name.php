@@ -50,6 +50,7 @@
 
             </style>
             <div class="separator"></div>
+
             <div class="row">
                 <div class="col-md-12 other-text">
                     <h4>Our Database Contains</h4>
@@ -94,6 +95,7 @@
                 </div>                
             </div>
             <div class="separator"></div>
+
             <?php echo $domains; ?>
         </div>    
     </div>
