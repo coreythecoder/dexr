@@ -7,12 +7,11 @@
                     <div class="col-md-4">
                         <div class="footer-content">
                             <div class="logo-footer"><img id="logo-footer" src="https://static.dexr.io/assets/images/blue-logo-45.png" alt=""></div>
-                            <p>Dexr connects you with more than 68 million targeted businesses & web site owners with full contact information. Create a free forever account today.</p>
+                            <p>Dexr connects you with more than 68 million targeted businesses & web site owners with full contact information.</p>
                             <div class="separator-2"></div>
                             <nav>
                                 <ul class="nav nav-pills nav-stacked">
                                     <li><a target="_blank" href="/pricing">Pricing</a></li>
-                                    <li><a href="https://app.dexr.io/register">Create a Free Account</a></li>
                                     <li><a href="https://app.dexr.io/login">Sign In</a></li>
                                 </ul>
                             </nav>

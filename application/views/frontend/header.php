@@ -60,6 +60,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             .word-break {
                 word-break: break-all;
             }
+            .other-text {
+                padding:10px;
+            }
             @media (max-width:600px){
                 .other-names .col-md-3 {
                     margin-bottom:10px;
@@ -101,10 +104,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php if (isset($showAds)) { ?>
             <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
             <script>
-                (adsbygoogle = window.adsbygoogle || []).push({
-                    google_ad_client: "ca-pub-2063867378055756",
-                    enable_page_level_ads: true
-                });
+            (adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: "ca-pub-2063867378055756",
+                enable_page_level_ads: true
+            });
             </script>
         <?php } ?>
     </head>
@@ -182,10 +185,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <ul class="nav navbar-nav ">
                                                         <li class=" mega-menu">
                                                             <a href="/pricing"><i class="fa fa-search"></i> Pricing</a>														
-                                                        </li>
-                                                        <li class=" mega-menu">
-                                                            <a href="https://app.dexr.io/register"><i class="fa fa-user"></i> Create a Free Account</a>														
-                                                        </li>
+                                                        </li>                                                        
                                                     </ul>
                                                 </div>
                                         </nav>
