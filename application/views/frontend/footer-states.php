@@ -60,25 +60,5 @@
 <script type="text/javascript" src="https://static.dexr.io/assets/themes/v4/plugins/jquery.browser.js"></script>
 <script type="text/javascript" src="https://static.dexr.io/assets/themes/v4/plugins/SmoothScroll.js"></script>
 <script type="text/javascript" src="https://static.dexr.io/assets/themes/v4/js/template.js"></script>
-<script>
-    jQuery(document).ready(function () {
-        jQuery("#get_bids_btn").click(function () {
-            window.GoogleAnalyticsObject = 'analytics';
-            jQuery.getScript('//www.google-analytics.com/analytics.js', function () {
-                analytics('create', 'UA-133857018-1', 'auto');
-                analytics('send', 'event', 'get-bids-btn', 'click');
-            });
-
-        });
-        jQuery("#bid_on_proj").click(function () {
-            window.GoogleAnalyticsObject = 'analytics';
-            jQuery.getScript('//www.google-analytics.com/analytics.js', function () {
-                analytics('create', 'UA-133857018-1', 'auto');
-                analytics('send', 'event', 'bid-on-proj-link', 'click');
-            });
-
-        });
-    });
-</script>
 </body>
 </html>
