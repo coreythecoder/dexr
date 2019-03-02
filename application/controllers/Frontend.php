@@ -300,7 +300,7 @@ class Frontend extends CI_Controller {
                 }
 
                 if (!empty($d->registrant_email)) {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Email</div><div class='col-info'><small><a class='btn btn-default-transparent' href='/pricing?src=name&btn=uncover_email' rel='nofollow'>Uncover Email<br>" . obfuscate_email($d->registrant_email) . "</a></small></div></div>";
+                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Email</div><div class='col-info'><small><button data-toggle='modal' data-target='#exampleModal' type='button' class='btn btn-default-transparent uncover_btn'>Uncover Email<br>" . obfuscate_email($d->registrant_email) . "</button></small></div></div>";
                 } else {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Email</div><div class='col-info'>-</div></div>";
                 }

@@ -122,7 +122,8 @@ CREATE TABLE `" . $table . "` (
   `company_slug` varchar(150) NOT NULL,
   `address_slug` varchar(150) NOT NULL,
   `city_slug` varchar(50) NOT NULL,
-  `name_city_slug` varchar(255) NOT NULL
+  `name_city_slug` varchar(255) NOT NULL,
+  `opt_out` INT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
 
@@ -433,8 +434,7 @@ CREATE TABLE `" . $table . "` (
         $country = "";
         $name = "";
 
-        $i = 0;
-        if (!empty($POST['keyword'][0])) {
+        if (!empty($POST['keyword'])) {
             $res = "";
 
             $res .= "INSERT INTO " . $table . " (" . trim(rtrim(implode(", ", $cols), ", ")) . ") ";

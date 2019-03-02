@@ -52,7 +52,7 @@ class Home extends CI_Controller {
             }
         }
 
-        if (isset($_POST['search']) && !empty($_POST['keyword'])) { 
+        if (isset($_POST['search']) && (!empty($_POST['keyword'][0]) || !empty($_POST['keyword'][1]) || !empty($_POST['keyword'][2]) || !empty($_POST['keyword'][3]) || !empty($_POST['keyword'][4]) || !empty($_POST['keyword'][5]) || !empty($_POST['keyword'][6]) || !empty($_POST['keyword'][7]) || !empty($_POST['keyword'][8]))) { 
             $data['list'] .= '<tr><th><strong>Organization</strong></th><th>Contact</th><th>Address</th><th>Created</th></tr>';
             if ($this->input->post('daterangeTrue')) {
                 $query = $this->db_model->applyFilters($_POST, 25, $this->input->post('daterange'));
@@ -63,7 +63,7 @@ class Home extends CI_Controller {
             //echo var_dump($_POST); exit();
             $data['total'] = count($query);
             foreach ($query as $domain) {
-                $data['list'] .= '<tr><td><a href="http://' . $domain->domain_name . '" target="_blank">' . $domain->domain_name . '</a><br><strong>' . $domain->registrant_company . '</strong></td><td>' . ucwords(strtolower($domain->registrant_name)) . '<br>' . substr(formatPhoneNumber($domain->registrant_phone), 0, -4) . "xxxx" . '<br>' . obfuscate_email(strtolower($domain->registrant_email)) . '</td><td>' . ucwords(strtolower($domain->registrant_address)) . '<br>' . ucwords(strtolower($domain->registrant_city)) . ', ' . $domain->registrant_state . '</td><td>' . $domain->created_date_normalized . '</td></tr>';
+                $data['list'] .= '<tr><td><a href="http://' . $domain->domain_name . '" target="_blank">' . $domain->domain_name . '</a><br><strong>' . $domain->registrant_company . '</strong></td><td>' . ucwords(strtolower($domain->registrant_name)) . '<br>' . formatPhoneNumber($domain->registrant_phone) . '<br>' . strtolower($domain->registrant_email) . '</td><td>' . ucwords(strtolower($domain->registrant_address)) . '<br>' . ucwords(strtolower($domain->registrant_city)) . ', ' . $domain->registrant_state . '</td><td>' . $domain->created_date_normalized . '</td></tr>';
                 //domainName, registrarName, createdDate, registrant_email, registrant_name, registrant_city, registrant_state, registrant_country, registrant_telephone
             }
         }
@@ -560,11 +560,11 @@ class Home extends CI_Controller {
             $this->db_model->saveStripeCustomerID($this->user->info->ID, $customer->id);
 
             // GET PLAN TYPE
-            $pid = "plan_EOP7ViqCXFPfte";
+            $pid = "plan_Ect6UjkS61gIb5";
             //$pid = "plan_EOPfv7iEDXLQFy"; // TEST
             $trial = strtotime("+7 Days");
             if ($this->input->post("type") == "pro") {
-                $pid = "plan_EOP6GRC06U4CFz";
+                $pid = "plan_Ect4vTNlxciFK3";
                 //$pid = "plan_EOPPjrZGnFyQlM"; // TEST
                 $trial = "now";
             }

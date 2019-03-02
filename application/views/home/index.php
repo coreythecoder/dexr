@@ -4,7 +4,7 @@
             <li><i class="fa fa-home pr-10"></i><a href="/">dexr.</a></li>
             <li class="active">Search Corpus</li>
         </ol>
-        <?php if (isset($_POST['search'])) { ?><span class="pull-right small" style="position:absolute; right:20px; bottom:8px;"><i class="fa fa-exclamation-triangle orange"></i> Results limited to 25 & data obfuscated. Create a dataset for records up to 10,000, full contact details & <a href="https://zapier.com" target="_blank">Zaps <i class="fa fa-external-link"></i></a></span><?php } ?>
+        <?php if (isset($_POST['search'])) { ?><span class="pull-right small" style="position:absolute; right:20px; bottom:8px;"><i class="fa fa-exclamation-triangle orange"></i> Results limited to 25. Create a dataset for records up to 10,000 & <a href="https://zapier.com" target="_blank">Zaps <i class="fa fa-external-link"></i></a></span><?php } ?>
     </div>
 </div>
 
@@ -86,7 +86,7 @@
                         if (isset($_POST['keyword'][0])) {
                             echo $this->input->post('keyword')[0];
                         }
-                        ?>" class="form-control input-sm" placeholder="Domain Name Contains..." autocomplete="new-password" required="true">                                
+                        ?>" class="form-control input-sm" placeholder="Domain Name Contains..." autocomplete="new-password">                                
                     </div>                    
                 </div>
                 <hr>
@@ -346,7 +346,7 @@
             <?php } else { ?>
                 <h1 class="text-center blue" style="margin-top:11%;">{ Too Much Data }<br><p style="font-size:.8em; color:#dedede;">Please limit your results</p></h1>
                 <p class="text-center" style="margin-top:45px;">
-                    <?php if (!isset($_POST['search'])) { ?><i class="fa fa-exclamation-triangle orange"></i> Results limited to 25 & data obfuscated.<br>Create a dataset for records up to 10,000, full contact details & <a href="https://zapier.com" target="_blank">Zaps <i class="fa fa-external-link"></i></a><?php } ?>
+                    <?php if (!isset($_POST['search'])) { ?><i class="fa fa-exclamation-triangle orange"></i> Results limited to 25.<br>Create a dataset for records up to 10,000 & <a href="https://zapier.com" target="_blank">Zaps <i class="fa fa-external-link"></i></a><?php } ?>
                 </p>
 
 
