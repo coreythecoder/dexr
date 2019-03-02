@@ -13,17 +13,17 @@
         <div class="col-md-12" style="margin-top:25px; margin-bottom:80px;">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>
+                    <h1 class="mobile-center">
                         <?php echo ucwords(strtolower($name)); ?> in <?php echo $city; ?>, <?php echo $state_abr; ?>
                     </h1>
                     <?php if ($total >= 5) { ?>
-                        <h4>Showing 5 of <?php
+                        <h4 class="mobile-center">Showing 5 of <?php
                             if ($total >= 25) {
                                 echo ">";
                             }
                             ?><?php echo $total; ?> Registration(s) &nbsp; &nbsp; <a href="/pricing?src=name&btn=show_full_list" rel="nofollow" class="btn btn-default btn-sm">See Full List</a></h4>
                         <?php } else { ?>
-                        <h4>Showing <?php echo $total; ?> of <?php
+                        <h4 class="mobile-center">Showing <?php echo $total; ?> of <?php
                             if ($total >= 25) {
                                 echo ">";
                             }
@@ -31,66 +31,14 @@
                     <?php } ?>         
                 </div>                
             </div>
-            <style>
-                .others-number {
-                    font-size:2.6em;
-                    font-weight:bold;                    
-                    margin-right:15px;
-                    margin-left:15px;
-                    color: #09afdf;
-                }
-                .others-label {
-                    position:relative;
-                    top:8px;
-                }
-                .others-list {
-                    position:relative;
-                    top:8px;
-                }
 
-            </style>
             <div class="separator"></div>
 
             <div class="row">
                 <div class="col-md-12 other-text">
-                    <h4>Our Database Contains</h4>
+                    <h4 class="mobile-center">Our Database Contains</h4>
                     <div class="row">
-                        <div class="col-md-3 other-text">
-                            <div class="col-md-4 text-center">
-                                <div class="others-number">2</div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="others-label small">Emails</div>
-                                <div class="others-list small">CDS****@gmail.com, CDS****@aol.com</div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 other-text">
-                            <div class="col-md-4 text-center">
-                                <div class="others-number">4</div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="others-label small">Cities</div>
-                                <div class="others-list small">Dallas, TX, Debary, FL, Deland, FL</div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 other-text">
-                            <div class="col-md-4 text-center">
-                                <div class="others-number">3</div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="others-label small">Phone #s</div>
-                                <div class="others-list small">(972) 555-****, (352) 555-****, (972) 555-****</div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 other-text">
-                            <div class="col-md-4 text-center">
-                                <div class="others-number">4</div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="others-label small">Addresses</div>
-                                <div class="others-list small">*** Main St, *** Some Ave, *** Random St</div>
-                            </div>
-                        </div>
+                        <?php echo $contains_emails.$contains_cities.$contains_phones.$contains_addresses; ?>                        
                     </div>
                 </div>                
             </div>

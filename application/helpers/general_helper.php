@@ -9,6 +9,18 @@
  * 
  */
 
+function obfuscate_address($address) {
+    
+    $ex = explode(" ", $address);
+    $first = array_shift($ex);
+    
+    return "*** ".implode(" ", $ex);
+}
+
+function obfuscate_phone($phone) {
+    return substr($phone, 0, -2) . '**';
+}
+
 function obfuscate_email($email) {
     $em = explode("@", $email);
     $name = implode(array_slice($em, 0, count($em) - 1), '@');

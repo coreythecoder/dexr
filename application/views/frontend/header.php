@@ -63,7 +63,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             .other-text {
                 padding:10px;
             }
+            .others-number {
+                font-size:2.6em;
+                font-weight:bold;                    
+                margin-right:5px;
+                margin-left:15px;
+                color: #09afdf;
+                text-align:right;
+            }
+            .others-label {
+                position:relative;
+                top:8px;
+            }
+            .others-list {
+                position:relative;
+                top:8px;
+            }
+
             @media (max-width:600px){
+                .mobile-center {
+                    text-align:center;
+                }
+                .others-number {
+                    margin-right:15px;
+                    margin-left:15px;
+                }
                 .other-names .col-md-3 {
                     margin-bottom:10px;
                 }
