@@ -44,6 +44,18 @@ class Db_model extends CI_Model {
             return false;
         }
     }
+    
+    function getUserReports($uid) {
+        $db = $this->load->database('default', TRUE);
+        $sql = "SELECT * FROM user_reports WHERE user_id = '" . $uid . "'";
+        $re = $db->query($sql);
+
+        if ($re->num_rows() > 0) {
+            return $re->result();
+        } else {
+            return false;
+        }
+    }
 
     function insertDataset($uid, $name, $table) {
         $db = $this->load->database('default', TRUE);

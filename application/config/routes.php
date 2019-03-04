@@ -144,6 +144,9 @@ if ($currHost[0] == 'app') {
 }
 
 $route['datasets'] = "home/datasets";
+$route['reports'] = "home/reports";
+$route['report/(:any)'] = "home/report/$1";
+
 $route['dataset/(:any)/(:any)/(:any)'] = "home/dataset/$1/$2/$3";
 
 $route['scrub'] = "home/scrub";

@@ -20,7 +20,6 @@ class Home extends CI_Controller {
         if (!$this->user->loggedin) {
             redirect("/login");
         }
-      
     }
 
     public function index() {
@@ -30,7 +29,7 @@ class Home extends CI_Controller {
 
         $this->load->model('db_model');
         $this->load->helper("stripe");
-        
+
         $data['userType'] = $this->db_model->userPlanType($this->user->info->ID);
 
         $data['error'] = "";
@@ -52,7 +51,7 @@ class Home extends CI_Controller {
             }
         }
 
-        if (isset($_POST['search']) && (!empty($_POST['keyword'][0]) || !empty($_POST['keyword'][1]) || !empty($_POST['keyword'][2]) || !empty($_POST['keyword'][3]) || !empty($_POST['keyword'][4]) || !empty($_POST['keyword'][5]) || !empty($_POST['keyword'][6]) || !empty($_POST['keyword'][7]) || !empty($_POST['keyword'][8]))) { 
+        if (isset($_POST['search']) && (!empty($_POST['keyword'][0]) || !empty($_POST['keyword'][1]) || !empty($_POST['keyword'][2]) || !empty($_POST['keyword'][3]) || !empty($_POST['keyword'][4]) || !empty($_POST['keyword'][5]) || !empty($_POST['keyword'][6]) || !empty($_POST['keyword'][7]) || !empty($_POST['keyword'][8]))) {
             $data['list'] .= '<tr><th><strong>Organization</strong></th><th>Contact</th><th>Address</th><th>Created</th></tr>';
             if ($this->input->post('daterangeTrue')) {
                 $query = $this->db_model->applyFilters($_POST, 25, $this->input->post('daterange'));
@@ -381,6 +380,58 @@ class Home extends CI_Controller {
 
         $this->load->view('header', $data);
         $this->load->view('home/datasets');
+        $this->load->view('footer');
+    }
+
+    public function reports() {
+        if (defined('REQUEST') && REQUEST == "external") {
+            return;
+        }
+
+        $this->load->model('db_model');
+        $this->load->helper("stripe");
+        $data['userType'] = $this->db_model->userPlanType($this->user->info->ID);
+        $data['reportList'] = "";
+
+        $reports = $this->db_model->getUserReports($this->user->info->ID);
+        if ($reports) {
+            $data['reportList'] .= "<tr><th>Name, City, State</th><th style='text-align:right;'>Created</th></tr>";
+            foreach ($reports as $report) {
+                $data['reportList'] .= "<tr><td><a href='/report/" . $report->ID . "' target='_blank'>" . ucwords(unslugify($report->name_city_slug)) . "</a></td><td style='text-align:right;'>" . $report->created . "</td></tr>";
+            }
+        }
+
+        $data['metaTitle'] = "My Name Reports";
+        $data['metaDescription'] = "";
+
+        $this->load->view('header', $data);
+        $this->load->view('home/reports');
+        $this->load->view('footer');
+    }
+
+    public function report($rid) {
+        if (defined('REQUEST') && REQUEST == "external") {
+            return;
+        }
+
+        $this->load->model('db_model');
+        $this->load->helper("stripe");
+        $data['userType'] = $this->db_model->userPlanType($this->user->info->ID);
+        $data['reportList'] = "";
+
+        $reports = $this->db_model->getUserReports($this->user->info->ID);
+        if ($reports) {
+            $data['reportList'] .= "<tr><th>Name, City, State</th><th style='text-align:right;'>Created</th></tr>";
+            foreach ($reports as $report) {
+                $data['reportList'] .= "<tr><td><a href='/reports/" . $report->ID . "' target='_blank'>" . ucwords(unslugify($report->name_city_slug)) . "</a></td><td style='text-align:right;'>" . $report->created . "</td></tr>";
+            }
+        }
+
+        $data['metaTitle'] = "My Name Reports";
+        $data['metaDescription'] = "";
+
+        $this->load->view('header', $data);
+        $this->load->view('home/reports');
         $this->load->view('footer');
     }
 
