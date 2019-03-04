@@ -47,15 +47,93 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- Custom css --> 
         <link href="/assets/themes/v4/css/custom.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+<style>
+            .state-list {
+                margin-top:25px; 
+                margin-bottom:80px;
+            }
+            .nearby-cities {
+                margin-top:25px; 
+                margin-bottom:80px;
+            }
+            .city-list {
+                margin-top:25px; 
+                margin-bottom:80px;
+            }
+            .letter-list {
+                margin-top:25px; 
+                margin-bottom:80px;
+            }
+            .word-break {
+                word-break: break-all;
+            }
+            .other-text {
+                padding:10px;
+            }
+            .others-number {
+                font-size:2.6em;
+                font-weight:bold;                    
+                margin-right:5px;
+                margin-left:15px;
+                color: #09afdf;
+                text-align:right;
+            }
+            .others-label {
+                position:relative;
+                top:8px;
+            }
+            .others-list {
+                position:relative;
+                top:8px;
+            }
 
+            @media (max-width:600px){
+                .mobile-center {
+                    text-align:center;
+                }
+                .others-number {
+                    margin-right:15px;
+                    margin-left:15px;
+                }
+                .other-names .col-md-3 {
+                    margin-bottom:10px;
+                }
+                .state-list .col-md-3 {
+                    margin-bottom:10px;
+                }
+                .main-navigation {
+                    position: absolute;
+                    top: -65px;
+                    right: 0px;
+                    z-index:999;
+                }
+                .state-list .col-md-4 {
+                    margin-bottom: 10px;
+                }
+                .nearby-cities .col-md-4 {
+                    margin-bottom:10px;
+                }
+                .city-list .col-md-4 {
+                    margin-bottom:10px;
+                }
+                .letter-list .col-md-4 {
+                    margin-bottom: 10px;
+                }
+                body > div.page-wrapper > div.breadcrumb-container > div > ol > li > a {
+                    line-height: 2em;
+                }
+                .breadcrumb {
+                    text-align:center;
+                }
+                .copyright {
+                    text-align:right;
+                    margin-right:40px;
+                }
+
+            }
+        </style>
     </head>
 
-    <!-- body classes:  -->
-    <!-- "boxed": boxed layout mode e.g. <body class="boxed"> -->
-    <!-- "pattern-1 ... pattern-9": background patterns for boxed layout mode e.g. <body class="boxed pattern-1"> -->
-    <!-- "transparent-header": makes the header transparent and pulls the banner to top -->
-    <!-- "gradient-background-header": applies gradient background to header -->
-    <!-- "page-loader-1 ... page-loader-6": add a page loader to the page (more info @components-page-loaders.html) -->
     <body class="no-trans    ">
 
         <!-- scrollToTop -->

@@ -493,7 +493,7 @@ class Home extends CI_Controller {
                 }
 
                 if ($i == 0) {
-                    $data['domains'] .= "<div class='col-md-12'><p>" . ucwords(str_replace('-', ' ', strtolower($name))) . " was located at " . ucwords(strtolower($d->registrant_address)) . " in " . $data['city'] . ", " . strtoupper($state) . " when they registered " . ucwords($d->domain_name) . " at " . str_replace('Llc', 'LLC', ucwords(strtolower($d->domain_registrar_name))) . "." . $created . $expires . $updated . $contact . " We have " . $data['total'] . " domain registration(s) total in our database, " . $totalListed . " of which are listed below. For the complete list please create an account, <a href='/pricing?src=name&link=description' rel='nofollow'>click here for pricing</a>.</p><div class='separator'></div></div>";
+                    //$data['domains'] .= "<div class='col-md-12'><p>" . ucwords(str_replace('-', ' ', strtolower($name))) . " was located at " . ucwords(strtolower($d->registrant_address)) . " in " . $data['city'] . ", " . strtoupper($state) . " when they registered " . ucwords($d->domain_name) . " at " . str_replace('Llc', 'LLC', ucwords(strtolower($d->domain_registrar_name))) . "." . $created . $expires . $updated . $contact . " We have " . $data['total'] . " domain registration(s) total in our database, " . $totalListed . " of which are listed below. For the complete list please create an account, <a href='/pricing?src=name&link=description' rel='nofollow'>click here for pricing</a>.</p><div class='separator'></div></div>";
                 }
 
                 $data['domains'] .= "<div class='col-md-9'>";
@@ -581,28 +581,6 @@ class Home extends CI_Controller {
                         . "</div>";
 
 
-                /*
-                  if (!empty($d->num)) {
-                  $sim = $this->frontend_model->getSimilarDomains($d->num);
-                  if ($sim) {
-                  $data['domains'] .= "</div><div class='row'><div class='col-md-1'></div>";
-                  $data['domains'] .= "<div class='col-md-11'>";
-                  $data['domains'] .= "<div class='row' style='margin-bottom:80px;'><div class='col-md-12'><h5 style='border-bottom:1px solid #ddd; padding-bottom:8px;'>Similar Web Sites</h5></div><div class='col-md-12'>";
-                  foreach ($sim as $s) {
-                  $domainInfo = $this->frontend_model->getDomainInfoByID($s->domain_ID);
-                  if ($domainInfo) {
-                  if ($domainInfo[0]->domain_name !== $d->domain_name) {
-                  $data['domains'] .= "<div class='col-md-4' style='margin-bottom:10px;'><a href='/" . strtolower($domainInfo[0]->registrant_state) . "/" . $domainInfo[0]->city_slug . "/" . $domainInfo[0]->name_slug . "'>" . ucwords(strtolower($domainInfo[0]->registrant_name)) . "</a><br><small>" . $domainInfo[0]->domain_name . "</small></div>";
-                  }
-                  }
-                  }
-                  $data['domains'] .= "</div>";
-                  $data['domains'] .= "</div></div>";
-                  }
-                  }
-                 * 
-                 */
-
                 if ($i < 3) {
                     $siteList[] = $d->domain_name;
                     $i++;
@@ -622,7 +600,7 @@ class Home extends CI_Controller {
 
             if ($domainBucket['emails']) {
                 foreach ($domainBucket['emails'] as $bucketEmails) {
-                    $bucketFromEmail = $this->frontend_model->getAllFromEmail($bucketEmails, 10);
+                    $bucketFromEmail = $this->frontend_model->getAllFromEmail($bucketEmails, 20);
                     if ($bucketFromEmail) {
                         foreach ($bucketFromEmail as $bfe) {
                             if (!in_array($bfe->domain_name, $domainBucket['theseDomains'])) {
@@ -644,7 +622,7 @@ class Home extends CI_Controller {
 
             if ($domainBucket['phones']) {
                 foreach ($domainBucket['phones'] as $bucketPhones) {
-                    $bucketFromPhone = $this->frontend_model->getAllFromPhone($bucketPhones, 10);
+                    $bucketFromPhone = $this->frontend_model->getAllFromPhone($bucketPhones, 20);
                     if ($bucketFromPhone) {
                         foreach ($bucketFromPhone as $bfe) {
                             if (!in_array($bfe->domain_name, $domainBucket['theseDomains'])) {
@@ -666,7 +644,7 @@ class Home extends CI_Controller {
 
             if ($domainBucket['addresses']) {
                 foreach ($domainBucket['addresses'] as $bucketAddress) {
-                    $bucketFromAddress = $this->frontend_model->getAllFromAddress($bucketAddress, 10);
+                    $bucketFromAddress = $this->frontend_model->getAllFromAddress($bucketAddress, 20);
                     if ($bucketFromAddress) {
                         foreach ($bucketFromPhone as $bfe) {
                             if (!in_array($bfe->domain_name, $domainBucket['theseDomains'])) {
@@ -751,14 +729,16 @@ class Home extends CI_Controller {
 // BEGIN LINKED DOMAINS
 
             if ($newBucket['domains'] && !empty($newBucket['domains'])) {
+                
+                $data['domains'] .= "<hr></hr><div class='row' style='margin-bottom:40px;'><div class='col-md-12'><h2>Linked Registrations</h2></div><p>Below are registrations we've discovered linked by phone, street address or phone number.</p></div>";
 
-                foreach ($newBucket['domains'] as $match_field=>$array) {
-                    foreach ($array as $k=>$match_value) {
+                foreach ($newBucket['domains'] as $match_field => $array) {
+                    foreach ($array as $k => $match_value) {
 
                         $d = $this->frontend_model->getDomainInfoByDomain($k, $match_field, $match_value);
-                        
+
                         $data['domains'] .= "<div class='row domain'>";
-                        $data['domains'] .= "<div class='col-md-12'><h2 class='word-break'><i class='fa fa-asterisk' style='color:#09afdf;'></i> " . $d->domain_name . "</h2><div class='separator'></div></div>";
+                        $data['domains'] .= "<div class='col-md-12'><h2 class='word-break'><i class='fa fa-asterisk' style='color:#09afdf;'></i> " . $d->domain_name . " &nbsp; <span style='font-size:.6em;' class='pull-right'>(Matched by " . ucwords(unslugify($match_field)) . ": " . $match_value . ")</span></h2><div class='separator'></div></div>";
 
                         $created = "";
                         if (!empty($d->created_date_normalized)) {
