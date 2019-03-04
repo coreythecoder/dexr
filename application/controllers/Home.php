@@ -443,7 +443,7 @@ class Home extends CI_Controller {
         $siteList = array();
         $i = 0;
 
-        $domains = $this->frontend_model->getDomainsByCityStateName($city, $state, $name);
+        $domains = $this->frontend_model->getDomainsByCityStateName($city, $state, $name, 50);
         $nId = $this->frontend_model->getNameIdFromNameSlugCityState($city, $state, $name);
         $data['total'] = $domains['total'];
 
@@ -603,7 +603,7 @@ class Home extends CI_Controller {
                 }
 
 
-
+/*
                 if (!empty($d->num)) {
                     $sim = $this->frontend_model->getSimilarDomains($d->num);
                     if ($sim) {
@@ -622,6 +622,8 @@ class Home extends CI_Controller {
                         $data['domains'] .= "</div></div>";
                     }
                 }
+ * 
+ */
 
                 if ($i < 3) {
                     $siteList[] = $d->domain_name;
@@ -707,6 +709,8 @@ class Home extends CI_Controller {
             }
 
             //echo var_dump($newBucket);
+            
+            $data['contains_cities'] = "";
 
             if (!isset($newBucket['addresses'])) {
                 $newBucket['addresses'] = array();
@@ -714,10 +718,11 @@ class Home extends CI_Controller {
             $obfuscated = array();
             $merged = array_merge($newBucket['addresses'], $domainBucket['addresses']);
             foreach ($merged as $address) {
-                $obfuscated[] = ucwords(obfuscate_address(unslugify(explode("|", $address)[0])));
+                $ex = explode("|", $address);
+                $obfuscated[] = ucwords(unslugify($ex[0]).' '.$ex[1]).", ".strtoupper($ex[2]);
             }
             $data['contains_addresses'] = '
-                    <div class="col-md-3 other-text">
+                    <div class="col-md-4 other-text">
                         <div class="col-md-4 text-center">
                             <div class="others-number mobile-center">' . count(array_merge($newBucket['addresses'], $domainBucket['addresses'])) . '</div>
                         </div>
@@ -733,10 +738,10 @@ class Home extends CI_Controller {
             $obfuscated = array();
             $merged = array_merge($newBucket['phones'], $domainBucket['phones']);
             foreach ($merged as $phone) {
-                $obfuscated[] = obfuscate_phone(formatPhoneNumber($phone));
+                $obfuscated[] = formatPhoneNumber($phone);
             }
             $data['contains_phones'] = '
-                    <div class="col-md-3 other-text">
+                    <div class="col-md-4 other-text">
                         <div class="col-md-4 text-center">
                             <div class="others-number mobile-center">' . count(array_merge($newBucket['phones'], $domainBucket['phones'])) . '</div>
                         </div>
@@ -746,40 +751,16 @@ class Home extends CI_Controller {
                         </div>
                     </div>';
 
-
-            if (!isset($newBucket['cities'])) {
-                $newBucket['cities'] = array();
-            }
-            $unslugged = array();
-            $merged = array_merge($newBucket['cities'], $domainBucket['cities']);
-            foreach ($merged as $city) {
-                if (strlen($city) > 2) {
-                    $ex = explode(", ", $city);
-                    $unslugged[] = ucwords(unslugify($ex[0])) . ", " . strtoupper($ex[1]);
-                }
-            }
-
-            $data['contains_cities'] = '
-                    <div class="col-md-3 other-text">
-                        <div class="col-md-4 text-center">
-                            <div class="others-number mobile-center">' . count(array_merge($newBucket['cities'], $domainBucket['cities'])) . '</div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="others-label small mobile-center">Cities</div>
-                            <div class="others-list small mobile-center"><strong>' . implode(",<br>", $unslugged) . '</strong></div>
-                        </div>
-                    </div>';
-
             if (!isset($newBucket['emails'])) {
                 $newBucket['emails'] = array();
             }
             $obfuscated = array();
             $merged = array_merge($newBucket['emails'], $domainBucket['emails']);
             foreach ($merged as $email) {
-                $obfuscated[] = obfuscate_email($email);
+                $obfuscated[] = $email;
             }
             $data['contains_emails'] = '
-                    <div class="col-md-3 other-text">
+                    <div class="col-md-4 other-text">
                         <div class="col-md-4 text-center">
                             <div class="others-number mobile-center">' . count(array_merge($newBucket['emails'], $domainBucket['emails'])) . '</div>
                         </div>
@@ -795,21 +776,6 @@ class Home extends CI_Controller {
             $idRollList = "";
             $data['names'] = "";
 
-            if ($nId[0]->ID && !empty($nId[0]->ID)) {
-                $idRoll = $this->frontend_model->getSomeNamesByID($nId[0]->ID);
-                if ($idRoll) {
-                    foreach ($idRoll as $ir) {
-                        $idRollList .= "<div class='col-md-3'><a href='/" . $ir->state . "/" . $ir->city_slug . "/" . $ir->name_slug . "'>" . ucwords(strtolower($ir->name)) . "</a></div>";
-                    }
-                    $data['names'] .= '
-                                            <div class="col-md-12">
-                                                <h4>Other Popular People & Businesses</h4>
-                                                    <div class="separator"></div>
-                                                ' . $idRollList . '
-                                            </div>
-                                        ';
-                }
-            }
 
             //$data['domains'] .= "</div>";
         } else {
