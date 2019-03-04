@@ -232,6 +232,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         <li class=" mega-menu">
                                                             <a href="/datasets"><i class="fa fa-database"></i> My Datasets</a>														
                                                         </li>
+                                                        <li class=" mega-menu">
+                                                            <a href="/reports"><i class="fa fa-users"></i> My Name Reports</a>														
+                                                        </li>
                                                         <!-- mega-menu end -->
 
                                                     </ul>

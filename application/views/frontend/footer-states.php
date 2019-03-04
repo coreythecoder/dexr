@@ -59,5 +59,41 @@
 <script type="text/javascript" src="https://static.dexr.io/assets/themes/v4/plugins/jquery.browser.js"></script>
 <script type="text/javascript" src="https://static.dexr.io/assets/themes/v4/plugins/SmoothScroll.js"></script>
 <script type="text/javascript" src="https://static.dexr.io/assets/themes/v4/js/template.js"></script>
+<script>
+    jQuery(document).ready(function () {
+        jQuery("#checkout_modal").click(function () {
+            window.GoogleAnalyticsObject = 'analytics';
+            jQuery.getScript('//www.google-analytics.com/analytics.js', function () {
+                analytics('create', 'UA-133857018-1', 'auto');
+                analytics('send', 'event', 'download_btn', 'click');
+            });
+
+        });
+        jQuery("#99_checkout_btn").click(function () {
+            window.GoogleAnalyticsObject = 'analytics';
+            jQuery.getScript('//www.google-analytics.com/analytics.js', function () {
+                analytics('create', 'UA-133857018-1', 'auto');
+                analytics('send', 'event', '99_checkout_btn', 'click');
+            });
+
+        });
+        jQuery("#9_99_checkout_btn").click(function () {
+            window.GoogleAnalyticsObject = 'analytics';
+            jQuery.getScript('//www.google-analytics.com/analytics.js', function () {
+                analytics('create', 'UA-133857018-1', 'auto');
+                analytics('send', 'event', '9_99_checkout_btn', 'click');
+            });
+
+        });
+        jQuery(".uncover_btn").click(function () {
+            window.GoogleAnalyticsObject = 'analytics';
+            jQuery.getScript('//www.google-analytics.com/analytics.js', function () {
+                analytics('create', 'UA-133857018-1', 'auto');
+                analytics('send', 'event', 'uncover_btn', 'click');
+            });
+
+        });
+    });
+</script>
 </body>
 </html>

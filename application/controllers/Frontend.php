@@ -300,7 +300,7 @@ class Frontend extends CI_Controller {
                 }
 
                 if (!empty($d->registrant_email)) {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Email</div><div class='col-info'><small><a class='btn btn-default-transparent' href='/pricing?src=name&btn=uncover_email' rel='nofollow'>Uncover Email<br>" . obfuscate_email($d->registrant_email) . "</a></small></div></div>";
+                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Email</div><div class='col-info'><small><button data-toggle='modal' data-target='#exampleModal' type='button' class='btn btn-default-transparent uncover_btn'>Uncover Email<br>" . obfuscate_email($d->registrant_email) . "</button></small></div></div>";
                 } else {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Email</div><div class='col-info'>-</div></div>";
                 }
@@ -453,9 +453,91 @@ class Frontend extends CI_Controller {
                 }
             }
 
-            echo var_dump($newBucket);
+            //echo var_dump($newBucket);
 
-            
+            if (!isset($newBucket['addresses'])) {
+                $newBucket['addresses'] = array();
+            }
+            $obfuscated = array();
+            $merged = array_merge($newBucket['addresses'], $domainBucket['addresses']);
+            foreach ($merged as $address) {
+                $obfuscated[] = ucwords(obfuscate_address(unslugify(explode("|", $address)[0])));
+            }
+            $data['contains_addresses'] = '
+                    <div class="col-md-3 other-text">
+                        <div class="col-md-4 text-center">
+                            <div class="others-number mobile-center">' . count(array_merge($newBucket['addresses'], $domainBucket['addresses'])) . '</div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="others-label small mobile-center">Address(es)</div>
+                            <div class="others-list small mobile-center"><strong>' . implode(",<br>", $obfuscated) . '</strong></div>
+                        </div>
+                    </div>';
+
+            if (!isset($newBucket['phones'])) {
+                $newBucket['phones'] = array();
+            }
+            $obfuscated = array();
+            $merged = array_merge($newBucket['phones'], $domainBucket['phones']);
+            foreach ($merged as $phone) {
+                $obfuscated[] = obfuscate_phone(formatPhoneNumber($phone));
+            }
+            $data['contains_phones'] = '
+                    <div class="col-md-3 other-text">
+                        <div class="col-md-4 text-center">
+                            <div class="others-number mobile-center">' . count(array_merge($newBucket['phones'], $domainBucket['phones'])) . '</div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="others-label small mobile-center">Phone(s)</div>
+                            <div class="others-list small mobile-center"><strong>' . implode(",<br>", $obfuscated) . '</strong></div>
+                        </div>
+                    </div>';
+
+
+            if (!isset($newBucket['cities'])) {
+                $newBucket['cities'] = array();
+            }
+            $unslugged = array();
+            $merged = array_merge($newBucket['cities'], $domainBucket['cities']);
+            foreach ($merged as $city) {
+                if (strlen($city) > 2) {
+                    $ex = explode(", ", $city);
+                    $unslugged[] = ucwords(unslugify($ex[0])) . ", " . strtoupper($ex[1]);
+                }
+            }
+
+            $data['contains_cities'] = '
+                    <div class="col-md-3 other-text">
+                        <div class="col-md-4 text-center">
+                            <div class="others-number mobile-center">' . count(array_merge($newBucket['cities'], $domainBucket['cities'])) . '</div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="others-label small mobile-center">Cities</div>
+                            <div class="others-list small mobile-center"><strong>' . implode(",<br>", $unslugged) . '</strong></div>
+                        </div>
+                    </div>';
+
+            if (!isset($newBucket['emails'])) {
+                $newBucket['emails'] = array();
+            }
+            $obfuscated = array();
+            $merged = array_merge($newBucket['emails'], $domainBucket['emails']);
+            foreach ($merged as $email) {
+                $obfuscated[] = obfuscate_email($email);
+            }
+            $data['contains_emails'] = '
+                    <div class="col-md-3 other-text">
+                        <div class="col-md-4 text-center">
+                            <div class="others-number mobile-center">' . count(array_merge($newBucket['emails'], $domainBucket['emails'])) . '</div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="others-label small mobile-center">Email(s)</div>
+                            <div class="others-list small mobile-center"><strong>' . implode(",<br>", $obfuscated) . '</strong></div>
+                        </div>
+                    </div>';
+
+
+
 
             $idRollList = "";
             $data['names'] = "";

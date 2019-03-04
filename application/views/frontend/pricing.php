@@ -21,7 +21,7 @@
                     <div class="col-sm-4 plan stripped">
                         <div class="header dark-bg">
                             <h3>Pro</h3>
-                            <div class="price"><span>$250</span>/m.</div>
+                            <div class="price"><span>$100</span>/m.</div>
                         </div>
                         <ul>
                             <li>All Premium Options +</li>
@@ -40,7 +40,7 @@
                     <div class="col-sm-4 plan stripped best-value">
                         <div class="header default-bg">
                             <h3>Premium</h3>
-                            <div class="price"><span>$100</span>/m.</div>
+                            <div class="price"><span>$49</span>/m.</div>
                         </div>
                         <ul>
                             <li><b><i class="fa fa-star blue"></i> 7 Day Free Trial</b></li>                                
