@@ -33,7 +33,7 @@
                 <div class="col-md-3">
                     <button data-toggle="modal" data-target="#exampleModal" type="button" class="btn btn-default btn-block" id="checkout_modal"><i class="fa fa-arrow-down"></i>&nbsp; Download Full Report</button>
                 </div>
-            </div>
+            </div>       
 
             <div class="separator"></div>
 

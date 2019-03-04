@@ -4,7 +4,7 @@ class Frontend_model extends CI_Model {
 
     function getAllFromEmail($email, $limit = 10) {
         $db = $this->load->database('default', TRUE);
-        $sql = "SELECT domain_name, city_slug, registrant_state, registrant_phone, registrant_address FROM production_2 WHERE registrant_email = '" . $email . "' AND opt_out = '0' LIMIT " . $limit;
+        $sql = "SELECT domain_name, registrant_email, city_slug, registrant_state, registrant_phone, registrant_address FROM production_2 WHERE registrant_email = '" . $email . "' AND opt_out = '0' LIMIT " . $limit;
         $re = $db->query($sql);
 
         if ($re->num_rows() > 0) {
@@ -203,6 +203,22 @@ class Frontend_model extends CI_Model {
 
         if ($re->num_rows() > 0) {
             return $re->result();
+        } else {
+            return false;
+        }
+    }
+
+    function getDomainInfoByDomain($domain, $match_field, $match_value) {
+
+        $db = $this->load->database('default', TRUE);
+
+        $sql = "SELECT * FROM production_2 WHERE domain_name = '" . $domain . "' AND " . $match_field . " = '" . $match_value . "' LIMIT 1";
+
+        $re = $db->query($sql);
+
+        if ($re->num_rows() > 0) {
+            $r = $re->result();
+            return $r[0];
         } else {
             return false;
         }
