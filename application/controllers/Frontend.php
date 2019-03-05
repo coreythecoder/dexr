@@ -168,13 +168,31 @@ class Frontend extends CI_Controller {
     }
 
     public function name($state, $city, $name, $page = false) {
-
+/*
+ * // REDIRECT FOR SPECIAL CHARS
         $currPath = $_SERVER['REQUEST_URI'];
+        $redirChars = array("%A0", "%C2", "%C3", "%A3", "%A1", "%AD", "%84", "%E2", "%A2", "%BA", "%B1", "%20", "%BC", "%A9", "%A7", "%C5");
 
-        if (isset($currPath) && substr($currPath, -1) == '-') {
-            redirect("https://dexr.io" . substr_replace($currPath, "", -1), 'location', 301);
-            exit();
+        if (isset($currPath)) {
+            foreach ($redirChars as $char) {
+                if (strpos($currPath, $char) !== FALSE) {
+                    $currPath = str_replace($char, "-", $currPath);
+                } 
+            }
+            $newPath = str_replace("--", "-", $currPath);
+            $newPath = preg_replace('/-+/', '-', $newPath);
+            if (substr($newPath, -1) == "-") {
+                $newPath = substr_replace($newPath, "", -1);
+            }
+            if ($currPath !== $newPath) {
+                echo $currPath . " => " . $newPath;
+                exit();
+            }
+
+            //redirect("https://dexr.io" . substr_replace($currPath, "", -1), 'location', 301);
         }
+ * 
+ */
 
         if ($page == '1') {
             //header('Location: /' . $state . "/" . $city . "/" . $name);
