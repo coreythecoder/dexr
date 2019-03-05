@@ -158,7 +158,6 @@ class Frontend extends CI_Controller {
             }
         }
 
-
         $data['metaTitle'] = "List of " . $data['city'] . ", " . strtoupper($data['state_abr']) . " Business Owners & Web Site Owners";
         $data['metaDescription'] = "Dexr is the leading provider for " . $data['city'] . ", " . strtoupper($data['state_abr']) . " Business Owner & Web Site Owner lists available for download. Our database contains full contact info such as owner name, email, phone and address.";
 
