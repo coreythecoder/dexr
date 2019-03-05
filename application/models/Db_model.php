@@ -44,7 +44,7 @@ class Db_model extends CI_Model {
             return false;
         }
     }
-    
+
     function getUserReports($uid) {
         $db = $this->load->database('default', TRUE);
         $sql = "SELECT * FROM user_reports WHERE user_id = '" . $uid . "'";
@@ -461,7 +461,7 @@ CREATE TABLE `" . $table . "` (
                 $endDate = $e[1];
                 //$res .= " ((STR_TO_DATE(create_date, '%Y-%m-%d %H:%i:%s UTC') >= STR_TO_DATE('" . $startDate . "', '%m/%d/%Y') AND STR_TO_DATE(create_date, '%Y-%m-%d %H:%i:%s UTC') <= STR_TO_DATE('" . $endDate . "', '%m/%d/%Y')) OR (STR_TO_DATE(create_date, '%d-%b-%y') >= STR_TO_DATE('" . $startDate . "', '%m/%d/%Y') AND STR_TO_DATE(create_date, '%d-%b-%y') <= STR_TO_DATE('" . $endDate . "', '%m/%d/%Y'))) AND ";
 
-                 $startDate = explode('/', $startDate);
+                $startDate = explode('/', $startDate);
                 $endDate = explode('/', $endDate);
                 $startDate = $startDate[2] . "-" . $startDate[0] . "-" . $startDate[1];
                 $endDate = $endDate[2] . "-" . $endDate[0] . "-" . $endDate[1];
@@ -720,7 +720,7 @@ CREATE TABLE `" . $table . "` (
                 $endDate = $e[1];
                 //$res .= " ((STR_TO_DATE(create_date, '%Y-%m-%d %H:%i:%s UTC') >= STR_TO_DATE('" . $startDate . "', '%m/%d/%Y') AND STR_TO_DATE(create_date, '%Y-%m-%d %H:%i:%s UTC') <= STR_TO_DATE('" . $endDate . "', '%m/%d/%Y')) OR (STR_TO_DATE(create_date, '%d-%b-%y') >= STR_TO_DATE('" . $startDate . "', '%m/%d/%Y') AND STR_TO_DATE(create_date, '%d-%b-%y') <= STR_TO_DATE('" . $endDate . "', '%m/%d/%Y'))) AND ";
 
-                 $startDate = explode('/', $startDate);
+                $startDate = explode('/', $startDate);
                 $endDate = explode('/', $endDate);
                 $startDate = $startDate[2] . "-" . $startDate[0] . "-" . $startDate[1];
                 $endDate = $endDate[2] . "-" . $endDate[0] . "-" . $endDate[1];
@@ -1896,11 +1896,12 @@ CREATE TABLE `" . $table . "` (
 
     function getReport($rid) {
         $db = $this->load->database('default', TRUE);
-        $sql = "SELECT * FROM reports WHERE ID = '" . $rid . "'";
+        $sql = "SELECT * FROM user_reports WHERE report_id = '" . $rid . "' LIMIT 1";
         $re = $db->query($sql);
 
         if ($re->num_rows() > 0) {
-            return $re->result();
+            $r = $re->result();
+            return $r[0];
         } else {
             return false;
         }
