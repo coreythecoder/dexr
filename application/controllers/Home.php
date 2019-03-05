@@ -397,7 +397,7 @@ class Home extends CI_Controller {
         if ($reports) {
             $data['reportList'] .= "<tr><th>Name, City, State</th><th style='text-align:right;'>Created</th></tr>";
             foreach ($reports as $report) {
-                $data['reportList'] .= "<tr><td><a href='/report/" . $report->report_id . "' target='_blank'><i class='fa fa-user'></i>&nbsp; " . ucwords(unslugify($report->name_slug)) . ", " . ucwords(unslugify($report->city_slug)) . ", " . strtoupper($report->state) . "</a></td><td style='text-align:right;'>" . $report->created . "</td></tr>";
+                $data['reportList'] .= "<tr><td><a href='/report/" . $report->state . "/" . $report->city_slug . "/" . $report->name_slug . "' target='_blank'><i class='fa fa-user'></i>&nbsp; " . ucwords(unslugify($report->name_slug)) . ", " . ucwords(unslugify($report->city_slug)) . ", " . strtoupper($report->state) . "</a></td><td style='text-align:right;'>" . $report->created . "</td></tr>";
             }
         }
 
@@ -409,7 +409,7 @@ class Home extends CI_Controller {
         $this->load->view('footer');
     }
 
-    public function report($rid) {
+    public function report($state, $city, $name) {
         if (defined('REQUEST') && REQUEST == "external") {
             return;
         }
@@ -427,11 +427,6 @@ class Home extends CI_Controller {
             redirect("https://dexr.io" . substr_replace($currPath, "", -1), 'location', 301);
             exit();
         }
-
-        $reportInfo = $this->db_model->getReport($rid);
-        $name = $reportInfo->name_slug;
-        $city = $reportInfo->city_slug;
-        $state = $reportInfo->state;
 
         $statesArray = statesArray();
         $data['state'] = $statesArray[strtoupper($state)];
@@ -729,7 +724,7 @@ class Home extends CI_Controller {
 // BEGIN LINKED DOMAINS
 
             if ($newBucket['domains'] && !empty($newBucket['domains'])) {
-                
+
                 $data['domains'] .= "<hr></hr><div class='row' style='margin-bottom:40px;'><div class='col-md-12'><h2>Linked Registrations</h2></div><p>Below are registrations we've discovered linked by phone, street address or phone number.</p></div>";
 
                 foreach ($newBucket['domains'] as $match_field => $array) {
