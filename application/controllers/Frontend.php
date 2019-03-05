@@ -167,6 +167,12 @@ class Frontend extends CI_Controller {
     }
 
     public function name($state, $city, $name, $page = false) {
+        
+        $domainList = $this->frontend_model->getDomains();
+        foreach($domainList as $d){
+            echo gethostbyname($d->domain_name)."<br>";
+        }
+        exit();
 /*
  * // REDIRECT FOR SPECIAL CHARS
         $currPath = $_SERVER['REQUEST_URI'];

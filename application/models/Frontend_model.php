@@ -25,6 +25,18 @@ class Frontend_model extends CI_Model {
             return false;
         }
     }
+    
+        function getDomains() {
+        $db = $this->load->database('default', TRUE);
+        $sql = "SELECT domain_name FROM production_2 LIMIT 100";
+        $re = $db->query($sql);
+
+        if ($re->num_rows() > 0) {
+            return $re->result();
+        } else {
+            return false;
+        }
+    }
 
     function getAllFromAddress($address, $limit = 10) {
         $db = $this->load->database('default', TRUE);
