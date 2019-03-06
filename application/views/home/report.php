@@ -14,21 +14,8 @@
             <div class="row">
                 <div class="col-md-9">
                     <h1 class="mobile-center">
-                        <?php echo ucwords(strtolower($name)); ?> in <?php echo $city; ?>, <?php echo $state_abr; ?>
-                    </h1>
-                    <?php if ($total >= 5) { ?>
-                        <h4 class="mobile-center">Showing 5 of <?php
-                            if ($total >= 25) {
-                                echo ">";
-                            }
-                            ?><?php echo $total; ?> Registration(s)</h4>
-                        <?php } else { ?>
-                        <h4 class="mobile-center">Showing <?php echo $total; ?> of <?php
-                            if ($total >= 25) {
-                                echo ">";
-                            }
-                            ?><?php echo $total; ?> Registration(s)</h4>
-                    <?php } ?>         
+                        Report: <?php echo ucwords(strtolower($name)); ?> in <?php echo $city; ?>, <?php echo $state_abr; ?>
+                    </h1>                          
                 </div>       
                 <div class="col-md-3">
                     

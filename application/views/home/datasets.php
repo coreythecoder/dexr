@@ -38,7 +38,7 @@
             </div>
         </div> -->
 
-        
+
 
         <div class='row' style='margin-top:10px;'>
             <div class="col-sm-12">
@@ -47,13 +47,18 @@
                         <?php if (isset($datasetList)) echo $datasetList; ?>
                     </table>            
                 <?php } else { ?>
-                    <h1 class="text-center blue" style="margin-top:8%;">{ No Datasets }<br><?php if($userType !== 'admin' && $userType !== 'free_pro' && $userType !== 'free_premium' && (!hasSubscription("plan_EOP7ViqCXFPfte") || !hasSubscription("plan_EOP6GRC06U4CFz"))){ echo "<div style='font-size:.7em; color:#ddd; margin:20px;'>You must have a paid plan to save datasets.</div>"; } else { ?><p style="font-size:.8em; color:#dedede;">Please create a dataset</p><?php } ?>
+                    <h1 class="text-center blue" style="margin-top:8%;">{ No Datasets }<br><?php if ($userType !== 'admin' && $userType !== 'free_pro' && $userType !== 'free_premium' && (!hasSubscription("plan_EOP7ViqCXFPfte") || !hasSubscription("plan_EOP6GRC06U4CFz"))) {
+                    echo "<div style='font-size:.7em; color:#ddd; margin:20px;'>You must have a paid plan to save datasets.</div>";
+                } else { ?><p style="font-size:.8em; color:#dedede;">Please create a dataset</p><?php } ?>
                         <div class="row">
-                            <a class="btn btn-default btn-sm <?php if(!hasSubscription("plan_EOP7ViqCXFPfte") || !hasSubscription("plan_EOP6GRC06U4CFz")){ echo "noThinker"; } ?>" type="button" <?php if(hasSubscription("plan_EOP7ViqCXFPfte") || hasSubscription("plan_EOP6GRC06U4CFz") || $userType == 'admin' || $userType == 'free_pro' || $userType == 'free_premium'){ ?>href="/" <?php } else { echo "disabled"; } ?>><i class="fa fa-toggle-on"></i> Create A Dataset</a> 
+                            <a class="btn btn-default btn-sm <?php if (!hasSubscription("plan_Ect6UjkS61gIb5") || !hasSubscription("plan_EOPfv7iEDXLQFy")) {
+                    echo "noThinker";
+                } ?>" type="button" <?php if (hasSubscription("plan_EOP7ViqCXFPfte") || hasSubscription("plan_EOP6GRC06U4CFz") || $userType == 'admin' || $userType == 'free_pro' || $userType == 'free_premium') { ?>href="/" <?php } else {
+                    echo "disabled";
+                } ?>><i class="fa fa-toggle-on"></i> Create A Dataset</a> 
                         </div>                        
-                </div>
-                </h1>
-            <?php } ?>
+                </div>                
+<?php } ?>
         </div>   
 
     </div>                        
