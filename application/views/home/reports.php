@@ -25,9 +25,9 @@
                         <?php if (isset($reportList)) echo $reportList; ?>
                     </table>            
                 <?php } else { ?>
-                    <h1 class="text-center blue" style="margin-top:14%;">{ No Datasets }<br><?php if ($userType !== 'admin' && $userType !== 'free_pro' && $userType !== 'free_premium' && (!hasSubscription("plan_EOP7ViqCXFPfte") || !hasSubscription("plan_EOP6GRC06U4CFz"))) {
-                    echo "<div style='font-size:.7em; color:#ddd; margin:20px;'>You must have a paid plan to save datasets.</div>";
-                } else { ?><p style="font-size:.8em; color:#dedede;">Please create a dataset</p><?php } ?>
+                    <h1 class="text-center blue" style="margin-top:14%;">{ No Reports }<br><?php if ($userType !== 'admin' && $userType !== 'free_pro' && $userType !== 'free_premium' && (!hasSubscription("plan_EOP7ViqCXFPfte") || !hasSubscription("plan_EOP6GRC06U4CFz"))) {
+                    echo "<div style='font-size:.7em; color:#ddd; margin:20px;'>You must have a paid plan to save reports.</div>";
+                } else { ?><p style="font-size:.8em; color:#dedede;">Please create a report</p><?php } ?>
                         <div class="row">
                             <a class="btn btn-default btn-sm <?php if (!hasSubscription("plan_Ect6UjkS61gIb5") || !hasSubscription("plan_EOPfv7iEDXLQFy")) {
                     echo "noThinker";
