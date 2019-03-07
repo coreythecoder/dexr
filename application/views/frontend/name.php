@@ -137,45 +137,153 @@
                 </div>                
             </div>
             <div class="modal-body">
-                Make Your Choice
-                <hr>
-                <div class="row">
-                    <div class="col-md-6">
-                        <img style="width:250px; height:250px; border-radius:50%; margin-top:20px; margin-bottom:40px; margin-left:auto; margin-right:auto;" src="https://maps.googleapis.com/maps/api/staticmap?center=41 East 11th Street 2nd Floor New York, NY&amp;zoom=13&amp;size=250x250&amp;maptype=roadmap&#10;                                        &amp;markers=color:blue%7Clabel:%7C41 East 11th Street 2nd Floor New York, NY&#10;                                        &amp;key=AIzaSyBSK9ERERVRBcrcRMVZkwhIt9Hjjb42dMg">
-                    </div>
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h5>Full Name Report</h5>
-                                <h4 style="font-size:28px;color:#09afdf;font-weight:bold;">$0.99</h4>
-                            </div>
-                            <div class="col-md-6">
-                                <button class="btn btn-default" id="99_checkout_btn">Continue &nbsp;<i class="fa fa-caret-right"></i></button>
-                            </div>
+                <div id="step_1">
+                    <h5>Make Your Choice</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img style="width:250px; height:250px; border-radius:50%; margin-top:20px; margin-bottom:40px; margin-left:auto; margin-right:auto;" src="https://maps.googleapis.com/maps/api/staticmap?center=41 East 11th Street 2nd Floor New York, NY&amp;zoom=13&amp;size=250x250&amp;maptype=roadmap&#10;                                        &amp;markers=color:blue%7Clabel:%7C41 East 11th Street 2nd Floor New York, NY&#10;                                        &amp;key=AIzaSyBSK9ERERVRBcrcRMVZkwhIt9Hjjb42dMg">
                         </div>
-                        <hr>
-                        <p>Special offer with FREE trial membership</p>
-                        <div><i class="fa fa-check-circle" style="color:#09afdf;"></i> Full Access to Name Search</div>
-                        <div><i class="fa fa-check-circle" style="color:#09afdf;"></i> Full Phone Numbers</div>
-                        <div><i class="fa fa-check-circle" style="color:#09afdf;"></i> Full Email Address(es)</div>
-                        <div><i class="fa fa-check-circle" style="color:#09afdf;"></i> Full Street Address(es)</div>
-                        <div><i class="fa fa-check-circle" style="color:#09afdf;"></i> Full List of Domain Registrations & Data</div>
-                        <div><i class="fa fa-check-circle" style="color:#09afdf;"></i> Full Access to 68,000,000 registrations</div>
-                        <div style="margin-top:25px;">
-                            <hr>
+                        <div class="col-md-6">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div><strong>Name Report Only</strong></div>
-                                    $9.99                     
+                                    <h5>Full Name Report</h5>
+                                    <h4 style="font-size:28px;color:#09afdf;font-weight:bold;">$0.99</h4>
                                 </div>
                                 <div class="col-md-6">
-                                    <a  id="9_99_checkout_btn">Continue &nbsp;<i class="fa fa-caret-right"></i></a>
+                                    <button class="btn btn-default" id="99_checkout_btn">Continue &nbsp;<i class="fa fa-caret-right"></i></button>
+                                </div>
+                            </div>
+                            <hr>
+                            <p>Special offer with FREE trial membership</p>
+                            <div><i class="fa fa-check-circle" style="color:#09afdf;"></i> Full Access to Name Search</div>
+                            <div><i class="fa fa-check-circle" style="color:#09afdf;"></i> Full Phone Numbers</div>
+                            <div><i class="fa fa-check-circle" style="color:#09afdf;"></i> Full Email Address(es)</div>
+                            <div><i class="fa fa-check-circle" style="color:#09afdf;"></i> Full Street Address(es)</div>
+                            <div><i class="fa fa-check-circle" style="color:#09afdf;"></i> Full List of Domain Registrations & Data</div>
+                            <div><i class="fa fa-check-circle" style="color:#09afdf;"></i> Full Access to 68,000,000 registrations</div>
+                            <div style="margin-top:25px;">
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div><strong>Name Report Only</strong></div>
+                                        $9.99                     
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a  id="9_99_checkout_btn">Continue &nbsp;<i class="fa fa-caret-right"></i></a>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>                    
+                    </div>
+                </div>
+                <div id="step_2" style="display:none;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5>Create an Account &nbsp; &nbsp; <small>Already have an account? <a style="color:#09afdf;" href="https://app.dexr.io/login" rel="nofollow">Sign In</a></small> <button type='button' id="continue_btn" class="btn btn-default pull-right" style="position:relative; bottom:22px;">Continue &nbsp;<i class="fa fa-caret-right"></i></button></h5>
+                            <hr>
+                            <?php if (!empty($fail)) : ?>
+                                <div class="alert alert-danger"><?php echo $fail ?></div>
+                            <?php endif; ?>
+                            <?php echo form_open("/register?" . $_SERVER['QUERY_STRING'], array("class" => "form-horizontal")) ?>
+
+                            <div class="row">
+                                <div class="col-md-6 col-xs-12 col-sm-12">
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <input type="text" class="form-control" placeholder="First & Last Name" id="name-in" name="first_name" value="<?php if (isset($first_name)) echo $first_name ?>" autofocus="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <?php if (!isset($_SESSION['email'])) { ?>
+                                                <input type="email" class="form-control" placeholder="Email Address" id="email-in" name="email" value="<?php if (isset($email)) echo $email; ?>">
+                                            <?php } else { ?>
+                                                <?php echo strip_tags($_SESSION['email']); ?>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xs-12 col-sm-12" style='padding-left:0px'>
+
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <input type="password" placeholder="Password" class="form-control" id="password-in" name="password" value="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <input type="password" placeholder="Confirm Password" class="form-control" id="cpassword-in" name="password2" value="">
+                                        </div>
+                                    </div>
+                                </div>                                
+                                <div class="col-md-12">
+
                                 </div>
                             </div>
 
+                        </div>
+                    </div>
+                </div>
+                <div id="step_3" style="display:none;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5><i class="fa fa-shopping-cart"></i>&nbsp; Secure Checkout<span class="pull-right"><i class="fa fa-lock"></i>&nbsp; 256-bit SSL</span></h5>
+                            <hr> 
+                            <div class="row" style="margin-top:20px; margin-bottom:20px;">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8">
+                                    <h3><i class="fa fa-user"></i>&nbsp; Dexr.io Report for John Doe <span style="font-weight: bold; font-size:28px;" class="pull-right blue">$0.99</span></h3>
+                                    <strong>+ 7 Day Dexr Membership Trial *FREE</strong>
+                                    <hr>
+                                    
+                                    <small>*Cancel anytime. After your 7 day free trial, you will be billed 49.00 per month.</small><br>
+                                    <hr>                                    
+                                    <h3>Total: $0.99</h3>
+                                </div>
+                                <div class="col-md-2"></div>
+                            </div>
+                            <script src="https://js.stripe.com/v3/"></script>
+                            <div class="row" style="margin-top:20px; margin-bottom:20px;">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8">
+                                    <form class="noThinker" method="post" id="payment-form" name="payment-form">
+                                        <div class="form-row">
+                                            <label for="card-element">
+                                                Credit or debit card
+                                            </label>
+                                            <div id="card-element">
+                                                <!-- A Stripe Element will be inserted here. -->
+                                            </div>
+
+                                            <!-- Used to display form errors. -->
+                                            <div id="card-errors" role="alert"></div>
+                                        </div>
+                                        <input type="hidden" name="type" value="" id="type">
+                                    </form>
+                                </div>
+                                <div class="col-md-2"></div>
+                            </div>
+                            <div class='row'>
+                                <div class='col-md-12 text-center'>
+                                    <button name="save_premium" id="savePaymentSource" form="payment-form" type="submit" class="btn btn-default btn-xs"><i class="fa fa-credit-card"></i>&nbsp; Pay $0.99</button>   
+
+                                </div>
+                            </div>
+                            <div class="row" style='margin-bottom:30px; '>
+                                <div class='col-md-2'></div>
+                                <div class='col-md-8'>
+                                    <div>I agree that I will not use dexr.io to determine an individual's eligibility for credit, insurance, employment, housing, or any other purpose covered under the Fair Credit Reporting Act (FCRA). I understand that dexr.io is not a consumer reporting agency. I have read and agree to the dexr.io terms and conditions as well as the dexr.io privacy policy. I understand that if I do not cancel my free trial within 7 days that my debit or credit card will be charged $49 at that time and each month thereafter until I cancel.  I understand dexr.io does not provide refunds. I understand that in order to cancel my subscription, I need to login to dexr.io, navigate to "my account" and click "cancel" next to my subscription. 
+                                    </div>
+
+                                </div>
+                                <div class='col-md-2'></div>
+                            </div>
 
                         </div>
-                    </div>                    
+                    </div>
                 </div>
             </div>
 

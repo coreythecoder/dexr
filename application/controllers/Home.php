@@ -17,6 +17,7 @@ class Home extends CI_Controller {
         $this->load->model("Db_model");
         $this->load->helper("aws");
         $this->load->helper("url");
+        $this->load->helper("stripe");
         if (!$this->user->loggedin) {
             redirect("/login");
         }
@@ -27,10 +28,15 @@ class Home extends CI_Controller {
             return;
         }
 
-        $this->load->model('db_model');
-        $this->load->helper("stripe");
+        $userType = $this->Db_model->userPlanType($this->user->info->ID);
+        if ($userType !== 'admin' && $userType !== 'free_pro' && $userType !== 'free_premium' && (!hasSubscription($this->config->item('pro')) || !hasSubscription($this->config->item('premium')))) {
+            redirect("https://app.dexr.io/pricing");
+            $data['hideMenu'] = true;
+        }
 
-        $data['userType'] = $this->db_model->userPlanType($this->user->info->ID);
+        $this->load->model('db_model');
+
+        //$data['userType'] = $userType = $this->db_model->userPlanType($this->user->info->ID);
 
         $data['error'] = "";
         $data['list'] = "";
@@ -339,7 +345,7 @@ class Home extends CI_Controller {
                         }
                     }
 
-                    if (($data['userType'] == 'admin' || $data['userType'] == 'free_pro') || (hasSubscription("plan_EOP7ViqCXFPfte") || hasSubscription("plan_EOP6GRC06U4CFz"))) {
+                    if (($data['userType'] == 'admin' || $data['userType'] == 'free_pro') || hasSubscription($this->config->item('pro'))) {
                         $dlButton = '<a href="/datasets?dataset_id=' . $d->ID . '&uid=' . $this->user->info->ID . '&action=download" class="btn btn-default btn-xs btn-block download-button" style="position:relative; top:8px;"><i class="fa fa-download"></i> Download</a>';
                     } else {
                         $dlButton = '<a class="btn btn-default btn-xs btn-block download-button noThinker" style="position:relative; top:8px;" disabled><i class="fa fa-download"></i> Download</a>';
@@ -1053,6 +1059,11 @@ class Home extends CI_Controller {
         if (defined('REQUEST') && REQUEST == "external") {
             return;
         }
+        
+        $userType = $this->Db_model->userPlanType($this->user->info->ID);
+        if ($userType !== 'admin' && $userType !== 'free_pro' && $userType !== 'free_premium' && (!hasSubscription($this->config->item('pro')) || !hasSubscription($this->config->item('premium')))) {
+            $data['hideMenu'] = true;
+        }
 
         $this->load->model('db_model');
 
@@ -1081,11 +1092,11 @@ class Home extends CI_Controller {
             $this->db_model->saveStripeCustomerID($this->user->info->ID, $customer->id);
 
             // GET PLAN TYPE
-            $pid = "plan_Ect6UjkS61gIb5";
+            $pid = $this->config->item('premium');
             //$pid = "plan_EOPfv7iEDXLQFy"; // TEST
             $trial = strtotime("+7 Days");
             if ($this->input->post("type") == "pro") {
-                $pid = "plan_Ect4vTNlxciFK3";
+                $pid = $this->config->item('pro');
                 //$pid = "plan_EOPPjrZGnFyQlM"; // TEST
                 $trial = "now";
             }
