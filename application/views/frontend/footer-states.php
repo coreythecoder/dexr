@@ -93,6 +93,16 @@
             });
 
         });
+
+        jQuery("#99_checkout_btn").click(function () {
+            jQuery("#step_1").slideUp();
+            jQuery("#step_2").slideDown();
+        });
+        jQuery("#continue_btn").click(function () {
+            jQuery("#step_2").slideUp();
+            jQuery("#step_3").slideDown();
+        });
+
     });
 </script>
 </body>

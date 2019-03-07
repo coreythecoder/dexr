@@ -25,7 +25,7 @@ function isActive() {
     }
 }
 
-function hasSubscription($subName = "") {
+function hasSubscription($subName = false) {
 
     $CI = get_instance();
     $CI->load->model('Db_model');
@@ -33,12 +33,10 @@ function hasSubscription($subName = "") {
     if (!empty($cid = $CI->Db_model->getCustomerID($CI->user->info->ID))) {
         $subscriptions = \Stripe\Customer::retrieve($cid);
         if (isset($subscriptions->subscriptions->data[0])) {
-            foreach ($subscriptions->subscriptions->data as $sub) {
-                if (strtolower($sub->plan->name) == strtolower($subName)) {
+            foreach ($subscriptions->subscriptions->data as $sub) { //echo $sub.PHP_EOL;
+                if (strtolower($sub->plan->id) == strtolower($subName)) { 
                     return true;
-                } elseif ($subName) {
-                    return true;
-                } else {
+                } else { 
                     return false;
                 }
             }

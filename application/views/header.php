@@ -174,7 +174,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </div>
                                     </div>
                                     <ul class="list-inline hidden-sm hidden-xs">
-                                        <li><i class="fa fa-envelope-o pr-5 pl-10"></i> Support@Dexr.io</li>
+                                        <?php if(!isset($hideMenu)){ ?><li><i class="fa fa-envelope-o pr-5 pl-10"></i> Support@Dexr.io</li><?php } ?>
                                     </ul>
                                 </div>
                                 <!-- header-top-first end -->
@@ -261,7 +261,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                                     <!-- logo -->
                                     <div id="logo" class="logo">
-                                        <a href="/"><img id="logo_img" src="/assets/images/blue-logo-45.png" alt="The Project"></a>
+                                        <a href="/"><img id="logo_img" src="/assets/images/blue-logo-45.png" alt=""></a>
                                     </div>
 
                                 </div>
@@ -299,8 +299,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 </div>
 
                                                 <!-- Collect the nav links, forms, and other content for toggling -->
-                                                <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                                                <div class="collapse navbar-collapse" id="navbar-collapse-1" style='min-height:70px;'>
                                                     <!-- main-menu -->
+                                                    <?php if(!isset($hideMenu)){ ?>
                                                     <ul class="nav navbar-nav ">
 
                                                         <!-- mega-menu start -->
@@ -316,6 +317,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         <!-- mega-menu end -->
 
                                                     </ul>
+                                                    <?php } ?>
                                                     <!-- main-menu end -->
 
                                                     <!-- header dropdown buttons -->

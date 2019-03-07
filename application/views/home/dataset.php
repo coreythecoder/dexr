@@ -34,7 +34,7 @@
                 </div> 
 
                 <div class="col-md-2 pull-right text-right">
-                    <?php if (($userType == 'admin' || $userType == 'free_pro') || (hasSubscription("plan_EOP7ViqCXFPfte") || hasSubscription("plan_EOP6GRC06U4CFz"))) { ?>
+                    <?php if (($userType == 'admin' || $userType == 'free_pro') || hasSubscription($this->config->item('pro'))) { ?>
                         <button id="download_button" form="form" name="download" type="submit" class="btn btn-default btn-xs noThinker" style=""><i class="fa fa-download"></i> Download</button>
                     <?php } else { ?>
                         <button id="download_button" type="button" class="btn btn-default btn-xs noThinker" disabled><i class="fa fa-download"></i> Download</button>

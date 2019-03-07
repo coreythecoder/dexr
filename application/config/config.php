@@ -26,7 +26,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 
 
-    $config['base_url'] = 'https://app.dexr.io/';
+$config['base_url'] = 'https://app.dexr.io/';
+
+// CURRENT SUBSCRIPTION PLANS
+// reference config: items $this->config->item('foo');
+
+$config['pro'] = 'plan_Ect4vTNlxciFK3';
+$config['premium'] = 'plan_Ect6UjkS61gIb5'; // 7 day trial
+$config['utlimate'] = false;
+
+// CURRENT REPORT PRICING
+
+$config['single_report'] = '999';
+$config['single_report_w_trial'] = '99';
 
 
 //$config['base_url'] = 'http://yoliya-temp.us-east-1.elasticbeanstalk.com';

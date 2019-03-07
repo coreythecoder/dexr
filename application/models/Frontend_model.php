@@ -28,7 +28,7 @@ class Frontend_model extends CI_Model {
     
         function getDomains() {
         $db = $this->load->database('default', TRUE);
-        $sql = "SELECT domain_name FROM production_2 LIMIT 100";
+        $sql = "SELECT domain_name FROM production_2 LIMIT 1000";
         $re = $db->query($sql);
 
         if ($re->num_rows() > 0) {

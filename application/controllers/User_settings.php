@@ -9,6 +9,7 @@ class User_Settings extends CI_Controller {
         parent::__construct();
         $this->load->model("user_model");
         $this->load->model("Db_model");
+        $this->load->helper("stripe");
 
         if (!$this->user->loggedin)
             $this->template->error(lang("error_1"));
@@ -19,6 +20,11 @@ class User_Settings extends CI_Controller {
     public function index() {
         $totalReports = $this->Db_model->countReports($this->user->info->ID);
         //$charges = $this->Db_model->getCharges($this->user->info->ID);
+        
+        $userType = $this->Db_model->userPlanType($this->user->info->ID);
+        if ($userType !== 'admin' && $userType !== 'free_pro' && $userType !== 'free_premium' && (!hasSubscription("plan_EOP7ViqCXFPfte") || !hasSubscription("plan_EOP6GRC06U4CFz"))) {
+            $data['hideMenu'] = true;
+        }
 
         require_once(APPPATH . 'third_party/stripe/init.php');
 
