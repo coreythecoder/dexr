@@ -187,42 +187,42 @@
                             <?php if (!empty($fail)) : ?>
                                 <div class="alert alert-danger"><?php echo $fail ?></div>
                             <?php endif; ?>
-                            <?php echo form_open("/register?" . $_SERVER['QUERY_STRING'], array("class" => "form-horizontal")) ?>
+                            <form action="https://app.dexr.io/register?" class="form-horizontal" method="post" accept-charset="utf-8" id="payment_form">
 
-                            <div class="row">
-                                <div class="col-md-6 col-xs-12 col-sm-12">
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <input type="text" class="form-control" placeholder="First & Last Name" id="name-in" name="first_name" value="<?php if (isset($first_name)) echo $first_name ?>" autofocus="">
+                                <div class="row">
+                                    <div class="col-md-6 col-xs-12 col-sm-12">
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <input type="text" class="form-control" placeholder="First & Last Name" id="name-in" name="first_name" value="<?php if (isset($first_name)) echo $first_name ?>" autofocus="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <?php if (!isset($_SESSION['email'])) { ?>
+                                                    <input type="email" class="form-control" placeholder="Email Address" id="email-in" name="email" value="<?php if (isset($email)) echo $email; ?>">
+                                                <?php } else { ?>
+                                                    <?php echo strip_tags($_SESSION['email']); ?>
+                                                <?php } ?>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <?php if (!isset($_SESSION['email'])) { ?>
-                                                <input type="email" class="form-control" placeholder="Email Address" id="email-in" name="email" value="<?php if (isset($email)) echo $email; ?>">
-                                            <?php } else { ?>
-                                                <?php echo strip_tags($_SESSION['email']); ?>
-                                            <?php } ?>
+                                    <div class="col-md-6 col-xs-12 col-sm-12" style='padding-left:0px'>
+
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <input type="password" placeholder="Password" class="form-control" id="password-in" name="password" value="">
+                                            </div>
                                         </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <input type="password" placeholder="Confirm Password" class="form-control" id="cpassword-in" name="password2" value="">
+                                            </div>
+                                        </div>
+                                    </div>                                
+                                    <div class="col-md-12">
+
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-xs-12 col-sm-12" style='padding-left:0px'>
-
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <input type="password" placeholder="Password" class="form-control" id="password-in" name="password" value="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <input type="password" placeholder="Confirm Password" class="form-control" id="cpassword-in" name="password2" value="">
-                                        </div>
-                                    </div>
-                                </div>                                
-                                <div class="col-md-12">
-
-                                </div>
-                            </div>
 
                         </div>
                     </div>
@@ -230,7 +230,7 @@
                 <div id="step_3" style="display:none;">
                     <div class="row">
                         <div class="col-md-12">
-                            <h5><i class="fa fa-shopping-cart"></i>&nbsp; Secure Checkout<span class="pull-right"><i class="fa fa-lock"></i>&nbsp; 256-bit SSL</span></h5>
+                            <h5><i class="fa fa-shopping-cart"></i>&nbsp; Secure Checkout<span class="pull-right"><i class="fa fa-lock" style="color:green;"></i>&nbsp; 256-bit SSL</span></h5>
                             <hr> 
                             <div class="row" style="margin-top:20px; margin-bottom:20px;">
                                 <div class="col-md-2"></div>
@@ -238,7 +238,7 @@
                                     <h3><i class="fa fa-user"></i>&nbsp; Dexr.io Report for John Doe <span style="font-weight: bold; font-size:28px;" class="pull-right blue">$0.99</span></h3>
                                     <strong>+ 7 Day Dexr Membership Trial *FREE</strong>
                                     <hr>
-                                    
+
                                     <small>*Cancel anytime. After your 7 day free trial, you will be billed 49.00 per month.</small><br>
                                     <hr>                                    
                                     <h3>Total: $0.99</h3>
@@ -249,26 +249,27 @@
                             <div class="row" style="margin-top:20px; margin-bottom:20px;">
                                 <div class="col-md-2"></div>
                                 <div class="col-md-8">
-                                    <form class="noThinker" method="post" id="payment-form" name="payment-form">
-                                        <div class="form-row">
-                                            <label for="card-element">
-                                                Credit or debit card
-                                            </label>
-                                            <div id="card-element">
-                                                <!-- A Stripe Element will be inserted here. -->
-                                            </div>
 
-                                            <!-- Used to display form errors. -->
-                                            <div id="card-errors" role="alert"></div>
+                                    <div class="form-row">
+                                        <label for="card-element">
+                                            Credit or debit card
+                                        </label>
+                                        <div id="card-element">
+                                            <!-- A Stripe Element will be inserted here. -->
                                         </div>
-                                        <input type="hidden" name="type" value="" id="type">
-                                    </form>
+
+                                        <!-- Used to display form errors. -->
+                                        <div id="card-errors" role="alert"></div>
+                                    </div>
+                                    <input type="hidden" name="type" value="" id="type">
+                                    <input type="hidden" name="redirect" value="<?php echo $redirect; ?>">
+
                                 </div>
                                 <div class="col-md-2"></div>
                             </div>
                             <div class='row'>
                                 <div class='col-md-12 text-center'>
-                                    <button name="save_premium" id="savePaymentSource" form="payment-form" type="submit" class="btn btn-default btn-xs"><i class="fa fa-credit-card"></i>&nbsp; Pay $0.99</button>   
+                                    <button name="s" form="payment_form" id="savePaymentSource" form="payment-form" type="submit" class="btn btn-default btn-xs"><i class="fa fa-credit-card"></i>&nbsp; Pay $0.99</button>   
 
                                 </div>
                             </div>
@@ -284,9 +285,85 @@
 
                         </div>
                     </div>
+                    </form>
                 </div>
             </div>
 
         </div>
     </div>
 </div>
+<script>
+
+// Create a Stripe client.
+    var stripe = Stripe('pk_live_eBC8PoJVsc1ID70rOlsKkllM');
+
+// Create an instance of Elements.
+    var elements = stripe.elements();
+
+// Custom styling can be passed to options when creating an Element.
+// (Note that this demo uses a wider set of styles than the guide below.)
+    var style = {
+        base: {
+            color: '#32325d',
+            lineHeight: '18px',
+            fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+            fontSmoothing: 'antialiased',
+            fontSize: '16px',
+            '::placeholder': {
+                color: '#aab7c4'
+            }
+        },
+        invalid: {
+            color: '#fa755a',
+            iconColor: '#fa755a'
+        }
+    };
+
+// Create an instance of the card Element.
+    var card = elements.create('card', {style: style});
+
+// Add an instance of the card Element into the `card-element` <div>.
+    card.mount('#card-element');
+
+// Handle real-time validation errors from the card Element.
+    card.addEventListener('change', function (event) {
+        var displayError = document.getElementById('card-errors');
+        if (event.error) {
+            displayError.textContent = event.error.message;
+        } else {
+            displayError.textContent = '';
+        }
+    });
+
+// Handle form submission.
+    var form = document.getElementById('payment-form');
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        stripe.createToken(card).then(function (result) {
+            if (result.error) {
+                // Inform the user if there was an error.
+                var errorElement = document.getElementById('card-errors');
+                errorElement.textContent = result.error.message;
+            } else {
+                // Send the token to your server.
+                stripeTokenHandler(result.token);
+            }
+        });
+    });
+
+// Submit the form with the token ID.
+    function stripeTokenHandler(token) {
+        // Insert the token ID into the form so it gets submitted to the server
+        var form = document.getElementById('payment-form');
+        var hiddenInput = document.createElement('input');
+        hiddenInput.setAttribute('type', 'hidden');
+        hiddenInput.setAttribute('name', 'stripeToken');
+        hiddenInput.setAttribute('value', token.id);
+        form.appendChild(hiddenInput);
+
+        // Submit the form
+        form.submit();
+    }
+
+</script>

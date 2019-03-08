@@ -108,7 +108,7 @@ class Register extends CI_Controller {
 
                     // Send email
                     $this->load->model("home_model");
-                    
+
                     /*
                       $email_template = $this->home_model->get_email_template(2);
                       if ($email_template->num_rows() == 0) {
@@ -171,20 +171,25 @@ class Register extends CI_Controller {
                 $config = $this->config->item("cookieprefix");
                 setcookie($config . "un", $email, time() + $ttl, "/");
                 setcookie($config . "tkn", $token, time() + $ttl, "/");
-/*
-                $message = "Hi ".ucwords($this->user->info->first_name)."," . PHP_EOL . PHP_EOL;
-                    $message .= "Welcome to Yoliya! We " . PHP_EOL . PHP_EOL;
-                    $message .= "The Yoliya Team";
-                    $html = "Hi " . ucwords($this->user->info->first_name) . ",<br><br>";
-                    $html .= "We're just sending you confirmation that we have cancelled your public records search subscription at yoliya.com.  We hope you've enjoyed using our services and hope to see you back soon!<br><br>";
-                    $html .= "The yoliya.com Team";
+                /*
+                  $message = "Hi ".ucwords($this->user->info->first_name)."," . PHP_EOL . PHP_EOL;
+                  $message .= "Welcome to Yoliya! We " . PHP_EOL . PHP_EOL;
+                  $message .= "The Yoliya Team";
+                  $html = "Hi " . ucwords($this->user->info->first_name) . ",<br><br>";
+                  $html .= "We're just sending you confirmation that we have cancelled your public records search subscription at yoliya.com.  We hope you've enjoyed using our services and hope to see you back soon!<br><br>";
+                  $html .= "The yoliya.com Team";
 
-                    sendEmail($this->user->info->email, "subscriptions@yoliya.com", "Yoliya Subscription Cancelled", $message, $html);
- * 
- */
-             
+                  sendEmail($this->user->info->email, "subscriptions@yoliya.com", "Yoliya Subscription Cancelled", $message, $html);
+                 * 
+                 */
+
                 $this->session->set_flashdata("globalmsg", $success);
-                
+
+                if (isset($_POST['redirect']) && !empty($_POST['redirect'])) {
+                    redirect($_POST['redirect']);
+                    exit();
+                }
+
                 //CHECK FOR COOKIE, IF NO COOKIE REDIRECT, IF COOKIE GO TO CREDIT CARD VIEW
                 redirect(site_url("/pricing"));
             }
