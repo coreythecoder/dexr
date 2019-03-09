@@ -170,17 +170,17 @@ class Frontend extends CI_Controller {
 
         /*
 
-        $domainList = $this->frontend_model->getDomains();
-        $i = 1;
-        foreach ($domainList as $d) {
-            $records = dns_get_record($d->domain_name, DNS_NS);
-            if ($records) {
-                echo $i . ". " . $d->domain_name . "<br>" . var_dump($records) . "<br><br>";
-                $i++;
-            }
-        }
-        exit();
-        /*
+          $domainList = $this->frontend_model->getDomains();
+          $i = 1;
+          foreach ($domainList as $d) {
+          $records = dns_get_record($d->domain_name, DNS_NS);
+          if ($records) {
+          echo $i . ". " . $d->domain_name . "<br>" . var_dump($records) . "<br><br>";
+          $i++;
+          }
+          }
+          exit();
+          /*
          * // REDIRECT FOR SPECIAL CHARS
           $currPath = $_SERVER['REQUEST_URI'];
           $redirChars = array("%A0", "%C2", "%C3", "%A3", "%A1", "%AD", "%84", "%E2", "%A2", "%BA", "%B1", "%20", "%BC", "%A9", "%A7", "%C5");
@@ -219,6 +219,8 @@ class Frontend extends CI_Controller {
         $data['domains'] = "";
         $siteList = array();
         $i = 0;
+
+        $data['redirect'] = "/report/" . $state . "/" . $city . "/" . $name;
 
         $domains = $this->frontend_model->getDomainsByCityStateName($city, $state, $name);
         $nId = $this->frontend_model->getNameIdFromNameSlugCityState($city, $state, $name);
