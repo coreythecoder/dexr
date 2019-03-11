@@ -33,8 +33,8 @@ function hasSubscription($subName = false) {
     if (!empty($cid = $CI->Db_model->getCustomerID($CI->user->info->ID))) {
         $subscriptions = \Stripe\Customer::retrieve($cid);
         if (isset($subscriptions->subscriptions->data[0])) {
-            foreach ($subscriptions->subscriptions->data as $sub) { //echo $sub.PHP_EOL;
-                if (strtolower($sub->plan->id) == strtolower($subName)) { 
+            foreach ($subscriptions->subscriptions->data as $sub) { //echo $sub.PHP_EOL;                
+                if (strtolower(trim($sub->plan->id)) == strtolower(trim($subName))) {
                     return true;
                 } else { 
                     return false;

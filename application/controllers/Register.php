@@ -8,15 +8,29 @@ class Register extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model("register_model");
+        $this->load->model("db_model");
         $this->load->model("user_model");
         $this->load->model("funds_model");
         $this->load->model("login_model");
         $this->load->library("Awslib");
         $this->load->helper("aws");
         $this->load->helper("general");
+        $this->load->library('session');
     }
 
     public function index() {
+
+        if (isset($_POST['redirect']) && !empty($_POST['redirect'])) {
+            $_SESSION['redirect'] = $this->input->post("redirect");
+        }
+
+        if (isset($_POST['stripeToken']) && !empty($_POST['stripeToken'])) {
+            $_SESSION['stripeToken'] = $this->input->post("stripeToken");
+        }
+
+        if (isset($_POST['fullPrice']) && !empty($_POST['fullPrice'])) {
+            $_SESSION['fullPrice'] = $this->input->post("fullPrice");
+        }
 
         if ($this->user_model->check_block_ip()) {
             $this->template->error(lang("error_26"));
@@ -26,10 +40,6 @@ class Register extends CI_Controller {
         $this->template->set_layout("layout/login_layout.php");
         if ($this->settings->info->register) {
             $this->template->error(lang("error_54"));
-        }
-
-        if ($this->user->loggedin) {
-            redirect("/", 301);
         }
 
         if (isset($_SESSION['email'])) {
@@ -101,6 +111,7 @@ class Register extends CI_Controller {
                 $active = 1;
                 $activate_code = "";
                 $success = lang("success_20");
+
                 if ($this->settings->info->activate_account) {
                     $active = 0;
                     $activate_code = md5(rand(1, 10000000000) . "fhsf" . rand(1, 100000));
@@ -171,6 +182,75 @@ class Register extends CI_Controller {
                 $config = $this->config->item("cookieprefix");
                 setcookie($config . "un", $email, time() + $ttl, "/");
                 setcookie($config . "tkn", $token, time() + $ttl, "/");
+
+                // GET TOKEN
+                if (isset($_SESSION['stripeToken'])) {
+
+                    // CREATE STRIPE INSTANCE
+                    require_once(APPPATH . 'third_party/stripe/init.php');
+                    $stripe = array(
+                        "secret_key" => $this->settings->info->stripe_secret_key,
+                        "publishable_key" => $this->settings->info->stripe_publish_key
+                    );
+                    \Stripe\Stripe::setApiKey($stripe['secret_key']);
+
+                    //CREATE CUSTOMER
+                    \Stripe\Stripe::setApiKey($this->settings->info->stripe_secret_key);
+
+                    $customer = \Stripe\Customer::create([
+                                "description" => $email,
+                                "source" => trim($_SESSION['stripeToken']) // obtained with Stripe.js
+                    ]);
+
+                    // SAVE CUST ID FOR LATER USE
+                    $this->db_model->saveStripeCustomerID($userid, $customer->id);
+
+                    // GET PLAN TYPE (49/month + 7 day trial)
+                    $pid = $this->config->item('premium');
+                    $trial = strtotime("+7 Days");
+
+                    $amount = 99;
+                    if (isset($_SESSION['fullPrice'])) {
+                        $amount = 999;
+                    } else {
+                        // ADD SUBSCRIPTION
+                        $subscribe = \Stripe\Stripe::setApiKey($this->settings->info->stripe_secret_key);
+
+                        \Stripe\Subscription::create([
+                            "customer" => trim($customer->id),
+                            "items" => [
+                                [
+                                    "plan" => $pid,
+                                ],
+                            ],
+                            "trial_end" => $trial
+                        ]);
+                    }
+
+                    // CHARGE CARD
+                    $charge = \Stripe\Charge::create([
+                                'amount' => $amount,
+                                'currency' => 'usd',
+                                'description' => 'Name_Report_' . $_SESSION['redirect'],
+                                'customer' => $customer->id,
+                    ]);
+
+                    // SAVE NAME TO USER_REPORTS
+                    $ex = explode("/", $_SESSION['redirect']);
+                    $saveNameReport = $this->db_model->saveNameReport($userid, $ex[2], $ex[3], $ex[4]);
+                }
+
+
+                if (isset($_SESSION['redirect']) && !empty($_SESSION['redirect'])) {
+                    redirect($_SESSION['redirect']);
+                    $this->session->unset_userdata('stripeToken');
+                    $this->session->unset_userdata('fullPrice');
+                    $this->session->unset_userdata('redirect');
+                    exit();
+                } elseif ($this->user->loggedin) {
+                    redirect("/", 301);
+                }
+
                 /*
                   $message = "Hi ".ucwords($this->user->info->first_name)."," . PHP_EOL . PHP_EOL;
                   $message .= "Welcome to Yoliya! We " . PHP_EOL . PHP_EOL;
@@ -185,13 +265,8 @@ class Register extends CI_Controller {
 
                 $this->session->set_flashdata("globalmsg", $success);
 
-                if (isset($_POST['redirect']) && !empty($_POST['redirect'])) {
-                    redirect($_POST['redirect']);
-                    exit();
-                }
-
                 //CHECK FOR COOKIE, IF NO COOKIE REDIRECT, IF COOKIE GO TO CREDIT CARD VIEW
-                redirect(site_url("/pricing"));
+                //redirect(site_url("/pricing"));
             }
         }
 

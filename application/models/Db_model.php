@@ -1754,6 +1754,14 @@ CREATE TABLE `" . $table . "` (
         return true;
     }
 
+    function saveNameReport($uid, $state, $city, $name) {
+        $db = $this->load->database('default', TRUE);
+        $sql = "INSERT INTO user_reports SET user_ID = '" . $uid . "', name_slug = '" . $name . "', city_slug = '" . $city . "', state = '" . $state . "'";
+        $db->query($sql);
+
+        return true;
+    }
+
     function inboxExists($address) {
         $db = $this->load->database('default', TRUE);
         $sql = "SELECT * FROM user_inboxes WHERE address = '" . $address . "'";

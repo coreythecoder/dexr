@@ -29,7 +29,7 @@ class Home extends CI_Controller {
         }
 
         $userType = $this->Db_model->userPlanType($this->user->info->ID);
-        if ($userType !== 'admin' && $userType !== 'free_pro' && $userType !== 'free_premium' && (!hasSubscription($this->config->item('pro')) || !hasSubscription($this->config->item('premium')))) {
+        if ($userType !== 'admin' && $userType !== 'free_pro' && $userType !== 'free_premium' && !hasSubscription($this->config->item('pro')) && !hasSubscription($this->config->item('premium'))) {
             redirect("https://app.dexr.io/pricing");
             $data['hideMenu'] = true;
         }
@@ -729,7 +729,7 @@ class Home extends CI_Controller {
 
 // BEGIN LINKED DOMAINS
 
-            if ($newBucket['domains'] && !empty($newBucket['domains'])) {
+            if (isset($newBucket['domains']) && !empty($newBucket['domains'])) {
 
                 $data['domains'] .= "<hr></hr><div class='row' style='margin-bottom:40px;'><div class='col-md-12'><h2>Linked Registrations</h2></div><p>Below are registrations we've discovered linked by phone, street address or phone number.</p></div>";
 

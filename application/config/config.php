@@ -32,7 +32,8 @@ $config['base_url'] = 'https://app.dexr.io/';
 // reference config: items $this->config->item('foo');
 
 $config['pro'] = 'plan_Ect4vTNlxciFK3';
-$config['premium'] = 'plan_Ect6UjkS61gIb5'; // 7 day trial
+$config['premium'] = 'plan_Ect6UjkS61gIb5'; // LIVE - 7 day trial
+//$config['premium'] = 'plan_EOPfv7iEDXLQFy'; // TEST - 7 day trial
 $config['utlimate'] = false;
 
 // CURRENT REPORT PRICING
