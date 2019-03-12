@@ -607,7 +607,7 @@ class Frontend extends CI_Controller {
             //header('Location: /' . $state);
         }
 
-        //$data['showAds'] = true;
+        $data['showAds'] = true;
 
         $data['metaTitle'] = "Webmaster: " . ucwords(str_replace('-', ' ', strtolower($name))) . " in " . $data['city'] . ", " . strtoupper($state);
         $data['metaDescription'] = "Contact webmaster " . ucwords(str_replace('-', ' ', strtolower($name))) . " in " . $data['city'] . ", " . strtoupper($state) . " by owner name, email, phone or address. They've registered " . $siteList . ".";
