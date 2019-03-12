@@ -99,8 +99,45 @@
             jQuery("#step_2").slideDown();
         });
         jQuery("#continue_btn").click(function () {
-            jQuery("#step_2").slideUp();
-            jQuery("#step_3").slideDown();
+
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+
+            var pass = true;
+
+            var name = jQuery("#name-in").val();
+            if (!name) {
+                jQuery("#name-in").css("border-color", "red");
+                pass = false;
+            }
+            var email = jQuery("#email-in").val();
+            if (!email || !email.match(re)) {
+                jQuery("#email-in").css("border-color", "red");
+                pass = false;
+            }            
+            var passw = jQuery("#password-in").val();
+            if (!passw) {
+                jQuery("#password-in").css("border-color", "red");
+                pass = false;
+            }
+            var cpass = jQuery("#cpassword-in").val();
+            if (!cpass) {
+                jQuery("#cpassword-in").css("border-color", "red");
+                pass = false;
+            }
+
+            if (!pass) {
+                //jQuery(".form-control").css("border-color", "red");
+            } else {
+                jQuery("#step_2").slideUp();
+                jQuery("#step_3").slideDown();
+            }
+
+            jQuery(".form-control").on("keyup", function () {
+                jQuery(this).css("border-color", "green");
+            });
+
+
         });
 
     });

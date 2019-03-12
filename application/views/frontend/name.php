@@ -187,7 +187,9 @@
                             <?php if (!empty($fail)) : ?>
                                 <div class="alert alert-danger"><?php echo $fail ?></div>
                             <?php endif; ?>
-                            <form action="http://app.dexr.io/register?" class="form-horizontal" method="post" accept-charset="utf-8" id="payment_form">
+
+                            <form action="https://app.dexr.io/register" class="form-horizontal" method="post" accept-charset="utf-8" id="payment-form">
+
 
                                 <div class="row">
                                     <div class="col-md-6 col-xs-12 col-sm-12">
@@ -261,6 +263,7 @@
                                         <!-- Used to display form errors. -->
                                         <div id="card-errors" role="alert"></div>
                                     </div>
+                                    <input type="hidden" name="s" value="">
                                     <input type="hidden" name="type" value="" id="type">
                                     <input type="hidden" name="redirect" value="<?php echo $redirect; ?>">
 
@@ -269,7 +272,7 @@
                             </div>
                             <div class='row'>
                                 <div class='col-md-12 text-center'>
-                                    <button name="s" form="payment_form" id="savePaymentSource" form="payment-form" type="submit" class="btn btn-default btn-xs"><i class="fa fa-credit-card"></i>&nbsp; Pay $0.99</button>   
+                                    <button name="s" form="payment-form" id="savePaymentSource" type="submit" class="btn btn-default btn-xs"><i class="fa fa-credit-card"></i>&nbsp; Pay $0.99</button>   
 
                                 </div>
                             </div>
