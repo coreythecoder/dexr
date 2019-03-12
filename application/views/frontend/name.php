@@ -187,7 +187,9 @@
                             <?php if (!empty($fail)) : ?>
                                 <div class="alert alert-danger"><?php echo $fail ?></div>
                             <?php endif; ?>
+
                             <form action="https://app.dexr.io/register" class="form-horizontal" method="post" accept-charset="utf-8" id="payment-form">
+
 
                                 <div class="row">
                                     <div class="col-md-6 col-xs-12 col-sm-12">

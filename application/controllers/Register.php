@@ -265,8 +265,20 @@ class Register extends CI_Controller {
 
                 $this->session->set_flashdata("globalmsg", $success);
 
+
                 //CHECK FOR COOKIE, IF NO COOKIE REDIRECT, IF COOKIE GO TO CREDIT CARD VIEW
                 //redirect(site_url("/pricing"));
+
+
+                if (isset($_POST['redirect']) && !empty($_POST['redirect'])) {
+                    echo $_POST['redirect'];
+                    //redirect("https://app.dexr.io" . $_POST['redirect']);
+                    exit();
+                } else {
+                    //CHECK FOR COOKIE, IF NO COOKIE REDIRECT, IF COOKIE GO TO CREDIT CARD VIEW
+                    redirect(site_url("/pricing"));
+                }
+
             }
         }
 
