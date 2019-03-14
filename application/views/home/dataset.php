@@ -14,12 +14,13 @@
             <div class="row">        
                 <div class="col-md-4">
                     <div class="btn-group">
-                        <button data-toggle="modal" type="button" data-target="#editFilters" class="btn btn-default btn-xs"><i class="fa fa-toggle-on"></i> Edit Filter</button>
+                        <button data-toggle="modal" type="button" data-target="#editFilters" class="btn btn-default btn-xs"><i class="fa fa-toggle-on"></i> &nbsp;Edit Filter</button>
                         <?php if (isset($_POST['search'])) { ?>
-                            <button data-toggle="modal" data-target="#saveFilters" type="button" id="saveButton" class="btn btn-default btn-xs"><i class="fa fa-save"></i> Save Filter</button>                        
+                            <button data-toggle="modal" data-target="#saveFilters" type="button" id="saveButton" class="btn btn-default btn-xs"><i class="fa fa-save"></i> &nbsp;Save Filter</button>                        
                         <?php } ?>
-                        <button data-toggle="modal" data-target="#setupZap" id="saveButton" type="button" class="btn btn-default btn-xs"><i class="fa fa-lightbulb-o"></i> Zaps</button>
+                        <button data-toggle="modal" data-target="#setupZap" id="saveButton" type="button" class="btn btn-default btn-xs"><i class="fa fa-lightbulb-o"></i> &nbsp;Zaps</button>
                     </div>
+                    <button data-toggle="modal" data-target="#setupZap" id="crawlButton" type="button" class="btn btn-default btn-xs"><i class="fa fa-bug"></i> &nbsp;Crawl</button>
                 </div>
                 <div class='col-md-4 col-xs-12 center-xs' style=''>
                     <h3 style="margin-top:15px;">Total Records: &nbsp;<?php
