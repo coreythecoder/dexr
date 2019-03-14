@@ -28,7 +28,7 @@ class Home extends CI_Controller {
             return;
         }
 
-        $userType = $this->Db_model->userPlanType($this->user->info->ID);
+        $data['userType'] = $userType = $this->Db_model->userPlanType($this->user->info->ID);
         if ($userType !== 'admin' && $userType !== 'free_pro' && $userType !== 'free_premium' && !hasSubscription($this->config->item('pro')) && !hasSubscription($this->config->item('premium'))) {
             redirect("https://app.dexr.io/pricing");
             $data['hideMenu'] = true;
