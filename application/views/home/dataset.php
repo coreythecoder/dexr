@@ -20,7 +20,11 @@
                         <?php } ?>
                         <button data-toggle="modal" data-target="#setupZap" id="saveButton" type="button" class="btn btn-default btn-xs"><i class="fa fa-lightbulb-o"></i> &nbsp;Zaps</button>
                     </div>
-                    <button data-toggle="modal" data-target="#setupZap" id="crawlButton" type="button" class="btn btn-default btn-xs"><i class="fa fa-bug"></i> &nbsp;Crawl</button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs"><i class="fa fa-bug"></i> &nbsp;Remove Inactive</button>
+                        <button type="button" class="btn btn-default btn-xs"><i class="fa fa-trash"></i> &nbsp;Remove Proxies</button>
+
+                    </div>
                 </div>
                 <div class='col-md-4 col-xs-12 center-xs' style=''>
                     <h3 style="margin-top:15px;">Total Records: &nbsp;<?php
