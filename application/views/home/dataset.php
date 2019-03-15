@@ -21,8 +21,10 @@
                         <button data-toggle="modal" data-target="#setupZap" id="saveButton" type="button" class="btn btn-default btn-xs"><i class="fa fa-lightbulb-o"></i> &nbsp;Zaps</button>
                     </div>
                     <div class="btn-group">
+
                         <!-- <button type="button" class="btn btn-default btn-xs"><i class="fa fa-remove"></i> &nbsp;Remove Inactive</button>
                         <button type="button" class="btn btn-default btn-xs"><i class="fa fa-trash"></i> &nbsp;Remove Proxies</button> -->
+
                     </div>
                 </div>
                 <div class='col-md-4 col-xs-12 center-xs' style=''>
