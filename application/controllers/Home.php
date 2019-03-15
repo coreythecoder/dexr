@@ -1220,7 +1220,7 @@ class Home extends CI_Controller {
             }
 
             // ECHO JSON
-            echo json_encode($jsonResult);
+            echo json_encode($jsonResult, JSON_PRETTY_PRINT);
         } elseif ($action == "status") {
             // STATUS OF CRAWL
         } elseif ($action == "import") {
