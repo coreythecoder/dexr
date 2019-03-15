@@ -167,20 +167,7 @@ class Frontend extends CI_Controller {
     }
 
     public function name($state, $city, $name, $page = false) {
-
         /*
-
-          $domainList = $this->frontend_model->getDomains();
-          $i = 1;
-          foreach ($domainList as $d) {
-          $records = dns_get_record($d->domain_name, DNS_NS);
-          if ($records) {
-          echo $i . ". " . $d->domain_name . "<br>" . var_dump($records) . "<br><br>";
-          $i++;
-          }
-          }
-          exit();
-          /*
          * // REDIRECT FOR SPECIAL CHARS
           $currPath = $_SERVER['REQUEST_URI'];
           $redirChars = array("%A0", "%C2", "%C3", "%A3", "%A1", "%AD", "%84", "%E2", "%A2", "%BA", "%B1", "%20", "%BC", "%A9", "%A7", "%C5");
@@ -607,7 +594,7 @@ class Frontend extends CI_Controller {
             //header('Location: /' . $state);
         }
 
-        $data['showAds'] = true;
+        //$data['showAds'] = true;
 
         $data['metaTitle'] = "Webmaster: " . ucwords(str_replace('-', ' ', strtolower($name))) . " in " . $data['city'] . ", " . strtoupper($state);
         $data['metaDescription'] = "Contact webmaster " . ucwords(str_replace('-', ' ', strtolower($name))) . " in " . $data['city'] . ", " . strtoupper($state) . " by owner name, email, phone or address. They've registered " . $siteList . ".";

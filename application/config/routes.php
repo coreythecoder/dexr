@@ -149,6 +149,9 @@ $route['report/(:any)/(:any)/(:any)'] = "home/report/$1/$2/$3";
 
 $route['dataset/(:any)/(:any)/(:any)'] = "home/dataset/$1/$2/$3";
 
+$route['crawl/(:any)'] = "home/crawl/$1";
+$route['crawl/(:any)/(:any)'] = "home/crawl/$1/$2";
+
 $route['scrub'] = "home/scrub";
 
 $route['zap/(:any)/(:any)/(:any)/(:any)'] = "home/zap/$1/$2/$3/$4";
