@@ -175,6 +175,9 @@ CREATE TABLE `" . $table . "` (
         $this->transferTable($POST, 10000, $dateRange, $table, $cols);
         //$sql = "INSERT INTO " . $table . " (" . trim(rtrim(implode(", ", $cols), ", ")) . ") SELECT " . trim(rtrim(implode(", ", $cols), ", ")) . " FROM production_2 LIMIT 10000";
         //$db->query($sql);
+        // APPEND ADDITIONAL COLUMSN TO TABLE FOR PROXIES & CRAWLING
+        $this->addDatasetColumns($table);
+
         return true;
     }
 
@@ -1524,6 +1527,31 @@ CREATE TABLE `" . $table . "` (
         } else {
             return false;
         }
+    }
+
+    function getDatasetUncrawledURLList($datasetId, $limit) {
+        $db = $this->load->database('default', TRUE);
+        $sql = "SELECT domain_name FROM " . $datasetId . " WHERE crawled = '0' LIMIT " . $limit;
+
+        $re = $db->query($sql);
+        if ($re->num_rows() > 0) {
+            return $re->result_array();
+        } else {
+            return false;
+        }
+    }
+
+    function addDatasetColumns($datasetId) {
+        $db = $this->load->database('default', TRUE);
+        $sql = "ALTER TABLE " . $datasetId . " "
+                . "ADD COLUMN crawled INTEGER NOT NULL, "
+                . "ADD COLUMN proxy INTEGER NOT NULL, "
+                . "ADD COLUMN title VARCHAR(255), "
+                . "ADD COLUMN description VARCHAR(255)";
+
+        $db->query($sql);
+
+        return true;
     }
 
     function getDataset($tableID, $count = false, $page = false) {
