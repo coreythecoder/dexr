@@ -1059,7 +1059,7 @@ class Home extends CI_Controller {
         if (defined('REQUEST') && REQUEST == "external") {
             return;
         }
-        
+
         $userType = $this->Db_model->userPlanType($this->user->info->ID);
         if ($userType !== 'admin' && $userType !== 'free_pro' && $userType !== 'free_premium' && (!hasSubscription($this->config->item('pro')) || !hasSubscription($this->config->item('premium')))) {
             $data['hideMenu'] = true;
@@ -1123,6 +1123,117 @@ class Home extends CI_Controller {
         $this->load->view('header', $data);
         $this->load->view('home/pricing');
         $this->load->view('footer');
+    }
+
+    public function crawl($datasetId, $action = "status") {
+
+        $this->load->model('db_model');
+        // Set your API parameters here.
+        $APIToken = 's2ksrgfn3kvobk5wko043dzbbnvvhu6a';
+        $urllist_name = "datasetId_" . $datasetId;
+
+        $jsonResult = array();
+        $jsonResult['action'] = $action;
+
+        if ($action == "start") {
+
+            // COMPILE URL LIST
+            $list = $this->db_model->getDatasetUncrawledURLList($datasetId, 100);
+            $domainArray = array();
+
+            foreach ($list as $l) {
+                $domainArray[] = "\"http://www." . $l['domain_name'] . "\"";
+            }
+
+            // UPLOAD LIST
+            $url = 'https://' . $APIToken . ':@api.80legs.com/v2/urllists/' . $urllist_name;
+            $request_body = $domainArray;
+
+            $options = array(
+                'http' => array(
+                    'header' => 'Content-Type: application/octet-stream',
+                    'method' => 'PUT',
+                    'content' => '[' . implode(", ", $domainArray) . ']'
+                )
+            );
+
+            $context = stream_context_create($options);
+            $result = file_get_contents($url, false, $context);
+
+            if ($result === FALSE) {
+                $jsonResult['upload_list_success'] = false;
+            } else {
+                $jsonResult['upload_list_success'] = true;
+                $jsonResult['list_results'] = $result;
+            }
+
+            // UPLOAD APP
+            $app_name = "headers";
+            $url = 'https://' . $APIToken . ':@api.80legs.com/v2/apps/' . $app_name;
+
+            $path_to_app = $_SERVER['DOCUMENT_ROOT'] . '/80legs/headerData.js';
+
+            $options = array(
+                'http' => array(
+                    'header' => 'Content-Type: application/octet-stream',
+                    'method' => 'PUT',
+                    'content' => file_get_contents($path_to_app)
+                )
+            );
+
+            $context = stream_context_create($options);
+            $result = file_get_contents($url, false, $context);
+            if ($result === FALSE) {
+                $jsonResult['upload_app_success'] = false;
+            } else {
+                $jsonResult['upload_app_success'] = true;
+                $jsonResult['app_results'] = $result;
+            }
+
+            // START CRAWL
+            $url = 'https://' . $APIToken . ':@api.80legs.com/v2/crawls/' . $urllist_name;
+
+            $request_body = array(
+                'urllist' => $urllist_name,
+                'app' => 'headers',
+                'max_depth' => 1,
+                'max_urls' => 10000
+            );
+
+            $options = array(
+                'http' => array(
+                    'header' => 'Content-Type: application/json',
+                    'method' => 'PUT',
+                    'content' => json_encode($request_body)
+                )
+            );
+            
+            echo json_encode($request_body); 
+
+            $context = stream_context_create($options);
+            $result = file_get_contents($url, false, $context);
+            if ($result === FALSE) {
+               $jsonResult['start_crawl_success'] = false;
+            } else {
+                $jsonResult['start_crawl_success'] = true;
+                $jsonResult['crawl_results'] = $result;
+            }
+
+            // ECHO JSON
+            echo json_encode($jsonResult);
+        } elseif ($action == "status") {
+            // STATUS OF CRAWL
+        } elseif ($action == "import") {
+            // DOWNLOAD FILE
+            // IMPORT TO DB
+            // DELETE FILE
+        }
+
+
+
+        //$domainList = $this->frontend_model->getDomains();
+
+        exit();
     }
 
 }
