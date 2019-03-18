@@ -63,3 +63,5 @@ else:
     print(response)
     
 print('<meta http-equiv="refresh" content="1">')
+
+http://app.dexr.io/python/index.py?table=user_1_1770336016
