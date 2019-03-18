@@ -11,11 +11,12 @@ user="dexrdb"
 passwd="dexrdbpass"
 db="ebdb"
 
+
 conn = pymysql.connect(host=host, port=3306, user=user, passwd=passwd, db=db)
 
 cur = conn.cursor()
 
-cur.execute("SELECT domain_name FROM user_1_3526197866 LIMIT 500")
+cur.execute("SELECT domain_name FROM user_1_3526197866 LIMIT 1000")
 
 domains = []
 
@@ -23,18 +24,27 @@ if cur is not None:
     for row in cur:
         domains.append(row[0])
 else:
-    print("cur is empty")
+    response = b"cur is empty"
 
 conn.commit()
 cur.close()
 
-resolver = Resolver(www=True, www_combine=True, verbose=True, timeout=3, tries=1, threads=500)
+resolver = Resolver(www=True, www_combine=True, verbose=True, timeout=2, tries=1, threads=500)
 result = resolver.resolve(domains)
+
+activeDomains = []
 
 if result['success'] is not None:
     for d in result['success']:
         if d in domains:
-            print(d)
-            print(" active")
+            activeDomains.append(d)
 else:
-    print("d is empty")
+    response = b"d is empty"
+
+response = ' '.join(activeDomains)
+
+if response is None:
+    print("GRRRRRRRRRRRRRRRRRR")
+else:
+    print(response)
+    
