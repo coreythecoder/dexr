@@ -156,7 +156,11 @@ class Home extends CI_Controller {
         if (isset($_POST['delete_zap'])) {
             $this->db_model->deleteZap($this->input->post("zap_list"));
         }
-
+        if (isset($_GET['action']) && $_GET['action'] == 'remove_proxies') {
+            $this->db_model->removeProxies($datasetInfo->table_name);
+            redirect(current_url());
+        }
+        
         $zaps = $this->db_model->getUserZaps($this->user->info->ID);
         $data['existingZaps'] = "";
         $data['zapButtons'] = "";
@@ -328,7 +332,7 @@ class Home extends CI_Controller {
                 exit();
             }
         }
-
+        
         $data['datasetList'] = "";
         if (isset($this->user->info->ID)) {
 

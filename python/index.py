@@ -42,11 +42,11 @@ result = resolver.resolve(domains)
 
 activeDomains = []
 
-if result['success'] is not None:
-    for d in result['success']:
+if result['error'] is not None:
+    for d in result['error']:
         if d in domains:
             activeDomains.append(d)
-            cur2.execute("UPDATE " + GET.get('table') + " SET active = 1 WHERE domain_name = '" + d + "'")
+            cur2.execute("DELETE FROM " + GET.get('table') + " WHERE domain_name = '" + d + "'")
 else:
     response = b"d is empty"
 

@@ -22,9 +22,10 @@
                     </div>
                     <div class="btn-group">
 
-                        <!-- <button type="button" class="btn btn-default btn-xs"><i class="fa fa-remove"></i> &nbsp;Remove Inactive</button>
-                        <button type="button" class="btn btn-default btn-xs"><i class="fa fa-trash"></i> &nbsp;Remove Proxies</button> -->
-
+                        <!-- <button type="button" class="btn btn-default btn-xs"><i class="fa fa-remove"></i> &nbsp;Remove Inactive</button> -->
+                        <?php if ($datasetInfo->proxies_removed == 0) { ?>
+                            <a onclick="return confirm('Are you sure? This operation cannot be reversed.')" href="<?php $this->uri->uri_string(); ?>?action=remove_proxies" type="button" class="btn btn-default btn-xs noThinker"><i class="fa fa-trash"></i> &nbsp;Remove Proxies</a>
+                        <?php } ?>
                     </div>
                 </div>
                 <div class='col-md-4 col-xs-12 center-xs' style=''>
