@@ -25,6 +25,8 @@
                         <!-- <button type="button" class="btn btn-default btn-xs"><i class="fa fa-remove"></i> &nbsp;Remove Inactive</button> -->
                         <?php if ($datasetInfo->proxies_removed == 0) { ?>
                             <a onclick="return confirm('Are you sure? This operation cannot be reversed.')" href="<?php $this->uri->uri_string(); ?>?action=remove_proxies" type="button" class="btn btn-default btn-xs noThinker"><i class="fa fa-trash"></i> &nbsp;Remove Proxies</a>
+                        <?php } else { ?>
+                            <span style="position:relative; left:30px; color:green;"><i class="fa fa-check green"></i> Proxies Removed</span>
                         <?php } ?>
                     </div>
                 </div>
