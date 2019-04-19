@@ -8,6 +8,15 @@
 
 class Db_model extends CI_Model {
 
+    function removeProxies($table) {
+        $db = $this->load->database('default', TRUE);
+        $sql = "DELETE FROM " . $table . " WHERE TRIM(registrant_phone) IN (SELECT TRIM(registrant_phone) FROM scrub_1)";
+        $db->query($sql);
+
+        $sql = "UPDATE user_datasets SET proxies_removed = 1 WHERE table_name = '" . $table . "'";
+        $db->query($sql);
+    }
+
     function processDataset($uid, $name, $keys, $matches, $values, $POST, $daterange = false) {
 
         $db = $this->load->database('default', TRUE);
