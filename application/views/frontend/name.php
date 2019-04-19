@@ -142,7 +142,7 @@
                     <hr>
                     <div class="row">
                         <div class="col-md-6">
-                            <img style="width:250px; height:250px; border-radius:50%; margin-top:20px; margin-bottom:40px; margin-left:auto; margin-right:auto;" src="https://maps.googleapis.com/maps/api/staticmap?center=41 East 11th Street 2nd Floor New York, NY&amp;zoom=13&amp;size=250x250&amp;maptype=roadmap&#10;                                        &amp;markers=color:blue%7Clabel:%7C41 East 11th Street 2nd Floor New York, NY&#10;                                        &amp;key=AIzaSyBSK9ERERVRBcrcRMVZkwhIt9Hjjb42dMg">
+                            <img style="width:250px; height:250px; border-radius:50%; margin-top:20px; margin-bottom:40px; margin-left:auto; margin-right:auto;" src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s-building+285A98(<?php echo $oneMap; ?>)/<?php echo $oneMap; ?>,15.67,0.00,0.00/300x300@2x?access_token=pk.eyJ1IjoiY2RzaG93ZXJzMjMiLCJhIjoiZF9zUFY2cyJ9.75SOCtl7m15KMrxB8bvJoQ'>
                         </div>
                         <div class="col-md-6">
                             <div class="row">
