@@ -237,7 +237,7 @@
                             <div class="row" style="margin-top:20px; margin-bottom:20px;">
                                 <div class="col-md-2"></div>
                                 <div class="col-md-8">
-                                    <h3><i class="fa fa-user"></i>&nbsp; Dexr.io Report for John Doe <span style="font-weight: bold; font-size:28px;" class="pull-right blue">$0.99</span></h3>
+                                    <h3><i class="fa fa-user"></i>&nbsp; Dexr.io Report for<br><b style="position:relative; left:30px;"><?php echo ucwords(strtolower($name)); ?></b> <span style="font-weight: bold; font-size:28px;" class="pull-right blue">$0.99</span></h3>
                                     <strong>+ 7 Day Dexr Membership Trial *FREE</strong>
                                     <hr>
 
@@ -279,7 +279,7 @@
                             <div class="row" style='margin-bottom:30px; '>
                                 <div class='col-md-2'></div>
                                 <div class='col-md-8'>
-                                    <div>I agree that I will not use dexr.io to determine an individual's eligibility for credit, insurance, employment, housing, or any other purpose covered under the Fair Credit Reporting Act (FCRA). I understand that dexr.io is not a consumer reporting agency. I have read and agree to the dexr.io terms and conditions as well as the dexr.io privacy policy. I understand that if I do not cancel my free trial within 7 days that my debit or credit card will be charged $49 at that time and each month thereafter until I cancel.  I understand dexr.io does not provide refunds. I understand that in order to cancel my subscription, I need to login to dexr.io, navigate to "my account" and click "cancel" next to my subscription. 
+                                    <div>By clicking this button I agree that I will not use dexr.io to determine an individual's eligibility for credit, insurance, employment, housing, or any other purpose covered under the Fair Credit Reporting Act (FCRA). I understand that dexr.io is not a consumer reporting agency. I have read and agree to the dexr.io terms and conditions as well as the dexr.io privacy policy. I understand that if I do not cancel my free trial within 7 days that my debit or credit card will be charged $49 at that time and each month thereafter until I cancel.  I understand dexr.io does not provide refunds. I understand that in order to cancel my subscription, I need to login to dexr.io, navigate to "my account" and click "cancel" next to my subscription. 
                                     </div>
 
                                 </div>
