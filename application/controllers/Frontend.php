@@ -167,6 +167,9 @@ class Frontend extends CI_Controller {
     }
 
     public function name($state, $city, $name, $page = false) {
+
+        $this->load->helper("mapbox");
+
         /*
          * // REDIRECT FOR SPECIAL CHARS
           $currPath = $_SERVER['REQUEST_URI'];
@@ -214,6 +217,7 @@ class Frontend extends CI_Controller {
         $data['total'] = $domains['total'];
 
         $domainBucket = array();
+        $addressBucket = array();
 
         if ($domains['results']) {
             foreach ($domains['results'] as $d) {
@@ -340,11 +344,20 @@ class Frontend extends CI_Controller {
 
                 $data['domains'] .= "</div>";
 
+                $addy = explode("|", explode("#", ucwords(strtolower($d->registrant_address)))[0])[0] . " " . $data['city'] . ", " . strtoupper($state);
+                if (!array_key_exists($addy, $addressBucket)) {
+                    $geo = forwardGeocode($addy);
+                } else {
+                    $geo = $addressBucket[$addy];
+                }
+                $geod = $geo['center'][0] . "," . $geo['center'][1];
+                if (!isset($data['oneMap'])) {
+                    $data['oneMap'] = $geod;
+                }
                 $data['domains'] .= "<div class='col-md-3 text-center'>"
-                        . "<img style='width:250px; height:250px; border-radius:50%; margin-top:40px; margin-bottom:40px; margin-left:auto; margin-right:auto;' src='https://maps.googleapis.com/maps/api/staticmap?center=" . explode("|", explode("#", ucwords(strtolower($d->registrant_address)))[0])[0] . " " . $data['city'] . ", " . strtoupper($state) . "&zoom=13&size=250x250&maptype=roadmap
-                                        &markers=color:blue%7Clabel:%7C" . explode("|", explode("#", ucwords(strtolower($d->registrant_address)))[0])[0] . " " . $data['city'] . ", " . strtoupper($state) . "
-                                        &key=AIzaSyBSK9ERERVRBcrcRMVZkwhIt9Hjjb42dMg'></img>"
+                        . "<img style='width:250px; height:250px; border-radius:50%; margin-top:40px; margin-bottom:40px; margin-left:auto; margin-right:auto;' src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s-building+285A98(" . $geod . ")/" . $geod . ",15.67,0.00,0.00/300x300@2x?access_token=pk.eyJ1IjoiY2RzaG93ZXJzMjMiLCJhIjoiZF9zUFY2cyJ9.75SOCtl7m15KMrxB8bvJoQ'></img>"
                         . "</div>";
+                $addressBucket[$addy] = $geo;
 
 
 
