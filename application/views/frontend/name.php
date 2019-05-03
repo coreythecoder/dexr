@@ -142,7 +142,7 @@
                     <hr>
                     <div class="row">
                         <div class="col-md-6">
-                            <img style="width:250px; height:250px; border-radius:50%; margin-top:20px; margin-bottom:40px; margin-left:auto; margin-right:auto;" src="https://maps.googleapis.com/maps/api/staticmap?center=41 East 11th Street 2nd Floor New York, NY&amp;zoom=13&amp;size=250x250&amp;maptype=roadmap&#10;                                        &amp;markers=color:blue%7Clabel:%7C41 East 11th Street 2nd Floor New York, NY&#10;                                        &amp;key=AIzaSyBSK9ERERVRBcrcRMVZkwhIt9Hjjb42dMg">
+                            <img style="width:250px; height:250px; border-radius:50%; margin-top:20px; margin-bottom:40px; margin-left:auto; margin-right:auto;" src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s-building+285A98(<?php echo $oneMap; ?>)/<?php echo $oneMap; ?>,15.67,0.00,0.00/300x300@2x?access_token=pk.eyJ1IjoiY2RzaG93ZXJzMjMiLCJhIjoiZF9zUFY2cyJ9.75SOCtl7m15KMrxB8bvJoQ'>
                         </div>
                         <div class="col-md-6">
                             <div class="row">
@@ -237,7 +237,7 @@
                             <div class="row" style="margin-top:20px; margin-bottom:20px;">
                                 <div class="col-md-2"></div>
                                 <div class="col-md-8">
-                                    <h3><i class="fa fa-user"></i>&nbsp; Dexr.io Report for John Doe <span style="font-weight: bold; font-size:28px;" class="pull-right blue">$0.99</span></h3>
+                                    <h3><i class="fa fa-user"></i>&nbsp; Dexr.io Report for<br><b style="position:relative; left:30px;"><?php echo ucwords(strtolower($name)); ?></b> <span style="font-weight: bold; font-size:28px;" class="pull-right blue">$0.99</span></h3>
                                     <strong>+ 7 Day Dexr Membership Trial *FREE</strong>
                                     <hr>
 
@@ -279,7 +279,7 @@
                             <div class="row" style='margin-bottom:30px; '>
                                 <div class='col-md-2'></div>
                                 <div class='col-md-8'>
-                                    <div>I agree that I will not use dexr.io to determine an individual's eligibility for credit, insurance, employment, housing, or any other purpose covered under the Fair Credit Reporting Act (FCRA). I understand that dexr.io is not a consumer reporting agency. I have read and agree to the dexr.io terms and conditions as well as the dexr.io privacy policy. I understand that if I do not cancel my free trial within 7 days that my debit or credit card will be charged $49 at that time and each month thereafter until I cancel.  I understand dexr.io does not provide refunds. I understand that in order to cancel my subscription, I need to login to dexr.io, navigate to "my account" and click "cancel" next to my subscription. 
+                                    <div>By clicking this button I agree that I will not use dexr.io to determine an individual's eligibility for credit, insurance, employment, housing, or any other purpose covered under the Fair Credit Reporting Act (FCRA). I understand that dexr.io is not a consumer reporting agency. I have read and agree to the dexr.io terms and conditions as well as the dexr.io privacy policy. I understand that if I do not cancel my free trial within 7 days that my debit or credit card will be charged $49 at that time and each month thereafter until I cancel.  I understand dexr.io does not provide refunds. I understand that in order to cancel my subscription, I need to login to dexr.io, navigate to "my account" and click "cancel" next to my subscription. 
                                     </div>
 
                                 </div>
