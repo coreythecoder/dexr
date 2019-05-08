@@ -117,6 +117,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 }
 
             }
+            
+            .StripeElement {
+                border:1px solid seagreen;
+            }
         </style>
         <?php if (isset($showAds)) { ?>
             <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
