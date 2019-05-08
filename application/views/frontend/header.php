@@ -11,13 +11,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic|Raleway:700,400,300|Pacifico|PT+Serif' rel='stylesheet' type='text/css'>
         <link href="https://static.dexr.io/assets/themes/v4/bootstrap/css/bootstrap.css" rel="stylesheet">
         <link href="https://static.dexr.io/assets/themes/v4/fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
-        <link href="https://static.dexr.io/assets/themes/v4/fonts/fontello/css/fontello.css" rel="stylesheet">
-        <link href="https://static.dexr.io/assets/themes/v4/plugins/magnific-popup/magnific-popup.css" rel="stylesheet">
-        <link href="https://static.dexr.io/assets/themes/v4/css/animations.css" rel="stylesheet">
-        <link href="https://static.dexr.io/assets/themes/v4/plugins/owl-carousel/owl.carousel.css" rel="stylesheet">
-        <link href="https://static.dexr.io/assets/themes/v4/plugins/owl-carousel/owl.transitions.css" rel="stylesheet">
-        <link href="https://static.dexr.io/assets/themes/v4/plugins/hover/hover-min.css" rel="stylesheet">		
-
         <link href="https://static.dexr.io/assets/themes/v4/css/style.css" rel="stylesheet" >
         <link href="https://static.dexr.io/assets/themes/v4/css/skins/light_blue.css" rel="stylesheet">
         <link href="https://static.dexr.io/assets/themes/v4/css/custom.css" rel="stylesheet">

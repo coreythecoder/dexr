@@ -50,7 +50,7 @@
         </div>
         <div class="row">
             <div class="col-md-4 ">
-                <div class="pv-30 ph-20 feature-box bordered shadow text-center object-non-visible" data-animation-effect="fadeInDownSmall" data-effect-delay="100">
+                <div class="pv-30 ph-20 feature-box bordered shadow text-center " data-animation-effect="fadeInDownSmall" data-effect-delay="100">
                     <span class="icon default-bg circle"><i class="fa fa-link"></i></span>
                     <h3>Link Building Outreach</h3>
                     <div class="separator clearfix"></div>
@@ -59,7 +59,7 @@
                 </div>
             </div>
             <div class="col-md-4 ">
-                <div class="pv-30 ph-20 feature-box bordered shadow text-center object-non-visible" data-animation-effect="fadeInDownSmall" data-effect-delay="150">
+                <div class="pv-30 ph-20 feature-box bordered shadow text-center " data-animation-effect="fadeInDownSmall" data-effect-delay="150">
                     <span class="icon default-bg circle"><i class="fa fa-building-o"></i></span>
                     <h3>B2B Marketing</h3>
                     <div class="separator clearfix"></div>
@@ -68,7 +68,7 @@
                 </div>
             </div>
             <div class="col-md-4 ">
-                <div class="pv-30 ph-20 feature-box bordered shadow text-center object-non-visible" data-animation-effect="fadeInDownSmall" data-effect-delay="200">
+                <div class="pv-30 ph-20 feature-box bordered shadow text-center " data-animation-effect="fadeInDownSmall" data-effect-delay="200">
                     <span class="icon default-bg circle"><i class="fa fa-line-chart"></i></span>
                     <h3>Competitive Analysis</h3>
                     <div class="separator clearfix"></div>
@@ -80,7 +80,7 @@
         <div class="row">
 
             <div class="col-md-4 ">
-                <div class="pv-30 ph-20 feature-box bordered shadow text-center object-non-visible" data-animation-effect="fadeInDownSmall" data-effect-delay="150">
+                <div class="pv-30 ph-20 feature-box bordered shadow text-center " data-animation-effect="fadeInDownSmall" data-effect-delay="150">
                     <span class="icon default-bg circle" style='opacity:.5;'><i class="fa fa-eye"></i></span>
                     <h3 style='opacity:.5;'>Brand Monitoring</h3>
                     <div class="separator clearfix"></div>
@@ -89,7 +89,7 @@
                 </div>
             </div>
             <div class="col-md-4 ">
-                <div class="pv-30 ph-20 feature-box bordered shadow text-center object-non-visible" data-animation-effect="fadeInDownSmall" data-effect-delay="200">
+                <div class="pv-30 ph-20 feature-box bordered shadow text-center " data-animation-effect="fadeInDownSmall" data-effect-delay="200">
                     <span class="icon default-bg circle" style='opacity:.5;'><i class="fa fa-users"></i></span>
                     <h3 style='opacity:.5;'>Employee Monitoring</h3>
                     <div class="separator clearfix"></div>
@@ -98,7 +98,7 @@
                 </div>
             </div>
             <div class="col-md-4 ">
-                <div class="pv-30 ph-20 feature-box bordered shadow text-center object-non-visible" data-animation-effect="fadeInDownSmall" data-effect-delay="100">
+                <div class="pv-30 ph-20 feature-box bordered shadow text-center " data-animation-effect="fadeInDownSmall" data-effect-delay="100">
                     <span class="icon default-bg circle" style='opacity:.5;'><i class="fa fa-list-alt"></i></span>
                     <h3 style='opacity:.5;'>Data Appending</h3>
                     <div class="separator clearfix"></div>
@@ -110,7 +110,7 @@
         <div class="row">
 
             <div class="col-md-12 ">
-                <div class="pv-30 ph-20 feature-box bordered shadow text-center object-non-visible" data-animation-effect="fadeInDownSmall" data-effect-delay="150">
+                <div class="pv-30 ph-20 feature-box bordered shadow text-center " data-animation-effect="fadeInDownSmall" data-effect-delay="150">
                     <span class="icon default-bg circle" style='opacity:.5;'><i class="fa fa-connectdevelop"></i></span>
                     <h3 style='opacity:.5;'>Robust Restful JSON API</h3>
                     <div class="separator clearfix"></div>
