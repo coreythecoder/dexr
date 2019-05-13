@@ -247,7 +247,7 @@ class Frontend extends CI_Controller {
 
                 $contact = "";
                 if (!empty($d->registrant_phone)) {
-                    $contact = " You may be able to contact them at " . formatPhoneNumber($d->registrant_phone);
+                    $contact = " You may be able to contact them at " . obfuscate_phone(formatPhoneNumber($d->registrant_phone));
                 }
 
                 if (!empty($d->registrant_email)) {
@@ -263,7 +263,7 @@ class Frontend extends CI_Controller {
                 }
 
                 if ($i == 0) {
-                    $data['domains'] .= "<div class='col-md-12'><p>" . ucwords(str_replace('-', ' ', strtolower($name))) . " was located at " . ucwords(strtolower($d->registrant_address)) . " in " . $data['city'] . ", " . strtoupper($state) . " when they registered " . ucwords($d->domain_name) . " at " . str_replace('Llc', 'LLC', ucwords(strtolower($d->domain_registrar_name))) . "." . $created . $expires . $updated . $contact . " We have " . $data['total'] . " domain registration(s) total in our database, " . $totalListed . " of which are listed below. For the complete list please create an account, <a href='/pricing?src=name&link=description' rel='nofollow'>click here for pricing</a>.</p><div class='separator'></div></div>";
+                    $data['domains'] .= "<div class='col-md-12'><p>" . ucwords(str_replace('-', ' ', strtolower($name))) . " was located at " . obfuscate_address(ucwords(strtolower($d->registrant_address))) . " in " . $data['city'] . ", " . strtoupper($state) . " when they registered " . ucwords($d->domain_name) . " at " . str_replace('Llc', 'LLC', ucwords(strtolower($d->domain_registrar_name))) . "." . $created . $expires . $updated . $contact . " We have " . $data['total'] . " domain registration(s) total in our database, " . $totalListed . " of which are listed below. For the complete list please <a data-toggle='modal' data-target='#exampleModal'>see pricing</a>.</p><div class='separator'></div></div>";
                 }
 
                 $data['domains'] .= "<div class='col-md-9'>";
@@ -299,7 +299,7 @@ class Frontend extends CI_Controller {
                 }
 
                 if (!empty($d->registrant_address)) {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Address</div><div class='col-info'>" . $d->registrant_address . "</div></div>";
+                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Address</div><div class='col-info'>" . obfuscate_address($d->registrant_address) . "</div></div>";
                 } else {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Address</div><div class='col-info'>-</div></div>";
                 }
@@ -329,7 +329,7 @@ class Frontend extends CI_Controller {
                 }
 
                 if (!empty($d->registrant_phone)) {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Phone</div><div class='col-info'>" . formatPhoneNumber($d->registrant_phone) . "</div></div>";
+                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Phone</div><div class='col-info'>" . obfuscate_phone(formatPhoneNumber($d->registrant_phone)) . "</div></div>";
                 } else {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Phone</div><div class='col-info'>-</div></div>";
                 }
