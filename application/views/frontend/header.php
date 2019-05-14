@@ -8,6 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <title><?php echo $metaTitle; ?></title>
         <meta name="description" content="<?php echo $metaDescription; ?>">        
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="canonical" href="https://dexr.io<?php if (uri_string() !== '/') { echo "/" . uri_string(); } ?>" />
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic|Raleway:700,400,300|Pacifico|PT+Serif' rel='stylesheet' type='text/css'>
         <link href="https://static.dexr.io/assets/themes/v4/bootstrap/css/bootstrap.css" rel="stylesheet">
         <link href="https://static.dexr.io/assets/themes/v4/fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -117,20 +118,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 }
 
             }
-            
+
             .StripeElement {
                 border:1px solid seagreen;
             }
         </style>
-        <?php if (isset($showAds)) { ?>
+<?php if (isset($showAds)) { ?>
             <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
             <script>
-            (adsbygoogle = window.adsbygoogle || []).push({
-                google_ad_client: "ca-pub-2063867378055756",
-                enable_page_level_ads: true
-            });
+                (adsbygoogle = window.adsbygoogle || []).push({
+                    google_ad_client: "ca-pub-2063867378055756",
+                    enable_page_level_ads: true
+                });
             </script>
-        <?php } ?>
+<?php } ?>
     </head>
     <body class="no-trans    ">
         <div class="scrollToTop circle"><i class="icon-up-open-big"></i></div>
