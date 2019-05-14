@@ -88,7 +88,8 @@ class Frontend extends CI_Controller {
                 $data['cities'] .= "<div class='col-md-4 col-xs-6'><a href='/" . $state . "/" . $c->slug . "'>" . ucwords(strtolower($c->city)) . "</a></div>";
             }
         } else {
-            show_404();
+            redirect("https://dexr.io/", 'location', 301);
+            //show_404();
         }
 
         $data['count'] = $cities['total'];
@@ -146,7 +147,8 @@ class Frontend extends CI_Controller {
         }
 
         if (empty($data['names'])) {
-            header('Location: /' . $state);
+            //header('Location: /' . $state);
+            redirect("https://dexr.io/" . $state, 'location', 301);
         }
 
         $nearby = $this->frontend_model->getNearbyCities($data['city'], $state);
@@ -592,7 +594,8 @@ class Frontend extends CI_Controller {
 
             //$data['domains'] .= "</div>";
         } else {
-            show_404();
+            redirect("https://dexr.io/" . $state . "/" . $city, 'location', 301);
+            //show_404();
         }
 
         if (count($siteList) > 0) {
@@ -705,7 +708,8 @@ class Frontend extends CI_Controller {
                 $data['names'] .= "<div class='col-md-4 col-xs-6'><a href='/" . $state . "/" . $city . "/" . $n->name_slug . "'>" . ucwords(strtolower($n->name)) . "</a></div>";
             }
         } else {
-            show_404();
+            redirect("https://dexr.io/", 'location', 301);
+            //show_404();
         }
 
         $data['count'] = $names['total'];
