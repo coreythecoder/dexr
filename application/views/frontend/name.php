@@ -21,7 +21,7 @@
                             if ($total >= 25) {
                                 echo ">";
                             }
-                            ?><?php echo $total; ?> Registration(s) &nbsp; &nbsp; <a href="/pricing?src=name&btn=show_full_list" rel="nofollow" class="btn btn-default btn-sm">See Full List</a></h4>
+                            ?><?php echo $total; ?> Registration(s) &nbsp; &nbsp; <a href="/<?php echo uri_string(); ?>/report" rel="nofollow" class="btn btn-default btn-sm">See Full List</a></h4>
                         <?php } else { ?>
                         <h4 class="mobile-center">Showing <?php echo $total; ?> of <?php
                             if ($total >= 25) {
@@ -31,7 +31,7 @@
                     <?php } ?>         
                 </div>       
                 <div class="col-md-3">
-                    <button data-toggle="modal" data-target="#exampleModal" type="button" class="btn btn-default btn-block" id="checkout_modal"><i class="fa fa-arrow-down"></i>&nbsp; Download Full Report</button>
+                    <a href="/<?php echo uri_string(); ?>/report" rel="nofollow" class="btn btn-default btn-block"><i class="fa fa-arrow-down"></i>&nbsp; Download Full Report</a>
                 </div>
             </div>
 

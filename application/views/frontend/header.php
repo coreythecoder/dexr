@@ -4,18 +4,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="en">
     <head>
         <meta charset="utf-8">
+        <?php if (isset($noIndex)) { ?>
+            <meta name="robots" content="noindex">
+        <?php } ?>
         <meta name="theme-color" content="#09afdf" />
         <title><?php echo $metaTitle; ?></title>
         <meta name="description" content="<?php echo $metaDescription; ?>">        
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="canonical" href="https://dexr.io<?php if (uri_string() !== '/') { echo "/" . uri_string(); } ?>" />
+        <link rel="canonical" href="https://dexr.io<?php
+        if (uri_string() !== '/') {
+            echo "/" . uri_string();
+        }
+        ?>" />
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic|Raleway:700,400,300|Pacifico|PT+Serif' rel='stylesheet' type='text/css'>
         <link href="https://static.dexr.io/assets/themes/v4/bootstrap/css/bootstrap.css" rel="stylesheet">
         <link href="https://static.dexr.io/assets/themes/v4/fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
         <link href="https://static.dexr.io/assets/themes/v4/css/style.css" rel="stylesheet" >
         <link href="https://static.dexr.io/assets/themes/v4/css/skins/light_blue.css" rel="stylesheet">
         <link href="https://static.dexr.io/assets/themes/v4/css/custom.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />      
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
 
         <link rel="apple-touch-icon" sizes="180x180" href="https://static.dexr.io/pwa/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="https://static.dexr.io/pwa/favicon-32x32.png">
@@ -72,6 +79,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             .others-list {
                 position:relative;
                 top:8px;
+            }
+            .modal__content {
+                z-index: 2;
+                border: 2px dotted blue;
+                position: relative;
+                overflow: auto;
+                height: 100%;
             }
 
             @media (max-width:600px){
