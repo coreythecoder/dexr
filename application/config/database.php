@@ -62,6 +62,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
+// FRONTEND DATABASE
+
 $db['default']['hostname'] = 'dexr-production-2.ci0hkmciekd6.us-east-2.rds.amazonaws.com';
 $db['default']['username'] = 'dexrdb';
 $db['default']['password'] = 'dexrdbpass';
@@ -77,3 +79,21 @@ $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
+
+// APP DATABASE
+
+$db['app']['hostname'] = 'dexr-app.ci0hkmciekd6.us-east-2.rds.amazonaws.com';
+$db['app']['username'] = 'dexrdb';
+$db['app']['password'] = 'dexrdbpass';
+$db['app']['database'] = 'ebdb';
+$db['app']['dbdriver'] = 'mysqli';
+$db['app']['dbprefix'] = '';
+$db['app']['pconnect'] = FALSE;
+$db['app']['db_debug'] = TRUE;
+$db['app']['cache_on'] = FALSE;
+$db['app']['cachedir'] = '';
+$db['app']['char_set'] = 'utf8';
+$db['app']['dbcollat'] = 'utf8_general_ci';
+$db['app']['swap_pre'] = '';
+$db['app']['autoinit'] = TRUE;
+$db['app']['stricton'] = FALSE;

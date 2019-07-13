@@ -2,6 +2,66 @@
 
 class Frontend_model extends CI_Model {
 
+    function getSomeFromCity($citySlug, $state, $limit = 10) {
+        $db = $this->load->database('default', TRUE);
+        $sqlThree = "SELECT name, city_slug, state, name_slug, name_city_slug FROM name_index WHERE city_slug = '" . $citySlug . "' AND state = '" . $state . "' AND opt_out != 1 LIMIT " . $limit;
+        //echo $sqlThree;
+
+        $reThree = $db->query($sqlThree);
+        if ($reThree->num_rows() > 0) {
+            return $reThree->result();
+        } else {
+            return false;
+        }
+    }
+
+    function getNearbyCitiesMatchingName($name, $city, $state) {
+        $db = $this->load->database('default', TRUE);
+
+        // BUILD CURRENT CITY STATE SLUG
+        $currentCityStateSlug = $city . "-" . $state;
+
+        $sqlOne = "SELECT lat, lng FROM all_cities WHERE city_state_slug = '" . $currentCityStateSlug . "' LIMIT 1";
+        $reOne = $db->query($sqlOne);
+        if ($reOne->num_rows() > 0) {
+
+            $r = $reOne->result();
+
+            $currLat = $r[0]->lat;
+            $currLng = $r[0]->lng;
+
+            $sqlTwo = "SELECT city_state_slug, population, lat, lng, SQRT(
+                POW(69.1 * (lat - " . $currLat . "), 2) +
+                POW(69.1 * (" . $currLng . " - lng) * COS(lat / 57.3), 2)) AS distance
+                FROM all_cities HAVING distance < 250 ORDER BY distance;";
+            $reTwo = $db->query($sqlTwo);
+            if ($reTwo->num_rows() > 0) {
+                $rTwo = $reTwo->result();
+                $cityArray = array();
+                $i = 0;
+                foreach ($rTwo as $city) {
+                    if ($i > 0) {
+                        $cityArray[] = "name_city_slug = '" . $name . "-" . $city->city_state_slug . "'";
+                    }
+                    $i++;
+                }
+                $orString = implode(" OR ", $cityArray);
+                //echo $orString;
+                $sqlThree = "SELECT name, city_slug, state, name_slug, name_city_slug FROM name_index WHERE (" . $orString . ") AND opt_out != 1 ORDER BY state ASC LIMIT 20";
+                //echo $sqlThree;
+
+                $reThree = $db->query($sqlThree);
+                if ($reThree->num_rows() > 0) {
+                    return $reThree->result();
+                } else {
+                    return false;
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+
     function getAllFromEmail($email, $limit = 10) {
         $db = $this->load->database('default', TRUE);
         $sql = "SELECT domain_name, registrant_email, city_slug, registrant_state, registrant_phone, registrant_address FROM production_2 WHERE registrant_email = '" . $email . "' AND opt_out = '0' LIMIT " . $limit;
@@ -25,8 +85,8 @@ class Frontend_model extends CI_Model {
             return false;
         }
     }
-    
-        function getDomains() {
+
+    function getDomains() {
         $db = $this->load->database('default', TRUE);
         $sql = "SELECT domain_name FROM production_2 LIMIT 1000";
         $re = $db->query($sql);
@@ -192,11 +252,17 @@ class Frontend_model extends CI_Model {
         }
     }
 
-    function getSomeNamesFromLetterCityState($city, $state, $letter, $limit) {
+    function getSomeNamesFromLetterCityState($city, $state, $limit) {
         $db = $this->load->database('default', TRUE);
 
-        $icss = $letter . "-" . $city . "-" . $state;
-        $sqlOne = "SELECT name, name_slug FROM name_index WHERE initial_city_state_slug = '" . $icss . "' AND opt_out = '0' ORDER BY name ASC LIMIT " . $limit;
+        /*
+          $icss = $letter . "-" . $city . "-" . $state;
+          $sqlOne = "SELECT name, name_slug FROM name_index WHERE initial_city_state_slug = '" . $icss . "' AND opt_out = '0' ORDER BY name ASC LIMIT " . $limit;
+
+         * 
+         */
+
+        $sqlOne = "SELECT name, initial_city_state_slug, name_slug, city_slug, state FROM `name_index` WHERE city_slug = '".$city."' AND state = '".$state."' AND opt_out = 0 ORDER BY ID LIMIT 500";
         $re = $db->query($sqlOne);
 
         if ($re->num_rows() > 0) {

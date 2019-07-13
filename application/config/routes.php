@@ -100,6 +100,8 @@ if ($currHost[0] == 'app') {
         $route['(:any)/(:any)/(:any)'] = "frontend/name/$1/$2/$3";
     } elseif (isset($currPath[3]) && !preg_match("/^[a-z]$/", $currPath[3]) && isset($currPath[4]) && is_numeric($currPath[4]) && in_array(strtoupper($currPath[1]), $states)) {
         $route['(:any)/(:any)/(:any)/(:any)'] = "frontend/name/$1/$2/$3/$4";
+    } elseif (isset($currPath[4]) && $currPath[4] == "report") { 
+        $route['(:any)/(:any)/(:any)/(:any)'] = "frontend/name_report/$1/$2/$3/$4";
     } else {
         $route['default_controller'] = "frontend/index";
     }
@@ -157,7 +159,6 @@ $route['scrub'] = "home/scrub";
 $route['zap/(:any)/(:any)/(:any)/(:any)'] = "home/zap/$1/$2/$3/$4";
 
 //$route['imap'] = "Imap_controller/index";
-
 //$route['create'] = "create/index";
 
 $route['sitemap'] = "frontend/sitemap_index";
