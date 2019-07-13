@@ -14,6 +14,7 @@
             <div class="row">
                 <div class="col-md-9">
                     <h1 class="mobile-center">
+                        <div class="col-title" style="font-size:.5em;">Webmaster</div>
                         <?php echo ucwords(strtolower($name)); ?> in <?php echo $city; ?>, <?php echo $state_abr; ?>
                     </h1>
                     <?php if ($total >= 5) { ?>
@@ -28,10 +29,15 @@
                                 echo ">";
                             }
                             ?><?php echo $total; ?> Registration(s)</h4>
-                    <?php } ?>         
+                    <?php } ?>
+                    <?php if (isset($allDomains) && !empty($allDomains)) { ?>
+                        <div>
+                            <div class="col-title">Linked Registrations</div><?php echo ucwords($allDomains); ?>
+                        </div>
+                    <?php } ?>
                 </div>       
-                <div class="col-md-3">
-                    <a href="/<?php echo uri_string(); ?>/report" rel="nofollow" class="btn btn-default btn-block"><i class="fa fa-arrow-down"></i>&nbsp; Download Full Report</a>
+                <div class="col-md-3 text-center"><br><br>
+                    <a href="/<?php echo uri_string(); ?>/report" rel="nofollow" class="btn btn-default btn-block animated shake"><i class="fa fa-arrow-down"></i>&nbsp; Download Full Report</a><small>Complete reports contain full contact details & all linked registrations.</small>
                 </div>
             </div>
 
@@ -47,7 +53,36 @@
             </div>
             <div class="separator"></div>
 
+            <?php if (!empty($nearbyCities)) { ?>
+                <div class="row">
+                    <div class="col-md-12 other-text">
+                        <h4 class="mobile-center"><?php echo ucwords(strtolower($name)); ?> Also Found In</h4>
+                        <div class="row" style="margin:20px 0px 20px 20px;">
+
+                            <?php echo $nearbyCities; ?>  
+
+                        </div>
+                    </div>                
+                </div>
+                <div class="separator"></div>
+            <?php } ?>
+
             <?php echo $domains; ?>
+
+            <?php if (!empty($sameCityNames)) { ?>
+                <div class="row">
+                    <div class="col-md-12 other-text">
+                        <h4 class="mobile-center">Other Records in <?php echo $city; ?>, <?php echo $state; ?></h4>
+                        <div class="row" style="margin:20px 0px 20px 20px;">
+
+                            <?php echo $sameCityNames; ?>  
+
+                        </div>
+                    </div>                
+                </div>
+                <div class="separator"></div>
+            <?php } ?>
+
         </div>    
     </div>
 </div>
@@ -88,7 +123,7 @@
         <div class="col-md-12 text-center">
             <h2 style="padding:15px;">We're Integrated with Zapier!</h2>
             <p class='text-center large' style="padding:15px;">Send our data to any of over 1000 other apps connected by Zapier!<br><small>**requires a Zapier account</small></p>
-            <img src='https://static.dexr.io/images/zapier.jpg' style='display:inline;'>
+            <img src='/assets/images/zapier.jpg' style='display:inline;'>
         </div>
     </div>
 </section>

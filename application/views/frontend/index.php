@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-6 text-center" style="">
-            <img src="https://static.dexr.io/images/black-outline.jpg" style="width:70%; text-align:center;margin:25px;display:inline-block;">  
+            <img src="/assets/images/black-outline.jpg" style="width:70%; text-align:center;margin:25px;display:inline-block;">  
         </div>
         
         <div class="col-md-4" style="margin-top:40px;">
@@ -129,7 +129,7 @@
         <div class="col-md-12 text-center" style='margin-top:80px; margin-bottom:80px;'>
             <h2 style="padding:15px;">We're Integrated with Zapier!</h2>
             <p class='text-center large' style="padding:15px;">Send our data to any of over 1000 other apps connected by Zapier!<br><small>**requires a Zapier account</small></p>
-            <img src='https://static.dexr.io/images/zapier.jpg' style='display:inline;'>
+            <img src='/assets/images/zapier.jpg' style='display:inline;'>
         </div>
     </div>
 </section>

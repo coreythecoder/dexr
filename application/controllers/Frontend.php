@@ -131,19 +131,34 @@ class Frontend extends CI_Controller {
         $data['city_slug'] = $city;
 
         $data['names'] = "";
-        foreach (range('a', 'z') as $v) {
+
+        $names = $this->frontend_model->getSomeNamesFromLetterCityState($city, $state, 12);
+
+        if ($names) {
+            $bucket = array();
+            foreach ($names as $n) {
+                $letter = mb_substr($n->initial_city_state_slug, 0, 1, 'utf-8');
+                $bucket[$letter][] = $n;
+            }
+        }
+
+        ksort($bucket);
+        foreach ($bucket as $k => $v) {
             $index_link = "";
-            $names = $this->frontend_model->getSomeNamesFromLetterCityState($city, $state, $v, 12);
-            if (count($names) >= 12) {
-                $index_link = "<a href='/" . $state . "/" . $city . "/" . $v . "'>View " . strtoupper($v) . " Index...</a>";
+
+            if (count($v) >= 12) {
+                $index_link = "<a href='/" . $state . "/" . $city . "/" . $k . "'>View " . strtoupper($k) . " Index...</a>";
             }
-            if ($names) {
-                $data['names'] .= "<div style='margin-bottom:30px;'><div class='col-md-12' style='border-bottom:1px solid #ddd;margin-bottom:15px;'><h2 style='display:inline-block;'>" . $v . "</h2><span class='pull-right' style='position:relative; top:40px;'>" . $index_link . "</span></div>";
-                foreach ($names as $n) {
-                    $data['names'] .= "<div class='col-md-4'><a href='/" . $state . "/" . $city . "/" . $n->name_slug . "'>" . ucwords(strtolower($n->name)) . "</a></div>";
+            $data['names'] .= "<div style='margin-bottom:30px;'><div class='col-md-12' style='border-bottom:1px solid #ddd;margin-bottom:15px;'><h2 style='display:inline-block;'>" . $k . "</h2><span class='pull-right' style='position:relative; top:40px;'>" . $index_link . "</span></div>";
+
+            foreach ($v as $names) {
+
+                if ($names) {
+
+                    $data['names'] .= "<div class='col-md-4'><a href='/" . $state . "/" . $city . "/" . $names->name_slug . "'>" . ucwords(strtolower($names->name)) . "</a></div>";
                 }
-                $data['names'] .= "</div>";
             }
+            $data['names'] .= "</div>";
         }
 
         if (empty($data['names'])) {
@@ -169,6 +184,8 @@ class Frontend extends CI_Controller {
     }
 
     public function name($state, $city, $name, $page = false) {
+
+        $name = urldecode($name);
 
         $this->load->helper("mapbox");
 
@@ -213,7 +230,26 @@ class Frontend extends CI_Controller {
         $i = 0;
 
         $data['redirect'] = "/report/" . $state . "/" . $city . "/" . $name;
+        
+          // GET NEARBY CITIES WITH MATCHING NAME
+          $data['nearbyCities'] = "";
+          $nearby = $this->frontend_model->getNearbyCitiesMatchingName($name, $city, $state);
+          if ($nearby) {
+          foreach ($nearby as $n) {
+          $data['nearbyCities'] .= "<div class='col-md-4 other-names-in-city'><span class='fa fa-user'></span> <a href='/" . $n->state . "/" . $n->city_slug . "/" . $n->name_slug . "'>" . ucwords(strtolower($n->name)) . " in " . ucwords(strtolower(unslugify($n->city_slug))) . ", " . strtoupper($n->state) . "</a></div>";
+          }
+          }
 
+          // GET OTHER NAMES IN SAME CITY_STATE
+          $data['sameCityNames'] = "";
+          $sameCityNames = $this->frontend_model->getSomeFromCity($city, $state, 15);
+          if ($sameCityNames) {
+          foreach ($sameCityNames as $s) {
+          $data['sameCityNames'] .= "<div class='col-md-4 other-names-in-city'><span class='fa fa-user'></span> <a href='/" . $s->state . "/" . $s->city_slug . "/" . $s->name_slug . "'>" . ucwords(strtolower($s->name)) . " in " . ucwords(strtolower(unslugify($s->city_slug))) . ", " . strtoupper($s->state) . "</a></div>";
+          }
+          }
+         
+        // GET ALL DOMAINS MATCHING THIS FL/CITY/NAME
         $domains = $this->frontend_model->getDomainsByCityStateName($city, $state, $name);
         $nId = $this->frontend_model->getNameIdFromNameSlugCityState($city, $state, $name);
         $data['total'] = $domains['total'];
@@ -222,6 +258,7 @@ class Frontend extends CI_Controller {
         $addressBucket = array();
 
         if ($domains['results']) {
+
             foreach ($domains['results'] as $d) {
                 $data['domains'] .= "<div class='row domain'>";
                 $data['domains'] .= "<div class='col-md-12'><h2 class='word-break'><i class='fa fa-asterisk' style='color:#09afdf;'></i> " . $d->domain_name . "</h2><div class='separator'></div></div>";
@@ -265,10 +302,10 @@ class Frontend extends CI_Controller {
                 }
 
                 if ($i == 0) {
-                    $data['domains'] .= "<div class='col-md-12'><p>" . ucwords(str_replace('-', ' ', strtolower($name))) . " was located at " . obfuscate_address(ucwords(strtolower($d->registrant_address))) . " in " . $data['city'] . ", " . strtoupper($state) . " when they registered " . ucwords($d->domain_name) . " at " . str_replace('Llc', 'LLC', ucwords(strtolower($d->domain_registrar_name))) . "." . $created . $expires . $updated . $contact . " We have " . $data['total'] . " domain registration(s) total in our database, " . $totalListed . " of which are listed below. For the complete list please <a href='/" . uri_string() . "/report' rel='nofollow'>see pricing</a>.</p><div class='separator'></div></div>";
+                    $data['domains'] .= "<div class='col-md-12'><p>" . ucwords(str_replace('-', ' ', strtolower($name))) . " in " . $data['city'] . ", " . strtoupper($state) . " was located at the street address " . obfuscate_address(ucwords(strtolower($d->registrant_address))) . " when they registered " . ucwords($d->domain_name) . " at " . str_replace('Llc', 'LLC', ucwords(strtolower($d->domain_registrar_name))) . "." . $created . $expires . $updated . $contact . " We have " . $data['total'] . " domain registration(s) total in our database, " . $totalListed . " of which are listed below. For the complete list please <a href='/" . uri_string() . "/report' rel='nofollow'>see pricing</a>.</p><div class='separator'></div></div>";
                 }
 
-                $data['domains'] .= "<div class='col-md-9'>";
+                $data['domains'] .= "<div class='col-md-12'>";
                 $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Keyword Split</div><div class='col-info'>" . $d->num . "</div></div>";
                 if (!empty($d->created_date_normalized)) {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Created</div><div class='col-info'>" . date('M d, Y', strtotime($d->created_date_normalized)) . "</div></div>";
@@ -301,7 +338,7 @@ class Frontend extends CI_Controller {
                 }
 
                 if (!empty($d->registrant_address)) {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Address</div><div class='col-info'>" . obfuscate_address($d->registrant_address) . "</div></div>";
+                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Address</div><div class='col-info'>" . $d->registrant_address . "</div></div>";
                 } else {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Address</div><div class='col-info'>-</div></div>";
                 }
@@ -331,7 +368,7 @@ class Frontend extends CI_Controller {
                 }
 
                 if (!empty($d->registrant_phone)) {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Phone</div><div class='col-info'>" . obfuscate_phone(formatPhoneNumber($d->registrant_phone)) . "</div></div>";
+                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Phone</div><div class='col-info'>" . formatPhoneNumber($d->registrant_phone) . "</div></div>";
                 } else {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Phone</div><div class='col-info'>-</div></div>";
                 }
@@ -345,7 +382,7 @@ class Frontend extends CI_Controller {
                 $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Registrar</div><div class='col-info'>" . str_replace('Llc', 'LLC', ucwords(strtolower($d->domain_registrar_name))) . "</div></div>";
 
                 $data['domains'] .= "</div>";
-
+/*
                 $addy = explode("|", explode("#", ucwords(strtolower($d->registrant_address)))[0])[0] . " " . $data['city'] . ", " . strtoupper($state);
                 if (!array_key_exists($addy, $addressBucket)) {
                     $geo = forwardGeocode($addy);
@@ -356,53 +393,34 @@ class Frontend extends CI_Controller {
                 if (!isset($data['oneMap'])) {
                     $data['oneMap'] = $geod;
                 }
-                $data['domains'] .= "<div class='col-md-3 text-center'>"
-                        . "<img style='width:250px; height:250px; border-radius:50%; margin-top:40px; margin-bottom:40px; margin-left:auto; margin-right:auto;' src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s-building+285A98(" . $geod . ")/" . $geod . ",15.67,0.00,0.00/300x300@2x?access_token=pk.eyJ1IjoiZGV4ciIsImEiOiJjanZzcndybDYwdWVmM3pvZWFpcnBsYmRhIn0.bl_iQq9nNrlVGVMU6TZOyA'></img>"
-                        . "</div>";
+*/
+                //$data['domains'] .= "<div class='col-md-3 text-center'>"
+                        //. "<img style='width:250px; height:250px; border-radius:50%; margin-top:40px; margin-bottom:40px; margin-left:auto; margin-right:auto;' src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s-building+285A98(" . $geod . ")/" . $geod . ",15.67,0.00,0.00/300x300@2x?access_token=pk.eyJ1IjoiZGV4ciIsImEiOiJjanZzcndybDYwdWVmM3pvZWFpcnBsYmRhIn0.bl_iQq9nNrlVGVMU6TZOyA'></img>"
+                        //. "</div>";
                 $addressBucket[$addy] = $geo;
 
 
-
-
-                if ($i == 0 && 1 == 2) {
-
-                    $data['domains'] .= "<div class='row'>";
-                    $data['domains'] .= "<div class='col-md-12'>";
-                    $data['domains'] .= '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                                        <!-- Name Top Main Column -->
-                                        <ins class="adsbygoogle"
-                                             style="display:block"
-                                             data-ad-client="ca-pub-2063867378055756"
-                                             data-ad-slot="5520348789"
-                                             data-ad-format="auto"
-                                             data-full-width-responsive="true"></ins>
-                                        <script>
-                                        (adsbygoogle = window.adsbygoogle || []).push({});
-                                        </script>';
-                    $data['domains'] .= "</div>";
-                    $data['domains'] .= "</div>";
-                }
-
-
-
-                if (!empty($d->num)) {
-                    $sim = $this->frontend_model->getSimilarDomains($d->num);
-                    if ($sim) {
-                        $data['domains'] .= "</div><div class='row'><div class='col-md-1'></div>";
-                        $data['domains'] .= "<div class='col-md-11'>";
-                        $data['domains'] .= "<div class='row' style='margin-bottom:80px;'><div class='col-md-12'><h5 style='border-bottom:1px solid #ddd; padding-bottom:8px;'>Similar Web Sites</h5></div><div class='col-md-12'>";
-                        foreach ($sim as $s) {
-                            $domainInfo = $this->frontend_model->getDomainInfoByID($s->domain_ID);
-                            if ($domainInfo) {
-                                if ($domainInfo[0]->domain_name !== $d->domain_name) {
-                                    $data['domains'] .= "<div class='col-md-4' style='margin-bottom:10px;'><a href='/" . strtolower($domainInfo[0]->registrant_state) . "/" . $domainInfo[0]->city_slug . "/" . $domainInfo[0]->name_slug . "'>" . ucwords(strtolower($domainInfo[0]->registrant_name)) . "</a><br><small>" . $domainInfo[0]->domain_name . "</small></div>";
-                                }
-                            }
-                        }
-                        $data['domains'] .= "</div>";
-                        $data['domains'] .= "</div></div>";
-                    }
-                }
+// SIMILAR DOMAINS LIST
+                /*
+                  if (!empty($d->num)) {
+                  $sim = $this->frontend_model->getSimilarDomains($d->num);
+                  if ($sim) {
+                  $data['domains'] .= "</div><div class='row'><div class='col-md-1'></div>";
+                  $data['domains'] .= "<div class='col-md-11'>";
+                  $data['domains'] .= "<div class='row' style='margin-bottom:80px;'><div class='col-md-12'><h5 style='border-bottom:1px solid #ddd; padding-bottom:8px;'>Similar Web Sites</h5></div><div class='col-md-12'>";
+                  foreach ($sim as $s) {
+                  $domainInfo = $this->frontend_model->getDomainInfoByID($s->domain_ID);
+                  if ($domainInfo) {
+                  if ($domainInfo[0]->domain_name !== $d->domain_name) {
+                  $data['domains'] .= "<div class='col-md-4' style='margin-bottom:10px;'><a href='/" . strtolower($domainInfo[0]->registrant_state) . "/" . $domainInfo[0]->city_slug . "/" . $domainInfo[0]->name_slug . "'>" . ucwords(strtolower($domainInfo[0]->registrant_name)) . "</a><br><small>" . $domainInfo[0]->domain_name . "</small></div>";
+                  }
+                  }
+                  }
+                  $data['domains'] .= "</div>";
+                  $data['domains'] .= "</div></div>";
+                  }
+                  }
+                 */
 
                 if ($i < 3) {
                     $siteList[] = $d->domain_name;
@@ -488,6 +506,10 @@ class Frontend extends CI_Controller {
             }
 
             //echo var_dump($newBucket);
+            $data['allDomains'] = implode(", ", $domainBucket['theseDomains']);
+            if (isset($newBucket['domains']) && !empty($newBucket['domains'])) {
+                $data['allDomains'] .= ", " . implode(", ", $newBucket['domains']);
+            }
 
             if (!isset($newBucket['addresses'])) {
                 $newBucket['addresses'] = array();
@@ -498,15 +520,15 @@ class Frontend extends CI_Controller {
                 $obfuscated[] = ucwords(obfuscate_address(unslugify(explode("|", $address)[0])));
             }
             $data['contains_addresses'] = '
-                    <div class="col-md-3 other-text">
-                        <div class="col-md-4 text-center">
-                            <div class="others-number mobile-center">' . count(array_merge($newBucket['addresses'], $domainBucket['addresses'])) . '</div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="others-label small mobile-center">Address(es)</div>
-                            <div class="others-list small mobile-center"><strong>' . implode(",<br>", $obfuscated) . '</strong></div>
-                        </div>
-                    </div>';
+              <div class="col-md-3 other-text">
+              <div class="col-md-4 text-center">
+              <div class="others-number mobile-center">' . count(array_merge($newBucket['addresses'], $domainBucket['addresses'])) . '</div>
+              </div>
+              <div class="col-md-8">
+              <div class="others-label small mobile-center">Address(es)</div>
+              <div class="others-list small mobile-center"><strong>' . implode(",<br>", $obfuscated) . '</strong></div>
+              </div>
+              </div>';
 
             if (!isset($newBucket['phones'])) {
                 $newBucket['phones'] = array();
@@ -517,15 +539,15 @@ class Frontend extends CI_Controller {
                 $obfuscated[] = obfuscate_phone(formatPhoneNumber($phone));
             }
             $data['contains_phones'] = '
-                    <div class="col-md-3 other-text">
-                        <div class="col-md-4 text-center">
-                            <div class="others-number mobile-center">' . count(array_merge($newBucket['phones'], $domainBucket['phones'])) . '</div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="others-label small mobile-center">Phone(s)</div>
-                            <div class="others-list small mobile-center"><strong>' . implode(",<br>", $obfuscated) . '</strong></div>
-                        </div>
-                    </div>';
+              <div class="col-md-3 other-text">
+              <div class="col-md-4 text-center">
+              <div class="others-number mobile-center">' . count(array_merge($newBucket['phones'], $domainBucket['phones'])) . '</div>
+              </div>
+              <div class="col-md-8">
+              <div class="others-label small mobile-center">Phone(s)</div>
+              <div class="others-list small mobile-center"><strong>' . implode(",<br>", $obfuscated) . '</strong></div>
+              </div>
+              </div>';
 
 
             if (!isset($newBucket['cities'])) {
@@ -541,15 +563,15 @@ class Frontend extends CI_Controller {
             }
 
             $data['contains_cities'] = '
-                    <div class="col-md-3 other-text">
-                        <div class="col-md-4 text-center">
-                            <div class="others-number mobile-center">' . count(array_merge($newBucket['cities'], $domainBucket['cities'])) . '</div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="others-label small mobile-center">Cities</div>
-                            <div class="others-list small mobile-center"><strong>' . implode(",<br>", $unslugged) . '</strong></div>
-                        </div>
-                    </div>';
+              <div class="col-md-3 other-text">
+              <div class="col-md-4 text-center">
+              <div class="others-number mobile-center">' . count(array_merge($newBucket['cities'], $domainBucket['cities'])) . '</div>
+              </div>
+              <div class="col-md-8">
+              <div class="others-label small mobile-center">Cities</div>
+              <div class="others-list small mobile-center"><strong>' . implode(",<br>", $unslugged) . '</strong></div>
+              </div>
+              </div>';
 
             if (!isset($newBucket['emails'])) {
                 $newBucket['emails'] = array();
@@ -560,15 +582,15 @@ class Frontend extends CI_Controller {
                 $obfuscated[] = obfuscate_email($email);
             }
             $data['contains_emails'] = '
-                    <div class="col-md-3 other-text">
-                        <div class="col-md-4 text-center">
-                            <div class="others-number mobile-center">' . count(array_merge($newBucket['emails'], $domainBucket['emails'])) . '</div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="others-label small mobile-center">Email(s)</div>
-                            <div class="others-list small mobile-center"><strong>' . implode(",<br>", $obfuscated) . '</strong></div>
-                        </div>
-                    </div>';
+              <div class="col-md-3 other-text">
+              <div class="col-md-4 text-center">
+              <div class="others-number mobile-center">' . count(array_merge($newBucket['emails'], $domainBucket['emails'])) . '</div>
+              </div>
+              <div class="col-md-8">
+              <div class="others-label small mobile-center">Email(s)</div>
+              <div class="others-list small mobile-center"><strong>' . implode(",<br>", $obfuscated) . '</strong></div>
+              </div>
+              </div>';
 
 
 
@@ -583,12 +605,12 @@ class Frontend extends CI_Controller {
                         $idRollList .= "<div class='col-md-3'><a href='/" . $ir->state . "/" . $ir->city_slug . "/" . $ir->name_slug . "'>" . ucwords(strtolower($ir->name)) . "</a></div>";
                     }
                     $data['names'] .= '
-                                            <div class="col-md-12">
-                                                <h4>Other Popular People & Businesses</h4>
-                                                    <div class="separator"></div>
-                                                ' . $idRollList . '
-                                            </div>
-                                        ';
+              <div class="col-md-12">
+              <h4>Other Popular People & Businesses</h4>
+              <div class="separator"></div>
+              ' . $idRollList . '
+              </div>
+              ';
                 }
             }
 
@@ -624,7 +646,7 @@ class Frontend extends CI_Controller {
 
         $data['checkoutModal'] = true;
         $data['noIndex'] = true;
-        
+
         $this->load->helper("mapbox");
 
         /*
@@ -800,7 +822,7 @@ class Frontend extends CI_Controller {
                 $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Registrar</div><div class='col-info'>" . str_replace('Llc', 'LLC', ucwords(strtolower($d->domain_registrar_name))) . "</div></div>";
 
                 $data['domains'] .= "</div>";
-
+/*
                 $addy = explode("|", explode("#", ucwords(strtolower($d->registrant_address)))[0])[0] . " " . $data['city'] . ", " . strtoupper($state);
                 if (!array_key_exists($addy, $addressBucket)) {
                     $geo = forwardGeocode($addy);
@@ -815,7 +837,7 @@ class Frontend extends CI_Controller {
                         . "<img style='width:250px; height:250px; border-radius:50%; margin-top:40px; margin-bottom:40px; margin-left:auto; margin-right:auto;' src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s-building+285A98(" . $geod . ")/" . $geod . ",15.67,0.00,0.00/300x300@2x?access_token=pk.eyJ1IjoiZGV4ciIsImEiOiJjanZzcndybDYwdWVmM3pvZWFpcnBsYmRhIn0.bl_iQq9nNrlVGVMU6TZOyA'></img>"
                         . "</div>";
                 $addressBucket[$addy] = $geo;
-
+*/
 
 
 

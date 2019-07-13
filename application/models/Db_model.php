@@ -9,7 +9,7 @@
 class Db_model extends CI_Model {
 
     function removeProxies($table) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "DELETE FROM " . $table . " WHERE TRIM(registrant_phone) IN (SELECT TRIM(registrant_phone) FROM scrub_1)";
         $db->query($sql);
 
@@ -19,7 +19,7 @@ class Db_model extends CI_Model {
 
     function processDataset($uid, $name, $keys, $matches, $values, $POST, $daterange = false) {
 
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
 
         // CHECK IF FILTER ID EXISTS & SAVE
         if (!$this->audienceNameExists($name, $uid)) {
@@ -43,7 +43,7 @@ class Db_model extends CI_Model {
     }
 
     function datasetExists($uid, $name) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT * FROM user_datasets WHERE user_id = '" . $uid . "' AND name = '" . $name . "'";
         $re = $db->query($sql);
 
@@ -55,7 +55,7 @@ class Db_model extends CI_Model {
     }
 
     function getUserReports($uid) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT * FROM user_reports WHERE user_id = '" . $uid . "'";
         $re = $db->query($sql);
 
@@ -67,7 +67,7 @@ class Db_model extends CI_Model {
     }
 
     function insertDataset($uid, $name, $table) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "INSERT INTO user_datasets SET user_id = '" . $uid . "', name = '" . $name . "', table_name = '" . $table . "'";
         $re = $db->query($sql);
 
@@ -76,7 +76,7 @@ class Db_model extends CI_Model {
 
     function createDatabaseTable($uid, $name, $POST, $table, $dateRange) {
 
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
 
         $newTable = "
 CREATE TABLE `" . $table . "` (
@@ -433,7 +433,7 @@ CREATE TABLE `" . $table . "` (
             }
         }
 
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         //echo $res;
         // echo $res . " GROUP BY registrant_organization LIMIT " . $limit; exit();
         //echo $res . " LIMIT " . $limit; exit();
@@ -691,7 +691,7 @@ CREATE TABLE `" . $table . "` (
             }
         }
 
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         //echo $res;
         // echo $res . " GROUP BY registrant_organization LIMIT " . $limit; exit();
         //echo $res . " LIMIT " . $limit;
@@ -953,7 +953,7 @@ CREATE TABLE `" . $table . "` (
 
         $res .= " ORDER BY ID LIMIT " . $start . ", " . $limit;
 
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         //echo $res;
         // echo $res . " GROUP BY registrant_organization LIMIT " . $limit; exit();
         //echo $res . " LIMIT " . $limit;
@@ -1208,7 +1208,7 @@ CREATE TABLE `" . $table . "` (
 
         $res .= " ORDER BY ID LIMIT 10000";
 
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         //echo $res;
         // echo $res . " GROUP BY registrant_organization LIMIT " . $limit; exit();
         //echo $res . " LIMIT " . $limit;
@@ -1454,7 +1454,7 @@ CREATE TABLE `" . $table . "` (
             }
         }
 
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         //echo $res;
         // echo $res . " GROUP BY registrant_organization LIMIT " . $limit; exit();
         //echo $res . " LIMIT " . $limit; exit();
@@ -1465,7 +1465,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function createTable() {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $cols = array("domainName", "registrarName", "contactEmail", "whoisServer", "nameServers", "createdDate", "updatedDate", "expiresDate", "standardRegCreatedDate", "standardRegUpdatedDate", "standardRegExpiresDate", "status", "RegistryData_rawText", "WhoisRecord_rawText", "Audit_auditUpdatedDate", "registrant_rawText", "registrant_email", "registrant_name", "registrant_organization", "registrant_street1", "registrant_street2", "registrant_street3", "registrant_street4", "registrant_city", "registrant_state", "registrant_postalCode", "registrant_country", "registrant_fax", "registrant_faxExt", "registrant_telephone", "registrant_telephoneExt", "administrativeContact_rawText", "administrativeContact_email", "administrativeContact_name", "administrativeContact_organization", "administrativeContact_street1", "administrativeContact_street2", "administrativeContact_street3", "administrativeContact_street4", "administrativeContact_city", "administrativeContact_state", "administrativeContact_postalCode", "administrativeContact_country", "administrativeContact_fax", "administrativeContact_faxExt", "administrativeContact_telephone", "administrativeContact_telephoneExt", "billingContact_rawText", "billingContact_email", "billingContact_name", "billingContact_organization", "billingContact_street1", "billingContact_street2", "billingContact_street3", "billingContact_street4", "billingContact_city", "billingContact_state", "billingContact_postalCode", "billingContact_country", "billingContact_fax", "billingContact_faxExt", "billingContact_telephone", "billingContact_telephoneExt", "technicalContact_rawText", "technicalContact_email", "technicalContact_name", "technicalContact_organization", "technicalContact_street1", "technicalContact_street2", "technicalContact_street3", "technicalContact_street4", "technicalContact_city", "technicalContact_state", "technicalContact_postalCode", "technicalContact_country", "technicalContact_fax", "technicalContact_faxExt", "technicalContact_telephone", "technicalContact_telephoneExt", "zoneContact_rawText", "zoneContact_email", "zoneContact_name", "zoneContact_organization", "zoneContact_street1", "zoneContact_street2", "zoneContact_street3", "zoneContact_street4", "zoneContact_city", "zoneContact_state", "zoneContact_postalCode", "zoneContact_country", "zoneContact_fax", "zoneContact_faxExt", "zoneContact_telephone", "zoneContact_telephoneExt", "registrarIANAID");
 
         $create = "CREATE TABLE domains (";
@@ -1478,7 +1478,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function insertFile($fileName) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $cols = array("domainName", "registrarName", "contactEmail", "whoisServer", "nameServers", "createdDate", "updatedDate", "expiresDate", "standardRegCreatedDate", "standardRegUpdatedDate", "standardRegExpiresDate", "status", "RegistryData_rawText", "WhoisRecord_rawText", "Audit_auditUpdatedDate", "registrant_rawText", "registrant_email", "registrant_name", "registrant_organization", "registrant_street1", "registrant_street2", "registrant_street3", "registrant_street4", "registrant_city", "registrant_state", "registrant_postalCode", "registrant_country", "registrant_fax", "registrant_faxExt", "registrant_telephone", "registrant_telephoneExt", "administrativeContact_rawText", "administrativeContact_email", "administrativeContact_name", "administrativeContact_organization", "administrativeContact_street1", "administrativeContact_street2", "administrativeContact_street3", "administrativeContact_street4", "administrativeContact_city", "administrativeContact_state", "administrativeContact_postalCode", "administrativeContact_country", "administrativeContact_fax", "administrativeContact_faxExt", "administrativeContact_telephone", "administrativeContact_telephoneExt", "billingContact_rawText", "billingContact_email", "billingContact_name", "billingContact_organization", "billingContact_street1", "billingContact_street2", "billingContact_street3", "billingContact_street4", "billingContact_city", "billingContact_state", "billingContact_postalCode", "billingContact_country", "billingContact_fax", "billingContact_faxExt", "billingContact_telephone", "billingContact_telephoneExt", "technicalContact_rawText", "technicalContact_email", "technicalContact_name", "technicalContact_organization", "technicalContact_street1", "technicalContact_street2", "technicalContact_street3", "technicalContact_street4", "technicalContact_city", "technicalContact_state", "technicalContact_postalCode", "technicalContact_country", "technicalContact_fax", "technicalContact_faxExt", "technicalContact_telephone", "technicalContact_telephoneExt", "zoneContact_rawText", "zoneContact_email", "zoneContact_name", "zoneContact_organization", "zoneContact_street1", "zoneContact_street2", "zoneContact_street3", "zoneContact_street4", "zoneContact_city", "zoneContact_state", "zoneContact_postalCode", "zoneContact_country", "zoneContact_fax", "zoneContact_faxExt", "zoneContact_telephone", "zoneContact_telephoneExt", "registrarIANAID");
 
         $colNames = "";
@@ -1494,7 +1494,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function findByKeyword($keyword) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT domainName, registrarName, createdDate, registrant_email, registrant_name, registrant_city, registrant_state, registrant_country, registrant_telephone FROM domains WHERE domainName REGEXP '" . $keyword . "'";
         $re = $db->query($sql);
         $r = $re->result();
@@ -1503,7 +1503,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function audienceNameExists($name, $uid = 1) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT filter_id FROM user_filters WHERE user_id = '" . $uid . "' AND filter_id = '" . $name . "'";
         $re = $db->query($sql);
 
@@ -1515,7 +1515,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function getAudiences($uid) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT * FROM user_filters WHERE user_id = '" . $uid . "' GROUP BY filter_id";
         $re = $db->query($sql);
 
@@ -1527,7 +1527,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function getDatasets($uid) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT * FROM user_datasets WHERE user_id = '" . $uid . "' ORDER BY ID DESC";
         $re = $db->query($sql);
 
@@ -1539,7 +1539,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function getDatasetUncrawledURLList($datasetId, $limit) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT domain_name FROM " . $datasetId . " WHERE crawled = '0' LIMIT " . $limit;
 
         $re = $db->query($sql);
@@ -1551,7 +1551,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function addDatasetColumns($datasetId) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "ALTER TABLE " . $datasetId . " "
                 . "ADD COLUMN crawled INTEGER NOT NULL, "
                 . "ADD COLUMN proxy INTEGER NOT NULL, "
@@ -1564,7 +1564,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function getDataset($tableID, $count = false, $page = false) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         if ($count && $page) {
             $page--;
             $start = $page * $count;
@@ -1584,7 +1584,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function getFilters($uid) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT * FROM user_filters WHERE user_id = '" . $uid . "' GROUP BY filter_id";
         $re = $db->query($sql);
 
@@ -1596,7 +1596,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function getFilter($uid, $filter_id) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT * FROM user_filters WHERE user_id = '" . $uid . "' AND filter_id = '" . $filter_id . "'";
         $re = $db->query($sql);
 
@@ -1608,7 +1608,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function getUserZaps($uid) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT * FROM user_zaps WHERE user_id = '" . $uid . "'";
         $re = $db->query($sql);
 
@@ -1620,7 +1620,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function userPlanType($uid) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT plan FROM users WHERE ID = '" . $uid . "'";
         $re = $db->query($sql);
 
@@ -1633,7 +1633,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function getZapInfo($zid) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT * FROM user_zaps WHERE ID = '" . $zid . "'";
         $re = $db->query($sql);
 
@@ -1645,7 +1645,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function getRecord($recordID, $tableName) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT * FROM " . $tableName . " WHERE ID = '" . $recordID . "'";
         $re = $db->query($sql);
 
@@ -1657,7 +1657,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function getDatasetInfo($dataset_id) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT * FROM user_datasets WHERE ID = '" . $dataset_id . "'";
         $re = $db->query($sql);
 
@@ -1670,7 +1670,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function getCampaigns($uid) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT * FROM user_campaigns WHERE user_id = '" . $uid . "'";
         $re = $db->query($sql);
 
@@ -1682,7 +1682,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function getEmails($uid) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT * FROM user_templates WHERE user_id = '" . $uid . "'";
         $re = $db->query($sql);
 
@@ -1694,7 +1694,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function getInboxes($uid) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT * FROM user_inboxes WHERE user_id = '" . $uid . "'";
         $re = $db->query($sql);
 
@@ -1706,7 +1706,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function filters($filter_id) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT * FROM user_filters WHERE filter_id = '" . $filter_id . "'";
         $re = $db->query($sql);
 
@@ -1718,7 +1718,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function deleteAudience($filter_id, $uid) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "DELETE FROM user_filters WHERE user_id = '" . $uid . "' AND filter_id = '" . $filter_id . "'";
         $re = $db->query($sql);
 
@@ -1726,7 +1726,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function deleteUserTable($dataset_id, $uid) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
 
         $datasetInfo = $this->getDatasetInfo($dataset_id);
 
@@ -1746,7 +1746,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function deleteInbox($inbox_id, $uid) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "DELETE FROM user_inboxes WHERE user_id = '" . $uid . "' AND ID = '" . $inbox_id . "'";
         $re = $db->query($sql);
 
@@ -1754,7 +1754,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function deleteZap($zap_id) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "DELETE FROM user_zaps WHERE ID = '" . $zap_id . "'";
         $re = $db->query($sql);
 
@@ -1762,7 +1762,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function insertFilters($keys, $matches, $values, $name, $uid = 1) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
 
         $i = 0;
         foreach ($keys as $key) {
@@ -1775,7 +1775,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function insertZap($zapUrl, $zapName, $UID) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
 
         $sql = "INSERT INTO user_zaps SET user_id = '" . $UID . "', zap_url = '" . trim($zapUrl) . "', zap_name = '" . trim($zapName) . "'";
         $re = $db->query($sql);
@@ -1784,7 +1784,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function saveInbox($POST, $uid) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "INSERT INTO user_inboxes SET address = '" . $POST['address'] . "', user_id = '" . $uid . "', imap_server = '" . $POST['imap_server'] . "', imap_password = '" . $POST['imap_password'] . "', smtp_server = '" . $POST['smtp_server'] . "', smtp_password = '" . $POST['smtp_password'] . "'";
         $db->query($sql);
 
@@ -1792,7 +1792,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function saveNameReport($uid, $state, $city, $name) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "INSERT INTO user_reports SET user_ID = '" . $uid . "', name_slug = '" . $name . "', city_slug = '" . $city . "', state = '" . $state . "'";
         $db->query($sql);
 
@@ -1800,7 +1800,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function inboxExists($address) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT * FROM user_inboxes WHERE address = '" . $address . "'";
         $re = $db->query($sql);
 
@@ -1812,7 +1812,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function insertTemplate($POST, $uid) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
 
         $sql = "INSERT INTO user_templates SET user_id = '" . $uid . "', name = '" . $POST['name'] . "', subject = '" . $POST['subject'] . "', body = '" . $POST['body'] . "', address = '" . $POST['address'] . "'";
         $re = $db->query($sql);
@@ -1821,7 +1821,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function insertCampaign($POST, $uid) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
 
         $sql = "INSERT INTO user_campaigns SET user_id = '" . $uid . "', name = '" . $POST['name'] . "', target_id = '" . $POST['target'] . "', inbox_id = '" . $POST['inbox'] . "', template_id = '" . $POST['template'] . "', schedule = '" . $POST['schedule'] . "'";
         $re = $db->query($sql);
@@ -1830,7 +1830,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function checkFileExists($filename, $status) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT * FROM download_log WHERE file_name = '" . $filename . "' AND status = '" . $status . "'";
         $re = $db->query($sql);
 
@@ -1842,7 +1842,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function insertFileLog($filename, $status) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
 
         $sql = "INSERT INTO download_log SET file_name = '" . $filename . "', status = '" . $status . "'";
         $re = $db->query($sql);
@@ -1855,7 +1855,7 @@ CREATE TABLE `" . $table . "` (
     ////////////////////////////////////////////////////////////////
 
     function insertOptOut($POST) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         date_default_timezone_set("America/New_York");
         $POST['dob'] = strtotime($POST['birthMonth'] . '/' . $POST['birthDay'] . '/' . $POST['birthYear']);
         $sql = "INSERT INTO yoliya_optOuts SET optOuts_url = '" . $POST['url'] . "', optOuts_fName = '" . $POST['fName'] . "', optOuts_lName = '" . $POST['lName'] . "', optOuts_emailAddress = '" . $POST['email'] . "', optOuts_address = '" . $POST['address'] . "', optOuts_city = '" . $POST['city'] . "', optOuts_state = '" . $POST['state'] . "', optOuts_zip = '" . $POST['zip'] . "', optOuts_phone = '" . $POST['phone'] . "', optOuts_dob = '" . $POST['dob'] . "', optOuts_cityState = '" . $POST['city.state'] . "', optOuts_fullAddressLastFirstMiddle = '" . $POST['fullAddress.last.first.middle'] . "'";
@@ -1865,7 +1865,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function checkReportExists($name, $nid) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT * FROM apiResponses WHERE api = '" . $name . "' AND nid = '" . $nid . "'";
         $re = $db->query($sql);
         $r = $re->result();
@@ -1883,7 +1883,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function saveAPIResponse($api, $nid, $response) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "INSERT INTO apiResponses SET api = '" . $api . "', nid = '" . $nid . "', response = " . $this->db->escape($response) . "";
         $db->query($sql);
 
@@ -1891,7 +1891,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function logError($error) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "INSERT INTO errors SET error = " . $this->db->escape($error) . "";
         $db->query($sql);
 
@@ -1899,7 +1899,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function newReport($pid, $nid, $uid, $first, $middle = "", $last, $dob = "", $street = "", $city = "", $state = "", $zip = "", $phone = "", $email = "", $username = "") {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "INSERT INTO reports SET pid = '" . $pid . "', nid = '" . $nid . "', uid = '" . $uid . "', first = " . $this->db->escape($first) . ", middle = " . $this->db->escape($middle) . ", last = " . $this->db->escape($last) . ", dob = " . $this->db->escape($dob) . ", street = " . $this->db->escape($street) . ", city = " . $this->db->escape($city) . ", state = " . $this->db->escape($state) . ", zip = " . $this->db->escape($zip) . ", phone = " . $this->db->escape($phone) . ", email = " . $this->db->escape($email) . ", username = " . $this->db->escape($username) . "";
         $db->query($sql);
 
@@ -1907,7 +1907,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function getReports($uid) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT * FROM reports WHERE uid = '" . $uid . "'";
         $re = $db->query($sql);
 
@@ -1919,7 +1919,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function getCharges($uid) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT * FROM payment_logs WHERE userid = '" . $uid . "' ORDER BY ID DESC LIMIT 20";
         $re = $db->query($sql);
 
@@ -1931,7 +1931,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function countReports($uid) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT ID FROM reports WHERE uid = '" . $uid . "'";
         $re = $db->query($sql);
 
@@ -1943,7 +1943,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function getReport($rid) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT * FROM user_reports WHERE report_id = '" . $rid . "' LIMIT 1";
         $re = $db->query($sql);
 
@@ -1956,7 +1956,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function getAPIResponse($nid, $api) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT * FROM apiResponses WHERE api = '" . $api . "' AND nid = '" . $nid . "'";
         $re = $db->query($sql);
 
@@ -1968,7 +1968,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function saveStripeCustomerID($uID, $customerID) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "UPDATE users SET stripeCustomerID = '" . $customerID . "' WHERE ID = '" . $uID . "'";
         $db->query($sql);
 
@@ -1976,7 +1976,7 @@ CREATE TABLE `" . $table . "` (
     }
 
     function getCustomerID($ID) {
-        $db = $this->load->database('default', TRUE);
+        $db = $this->load->database('app', TRUE);
         $sql = "SELECT * FROM users WHERE ID = '" . $ID . "'";
         $re = $db->query($sql);
 
