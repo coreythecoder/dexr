@@ -11,7 +11,7 @@
 
             <!-- pricing tables start -->
             <!-- ================ -->
-            <div class="pricing-tables stripped object-non-visible" data-animation-effect="fadeInUpSmall"  data-effect-delay="0">
+            <div class="pricing-tables stripped animated fadeInUp" data-animation-effect="fadeInUpSmall"  data-effect-delay="0">
                 <div class="row grid-space-0">
 
                    
