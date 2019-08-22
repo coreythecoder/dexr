@@ -1,14 +1,7 @@
-User-agent: *
+User-agent: Yandex
 Disallow: /
-User-agent: Googlebot
-Allow: /
-User-agent: Mediapartners-Google
-Allow: /
-User-agent: Slurp
-Allow: /
-User-Agent: msnbot
-Allow: /
 
+User-agent: MJ12bot
+Disallow: /
 
 Sitemap: https://dexr.io/sitemap
-
