@@ -66,7 +66,7 @@ $currPath = explode('/', $_SERVER['REQUEST_URI']);
 if ($currHost[0] == 'app') {
     //BACKEND
     $route['default_controller'] = "home/index";
-} else {
+} elseif ($currHost[0] == "dexr") {
     // FRONTEND
     //state/{/page-number} 
     //(lists cities)
@@ -100,11 +100,15 @@ if ($currHost[0] == 'app') {
         $route['(:any)/(:any)/(:any)'] = "frontend/name/$1/$2/$3";
     } elseif (isset($currPath[3]) && !preg_match("/^[a-z]$/", $currPath[3]) && isset($currPath[4]) && is_numeric($currPath[4]) && in_array(strtoupper($currPath[1]), $states)) {
         $route['(:any)/(:any)/(:any)/(:any)'] = "frontend/name/$1/$2/$3/$4";
-    } elseif (isset($currPath[4]) && $currPath[4] == "report") { 
+    } elseif (isset($currPath[4]) && $currPath[4] == "report") {
         $route['(:any)/(:any)/(:any)/(:any)'] = "frontend/name_report/$1/$2/$3/$4";
     } else {
         $route['default_controller'] = "frontend/index";
     }
+} else {
+    header("HTTP/1.1 301 Moved Permanently");
+    header("Location: https://dexr.io" . $_SERVER['REQUEST_URI']);
+    exit();
 }
 
 // Custom Routes

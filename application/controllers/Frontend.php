@@ -230,25 +230,25 @@ class Frontend extends CI_Controller {
         $i = 0;
 
         $data['redirect'] = "/report/" . $state . "/" . $city . "/" . $name;
-        
-          // GET NEARBY CITIES WITH MATCHING NAME
-          $data['nearbyCities'] = "";
-          $nearby = $this->frontend_model->getNearbyCitiesMatchingName($name, $city, $state);
-          if ($nearby) {
-          foreach ($nearby as $n) {
-          $data['nearbyCities'] .= "<div class='col-md-4 other-names-in-city'><span class='fa fa-user'></span> <a href='/" . $n->state . "/" . $n->city_slug . "/" . $n->name_slug . "'>" . ucwords(strtolower($n->name)) . " in " . ucwords(strtolower(unslugify($n->city_slug))) . ", " . strtoupper($n->state) . "</a></div>";
-          }
-          }
 
-          // GET OTHER NAMES IN SAME CITY_STATE
-          $data['sameCityNames'] = "";
-          $sameCityNames = $this->frontend_model->getSomeFromCity($city, $state, 15);
-          if ($sameCityNames) {
-          foreach ($sameCityNames as $s) {
-          $data['sameCityNames'] .= "<div class='col-md-4 other-names-in-city'><span class='fa fa-user'></span> <a href='/" . $s->state . "/" . $s->city_slug . "/" . $s->name_slug . "'>" . ucwords(strtolower($s->name)) . " in " . ucwords(strtolower(unslugify($s->city_slug))) . ", " . strtoupper($s->state) . "</a></div>";
-          }
-          }
-         
+        // GET NEARBY CITIES WITH MATCHING NAME
+        $data['nearbyCities'] = "";
+        $nearby = $this->frontend_model->getNearbyCitiesMatchingName($name, $city, $state);
+        if ($nearby) {
+            foreach ($nearby as $n) {
+                $data['nearbyCities'] .= "<div class='col-md-4 other-names-in-city'><span class='fa fa-user'></span> <a href='/" . $n->state . "/" . $n->city_slug . "/" . $n->name_slug . "'>" . ucwords(strtolower($n->name)) . " in " . ucwords(strtolower(unslugify($n->city_slug))) . ", " . strtoupper($n->state) . "</a></div>";
+            }
+        }
+
+        // GET OTHER NAMES IN SAME CITY_STATE
+        $data['sameCityNames'] = "";
+        $sameCityNames = $this->frontend_model->getSomeFromCity($city, $state, 15);
+        if ($sameCityNames) {
+            foreach ($sameCityNames as $s) {
+                $data['sameCityNames'] .= "<div class='col-md-4 other-names-in-city'><span class='fa fa-user'></span> <a href='/" . $s->state . "/" . $s->city_slug . "/" . $s->name_slug . "'>" . ucwords(strtolower($s->name)) . " in " . ucwords(strtolower(unslugify($s->city_slug))) . ", " . strtoupper($s->state) . "</a></div>";
+            }
+        }
+
         // GET ALL DOMAINS MATCHING THIS FL/CITY/NAME
         $domains = $this->frontend_model->getDomainsByCityStateName($city, $state, $name);
         $nId = $this->frontend_model->getNameIdFromNameSlugCityState($city, $state, $name);
@@ -286,7 +286,7 @@ class Frontend extends CI_Controller {
 
                 $contact = "";
                 if (!empty($d->registrant_phone)) {
-                    $contact = " You may be able to contact them at " . obfuscate_phone(formatPhoneNumber($d->registrant_phone));
+                    $contact = " You may be able to contact them at " . formatPhoneNumber($d->registrant_phone);
                 }
 
                 if (!empty($d->registrant_email)) {
@@ -302,7 +302,7 @@ class Frontend extends CI_Controller {
                 }
 
                 if ($i == 0) {
-                    $data['domains'] .= "<div class='col-md-12'><p>" . ucwords(str_replace('-', ' ', strtolower($name))) . " in " . $data['city'] . ", " . strtoupper($state) . " was located at the street address " . obfuscate_address(ucwords(strtolower($d->registrant_address))) . " when they registered " . ucwords($d->domain_name) . " at " . str_replace('Llc', 'LLC', ucwords(strtolower($d->domain_registrar_name))) . "." . $created . $expires . $updated . $contact . " We have " . $data['total'] . " domain registration(s) total in our database, " . $totalListed . " of which are listed below. For the complete list please <a href='/" . uri_string() . "/report' rel='nofollow'>see pricing</a>.</p><div class='separator'></div></div>";
+                    $data['paragraph'] = "<div class='col-md-12'><p>" . ucwords(str_replace('-', ' ', strtolower($name))) . " was located at the street address " . ucwords(strtolower($d->registrant_address)) . ", " . $data['city'] . ", " . strtoupper($state) . " when they registered " . ucwords($d->domain_name) . " at " . str_replace('Llc', 'LLC', ucwords(strtolower($d->domain_registrar_name))) . "." . $created . $expires . $updated . $contact . " We have " . $data['total'] . " domain registration(s) total in our database, " . $totalListed . " of which are listed below. For the complete list please <a href='/" . uri_string() . "/report' rel='nofollow'>see pricing</a>.</p><div class='separator'></div></div>";
                 }
 
                 $data['domains'] .= "<div class='col-md-12'>";
@@ -310,117 +310,78 @@ class Frontend extends CI_Controller {
                 if (!empty($d->created_date_normalized)) {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Created</div><div class='col-info'>" . date('M d, Y', strtotime($d->created_date_normalized)) . "</div></div>";
                 } else {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Created</div><div class='col-info'>-</div></div>";
+                    //$data['domains'] .= "<div class='col-md-4'><div class='col-title'>Created</div><div class='col-info'>-</div></div>";
                 }
 
                 if (!empty($d->update_date)) {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Updated</div><div class='col-info'>" . date('M d, Y', strtotime($d->update_date)) . "</div></div>";
                 } else {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Updated</div><div class='col-info'>-</div></div>";
+                    //$data['domains'] .= "<div class='col-md-4'><div class='col-title'>Updated</div><div class='col-info'>-</div></div>";
                 }
 
                 if (!empty($d->expiry_date)) {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Expiration</div><div class='col-info'>" . date('M d, Y', strtotime($d->expiry_date)) . "</div></div>";
                 } else {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Expiration</div><div class='col-info'>-</div></div>";
+                    //$data['domains'] .= "<div class='col-md-4'><div class='col-title'>Expiration</div><div class='col-info'>-</div></div>";
                 }
 
-                if (!empty($d->registrant_name)) {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Registrant Name</div><div class='col-info'>" . $d->registrant_name . "</div></div>";
-                } else {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Registrant Name</div><div class='col-info'>-</div></div>";
-                }
+                //if (!empty($d->registrant_name)) {
+                //    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Registrant Name</div><div class='col-info'>" . $d->registrant_name . "</div></div>";
+                //} else {
+                //    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Registrant Name</div><div class='col-info'>-</div></div>";
+                //}
 
                 if (!empty($d->registrant_company)) {
                     $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Company</div><div class='col-info'>" . ucwords(strtolower($d->registrant_company)) . "</div></div>";
                 } else {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Company</div><div class='col-info'>-</div></div>";
+                    //$data['domains'] .= "<div class='col-md-4'><div class='col-title'>Company</div><div class='col-info'>-</div></div>";
                 }
 
-                if (!empty($d->registrant_address)) {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Address</div><div class='col-info'>" . $d->registrant_address . "</div></div>";
-                } else {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Address</div><div class='col-info'>-</div></div>";
-                }
+                //if (!empty($d->registrant_address)) {
+                //    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Address</div><div class='col-info'>" . $d->registrant_address . "</div></div>";
+                //} else {
+                //    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Address</div><div class='col-info'>-</div></div>";
+                //}
 
-                if (!empty($d->registrant_city)) {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>City</div><div class='col-info'>" . ucwords(strtolower($d->registrant_city)) . ", " . $d->registrant_state . "</div></div>";
-                } else {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>City</div><div class='col-info'>-</div></div>";
-                }
+                //if (!empty($d->registrant_city)) {
+                //    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>City</div><div class='col-info'>" . ucwords(strtolower($d->registrant_city)) . ", " . $d->registrant_state . "</div></div>";
+                //} else {
+                //    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>City</div><div class='col-info'>-</div></div>";
+                //}
 
-                if (!empty($d->registrant_state)) {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>State</div><div class='col-info'>" . $d->registrant_state . "</div></div>";
-                } else {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>State</div><div class='col-info'>-</div></div>";
-                }
+                //if (!empty($d->registrant_state)) {
+                //    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>State</div><div class='col-info'>" . $d->registrant_state . "</div></div>";
+                //} else {
+                    //$data['domains'] .= "<div class='col-md-4'><div class='col-title'>State</div><div class='col-info'>-</div></div>";
+                //}
 
-                if (!empty($d->registrant_zip)) {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Zip</div><div class='col-info'>" . $d->registrant_zip . "</div></div>";
-                } else {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Zip</div><div class='col-info'>-</div></div>";
-                }
+                //if (!empty($d->registrant_zip)) {
+                //    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Zip</div><div class='col-info'>" . $d->registrant_zip . "</div></div>";
+                //} else {
+                //    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Zip</div><div class='col-info'>-</div></div>";
+                //}
 
-                if (!empty($d->registrant_email)) {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Email</div><div class='col-info'><small><a href='/" . uri_string() . "/report' rel='nofollow' class='btn btn-default-transparent uncover_btn'>Uncover Email<br>" . obfuscate_email($d->registrant_email) . "</a></small></div></div>";
-                } else {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Email</div><div class='col-info'>-</div></div>";
-                }
+                //if (!empty($d->registrant_email)) {
+                //    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Email</div><div class='col-info'><small><a href='/" . uri_string() . "/report' rel='nofollow' class='btn btn-default-transparent uncover_btn'>Uncover Email<br>" . obfuscate_email($d->registrant_email) . "</a></small></div></div>";
+                //} else {
+                //    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Email</div><div class='col-info'>-</div></div>";
+                //}
 
-                if (!empty($d->registrant_phone)) {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Phone</div><div class='col-info'>" . formatPhoneNumber($d->registrant_phone) . "</div></div>";
-                } else {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Phone</div><div class='col-info'>-</div></div>";
-                }
+                //if (!empty($d->registrant_phone)) {
+                //    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Phone</div><div class='col-info'>" . formatPhoneNumber($d->registrant_phone) . "</div></div>";
+                //} else {
+                //    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Phone</div><div class='col-info'>-</div></div>";
+                //}
 
-                if (!empty($d->registrant_fax)) {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Fax</div><div class='col-info'>" . formatPhoneNumber($d->registrant_fax) . "</div></div>";
-                } else {
-                    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Fax</div><div class='col-info'>-</div></div>";
-                }
+                //if (!empty($d->registrant_fax)) {
+                //    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Fax</div><div class='col-info'>" . formatPhoneNumber($d->registrant_fax) . "</div></div>";
+                //} else {
+                //    $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Fax</div><div class='col-info'>-</div></div>";
+                //}
 
-                $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Registrar</div><div class='col-info'>" . str_replace('Llc', 'LLC', ucwords(strtolower($d->domain_registrar_name))) . "</div></div>";
+                //$data['domains'] .= "<div class='col-md-4'><div class='col-title'>Registrar</div><div class='col-info'>" . str_replace('Llc', 'LLC', ucwords(strtolower($d->domain_registrar_name))) . "</div></div>";
 
                 $data['domains'] .= "</div>";
-/*
-                $addy = explode("|", explode("#", ucwords(strtolower($d->registrant_address)))[0])[0] . " " . $data['city'] . ", " . strtoupper($state);
-                if (!array_key_exists($addy, $addressBucket)) {
-                    $geo = forwardGeocode($addy);
-                } else {
-                    $geo = $addressBucket[$addy];
-                }
-                $geod = $geo['center'][0] . "," . $geo['center'][1];
-                if (!isset($data['oneMap'])) {
-                    $data['oneMap'] = $geod;
-                }
-*/
-                //$data['domains'] .= "<div class='col-md-3 text-center'>"
-                        //. "<img style='width:250px; height:250px; border-radius:50%; margin-top:40px; margin-bottom:40px; margin-left:auto; margin-right:auto;' src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s-building+285A98(" . $geod . ")/" . $geod . ",15.67,0.00,0.00/300x300@2x?access_token=pk.eyJ1IjoiZGV4ciIsImEiOiJjanZzcndybDYwdWVmM3pvZWFpcnBsYmRhIn0.bl_iQq9nNrlVGVMU6TZOyA'></img>"
-                        //. "</div>";
-                $addressBucket[$addy] = $geo;
-
-
-// SIMILAR DOMAINS LIST
-                /*
-                  if (!empty($d->num)) {
-                  $sim = $this->frontend_model->getSimilarDomains($d->num);
-                  if ($sim) {
-                  $data['domains'] .= "</div><div class='row'><div class='col-md-1'></div>";
-                  $data['domains'] .= "<div class='col-md-11'>";
-                  $data['domains'] .= "<div class='row' style='margin-bottom:80px;'><div class='col-md-12'><h5 style='border-bottom:1px solid #ddd; padding-bottom:8px;'>Similar Web Sites</h5></div><div class='col-md-12'>";
-                  foreach ($sim as $s) {
-                  $domainInfo = $this->frontend_model->getDomainInfoByID($s->domain_ID);
-                  if ($domainInfo) {
-                  if ($domainInfo[0]->domain_name !== $d->domain_name) {
-                  $data['domains'] .= "<div class='col-md-4' style='margin-bottom:10px;'><a href='/" . strtolower($domainInfo[0]->registrant_state) . "/" . $domainInfo[0]->city_slug . "/" . $domainInfo[0]->name_slug . "'>" . ucwords(strtolower($domainInfo[0]->registrant_name)) . "</a><br><small>" . $domainInfo[0]->domain_name . "</small></div>";
-                  }
-                  }
-                  }
-                  $data['domains'] .= "</div>";
-                  $data['domains'] .= "</div></div>";
-                  }
-                  }
-                 */
 
                 if ($i < 3) {
                     $siteList[] = $d->domain_name;
@@ -433,6 +394,7 @@ class Frontend extends CI_Controller {
                 $domainBucket['cities'][$d->city_slug . ", " . $d->registrant_state] = $d->city_slug . ", " . $d->registrant_state;
                 $domainBucket['phones'][trim($d->registrant_phone)] = trim($d->registrant_phone);
                 $domainBucket['addresses'][slugify($d->registrant_address) . "|" . $d->city_slug . "|" . $d->registrant_state] = slugify($d->registrant_address) . "|" . $d->city_slug . "|" . $d->registrant_state;
+                
             }
 
             //echo var_dump($domainBucket); // exit();
@@ -517,7 +479,7 @@ class Frontend extends CI_Controller {
             $obfuscated = array();
             $merged = array_merge($newBucket['addresses'], $domainBucket['addresses']);
             foreach ($merged as $address) {
-                $obfuscated[] = ucwords(obfuscate_address(unslugify(explode("|", $address)[0])));
+                $obfuscated[] = ucwords(unslugify(explode("|", $address)[0]));
             }
             $data['contains_addresses'] = '
               <div class="col-md-3 other-text">
@@ -536,7 +498,7 @@ class Frontend extends CI_Controller {
             $obfuscated = array();
             $merged = array_merge($newBucket['phones'], $domainBucket['phones']);
             foreach ($merged as $phone) {
-                $obfuscated[] = obfuscate_phone(formatPhoneNumber($phone));
+                $obfuscated[] = formatPhoneNumber($phone);
             }
             $data['contains_phones'] = '
               <div class="col-md-3 other-text">
@@ -635,11 +597,11 @@ class Frontend extends CI_Controller {
         //$data['showAds'] = true;
 
         $data['metaTitle'] = "Webmaster: " . ucwords(str_replace('-', ' ', strtolower($name))) . " in " . $data['city'] . ", " . strtoupper($state);
-        $data['metaDescription'] = "Contact webmaster " . ucwords(str_replace('-', ' ', strtolower($name))) . " in " . $data['city'] . ", " . strtoupper($state) . " by owner name, email, phone or address. They've registered " . $siteList . ".";
+        $data['metaDescription'] = "Contact webmaster " . ucwords(str_replace('-', ' ', strtolower($name))) . " in " . $data['city'] . ", " . strtoupper($state) . " by address: " . $domains['results'][0]->registrant_address . ", email or phone: ".formatPhoneNumber($domains['results'][0]->registrant_phone).". They've registered " . $siteList . ".";
 
         $this->load->view('frontend/header', $data);
         $this->load->view('frontend/name');
-        $this->load->view('frontend/footer-states');
+        $this->load->view('frontend/footer-no-states');
     }
 
     public function name_report($state, $city, $name, $page = false) {
@@ -822,22 +784,22 @@ class Frontend extends CI_Controller {
                 $data['domains'] .= "<div class='col-md-4'><div class='col-title'>Registrar</div><div class='col-info'>" . str_replace('Llc', 'LLC', ucwords(strtolower($d->domain_registrar_name))) . "</div></div>";
 
                 $data['domains'] .= "</div>";
-/*
-                $addy = explode("|", explode("#", ucwords(strtolower($d->registrant_address)))[0])[0] . " " . $data['city'] . ", " . strtoupper($state);
-                if (!array_key_exists($addy, $addressBucket)) {
-                    $geo = forwardGeocode($addy);
-                } else {
-                    $geo = $addressBucket[$addy];
-                }
-                $geod = $geo['center'][0] . "," . $geo['center'][1];
-                if (!isset($data['oneMap'])) {
-                    $data['oneMap'] = $geod;
-                }
-                $data['domains'] .= "<div class='col-md-3 text-center'>"
-                        . "<img style='width:250px; height:250px; border-radius:50%; margin-top:40px; margin-bottom:40px; margin-left:auto; margin-right:auto;' src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s-building+285A98(" . $geod . ")/" . $geod . ",15.67,0.00,0.00/300x300@2x?access_token=pk.eyJ1IjoiZGV4ciIsImEiOiJjanZzcndybDYwdWVmM3pvZWFpcnBsYmRhIn0.bl_iQq9nNrlVGVMU6TZOyA'></img>"
-                        . "</div>";
-                $addressBucket[$addy] = $geo;
-*/
+                /*
+                  $addy = explode("|", explode("#", ucwords(strtolower($d->registrant_address)))[0])[0] . " " . $data['city'] . ", " . strtoupper($state);
+                  if (!array_key_exists($addy, $addressBucket)) {
+                  $geo = forwardGeocode($addy);
+                  } else {
+                  $geo = $addressBucket[$addy];
+                  }
+                  $geod = $geo['center'][0] . "," . $geo['center'][1];
+                  if (!isset($data['oneMap'])) {
+                  $data['oneMap'] = $geod;
+                  }
+                  $data['domains'] .= "<div class='col-md-3 text-center'>"
+                  . "<img style='width:250px; height:250px; border-radius:50%; margin-top:40px; margin-bottom:40px; margin-left:auto; margin-right:auto;' src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s-building+285A98(" . $geod . ")/" . $geod . ",15.67,0.00,0.00/300x300@2x?access_token=pk.eyJ1IjoiZGV4ciIsImEiOiJjanZzcndybDYwdWVmM3pvZWFpcnBsYmRhIn0.bl_iQq9nNrlVGVMU6TZOyA'></img>"
+                  . "</div>";
+                  $addressBucket[$addy] = $geo;
+                 */
 
 
 

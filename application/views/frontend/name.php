@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-md-9">
                     <h1 class="mobile-center">
-                        <div class="col-title" style="font-size:.5em;">Webmaster</div>
+                        <span class="col-title" style="font-size:.5em;display:block;">Webmaster</span>
                         <?php echo ucwords(strtolower($name)); ?> in <?php echo $city; ?>, <?php echo $state_abr; ?>
                     </h1>
                     <?php if ($total >= 5) { ?>
@@ -37,7 +37,7 @@
                     <?php } ?>
                 </div>       
                 <div class="col-md-3 text-center"><br><br>
-                    <a href="/<?php echo uri_string(); ?>/report" rel="nofollow" class="btn btn-default btn-block animated shake"><i class="fa fa-arrow-down"></i>&nbsp; Download Full Report</a><small>Complete reports contain full contact details & all linked registrations.</small>
+                    <a href="/<?php echo uri_string(); ?>/report" rel="nofollow" class="btn btn-default btn-block animated shake"><i class="fa fa-arrow-down"></i>&nbsp; Download Full WHOIS Report</a><small>Complete reports contain full contact details & all linked registrations.</small>
                 </div>
             </div>
 
@@ -45,13 +45,15 @@
 
             <div class="row">
                 <div class="col-md-12 other-text">
-                    <h4 class="mobile-center">Our Database Contains</h4>
-                    <div class="row">
-                        <?php echo $contains_emails . $contains_cities . $contains_phones . $contains_addresses; ?>                        
+                    <h4 class="mobile-center">About <?php echo ucwords(strtolower($name)); ?> in <?php echo $city; ?>, <?php echo strtoupper($state_abr); ?></h4>
+                    <div class="row" style="margin:20px 0px 20px 20px;">
+
+                        <?php echo $paragraph; ?>  
+
                     </div>
                 </div>                
             </div>
-            <div class="separator"></div>
+            
 
             <?php if (!empty($nearbyCities)) { ?>
                 <div class="row">
@@ -66,6 +68,17 @@
                 </div>
                 <div class="separator"></div>
             <?php } ?>
+
+            <div class="row" style="margin-bottom:90px;">
+                <div class="col-md-12 other-text">
+                    <h4 class="mobile-center">Our Database Contains</h4>
+                    <div class="row">
+                        <?php echo $contains_emails . $contains_cities . $contains_phones . $contains_addresses; ?>                        
+                    </div>
+                </div>                
+            </div>
+            
+
 
             <?php echo $domains; ?>
 
@@ -118,35 +131,6 @@
     </div>
 </section>
 
-<section>
-    <div class="row" style='margin-top:30px; margin-bottom:80px;'>
-        <div class="col-md-12 text-center">
-            <h2 style="padding:15px;">We're Integrated with Zapier!</h2>
-            <p class='text-center large' style="padding:15px;">Send our data to any of over 1000 other apps connected by Zapier!<br><small>**requires a Zapier account</small></p>
-            <img src='/assets/images/zapier.jpg' style='display:inline;'>
-        </div>
-    </div>
-</section>
 
 
 
-<section class="section default-bg clearfix">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="call-to-action text-center">
-                    <div class="row">
-                        <div class="col-sm-8">
-                            <h1 class="title">Ready To Take A Test Drive?</h1>
-                            <p>Get started today.</p>
-                        </div>
-                        <div class="col-sm-4">
-                            <br>
-                            <p><a href="/pricing?src=name&btn=test_drive" rel="nofollow" class="btn btn-lg btn-gray-transparent btn-animated">Check Out Our Pricing<i class="fa fa-arrow-right pl-20"></i></a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
